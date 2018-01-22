@@ -1,11 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using DBCreator;
 using Domain;
 using Domain.Events;
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
 using Infrastructure;
+using NHibernate;
+using NHibernate.Cfg;
+using NHibernate.Cfg.MappingSchema;
+using NHibernate.Dialect;
+using NHibernate.Mapping.ByCode;
+using NHibernate.Tool.hbm2ddl;
 
 namespace ConsoleApplication1
 {
@@ -13,6 +23,17 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
+            ISessionFactory sessionFactory = Fluently.Configure()
+                .Database(MsSqlConfiguration.MsSql2012.ConnectionString(
+                        @"Server=DESKTOP-51T48C5\SQLEXPRESS; initial catalog=HSEvents; Integrated Security=SSPI;").ShowSql()
+                )
+                
+                .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(true, true))
+                .BuildSessionFactory();
+
+            DataBaseHelper.CreateDB(sessionFactory);
+
+
             var session = NHibernateHelper.OpenSession();
 
             var book = session.Get<Book>(1);
@@ -27,6 +48,22 @@ namespace ConsoleApplication1
 
             book = session.Get<Book>(2);
 
+        }
+
+        private ISessionFactory Create()
+        {
+
+            var cfg = new Configuration()
+                .DataBaseIntegration(db =>
+                {
+                    db.ConnectionString =
+                        @"Server=DESKTOP-51T48C5\SQLEXPRESS; initial catalog=HSEvents; Integrated Security=SSPI;";
+                    db.Dialect<MsSql2008Dialect>();
+                });
+
+            new SchemaUpdate(cfg).Execute(false, false);
+
+            return cfg.BuildSessionFactory();
         }
     }
 

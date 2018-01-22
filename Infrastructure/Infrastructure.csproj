@@ -57,6 +57,7 @@
     <Compile Include="Mappings\EntityMap.cs" />
     <Compile Include="EventMap.cs" />
     <Compile Include="NHibernateHelper.cs" />
+    <Compile Include="PasswordHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
