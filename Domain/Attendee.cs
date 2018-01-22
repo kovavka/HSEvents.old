@@ -13,8 +13,11 @@ namespace Domain
         public virtual AttendeeType AttendeeType { get; set; }
     }
 
-    public class AttendeeType : NamedEntity
+    public enum AttendeeType
     {
+        Pupil = 1,
+        Parent = 2,
+        Teacher = 3,
     }
 
 }

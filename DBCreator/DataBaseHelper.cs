@@ -5,15 +5,68 @@ using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
 using Logger;
 using NHibernate;
+using NHibernate.Tool.hbm2ddl;
 
 namespace DBCreator
 {
     public class DataBaseHelper
     {
-        public static void CreateDB(ISessionFactory sessionFactory)
+        private static ISessionFactory sessionFactory;
+
+        private static readonly string server = @"Server= DESKTOP-51T48C5\SQLEXPRESS; ";
+
+        private static FluentConfiguration defaultConfiguration = Fluently.Configure()
+            .Database(MsSqlConfiguration.MsSql2012.ConnectionString(
+                    server + @"Initial Catalog=HSEvents; Integrated Security=SSPI;").ShowSql()
+            )
+            .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(true, true));
+
+        private static FluentConfiguration reBiuldConfiguration = Fluently.Configure()
+            .Database(MsSqlConfiguration.MsSql2012.ConnectionString(
+                    server + @"Integrated Security=SSPI;").ShowSql()
+            )
+            .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(true, true));
+
+
+        public static ISessionFactory SessionFactory
+        {
+            get
+            {
+                if (sessionFactory == null)
+                    sessionFactory = defaultConfiguration.BuildSessionFactory();
+
+                return sessionFactory;
+            }
+        }
+
+        public static void ReBuildDB()
+        {
+            var factory = reBiuldConfiguration.BuildSessionFactory();
+
+            Run("Drop database HSEvents;", factory);
+            Run("Create database HSEvents;", factory);
+            factory.Close();
+
+            UpdateDB(SessionFactory);
+        }
+
+        private static void Run(string queryString, ISessionFactory sessionFactory)
+        {
+            using (ISession session = sessionFactory.OpenSession())
+            {
+                ISQLQuery query = session.CreateSQLQuery(queryString);
+                query.SetTimeout(600);
+                query.UniqueResult();
+            }
+        }
+
+        private static void UpdateDB(ISessionFactory sessionFactory)
         {
             var scripts = GetScripts();
             foreach (var script in scripts)
@@ -63,20 +116,22 @@ namespace DBCreator
             string[] parts = Script.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
             using (ISession session = sessionFactory.OpenSession())
             {
-                for (int i = 0; i < parts.Length; i++)
+                foreach(var queryString in parts)
                 {
-                    if (string.IsNullOrEmpty(parts[i].Trim()))
+                    if (string.IsNullOrEmpty(queryString.Trim()))
                         continue;
-
+                    
                     using (ITransaction tx = session.BeginTransaction())
                     {
-                        ISQLQuery query = session.CreateSQLQuery(parts[i]);
+                        ISQLQuery query = session.CreateSQLQuery(queryString);
                         query.SetTimeout(600);
                         query.UniqueResult();
+
                         tx.Commit();
                     }
                 }
             }
         }
+        
     }
 }

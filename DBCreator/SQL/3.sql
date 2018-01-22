@@ -1,54 +1,45 @@
-﻿
-Create table Country(
+﻿Create table Attendee(
 Id int identity(1,1) not null,
-Name nvarchar(255) not null,
+FullName nvarchar(255) not null,
+PhoneNumber nvarchar(255),
+Email nvarchar(255),
+Type int not null,
+
 primary key (Id)
 );
 
-Create table Region(
+Create table AcademicProgram(
 Id int identity(1,1) not null,
 Name nvarchar(255) not null,
-CountryId int not null,
-primary key (Id),
-constraint FK_Region_Country foreign key (CountryId) references Country(CountryId),
+primary key (Id)
+);	
+
+Create table Pupil(
+Sex int not null,
+YearOfGraduation int not null,
+EnterProgramId int,
+SchoolId int not null,
+AttendeeId int not null,
+
+constraint FK_Pupil_EnterProgram foreign key (EnterProgramId) references AcademicProgram(Id),
+constraint FK_Pupil_School foreign key (SchoolId) references School(Id),
+constraint FK_Pupil_Attendee foreign key (AttendeeId) references Attendee(Id),
+constraint AK_AttendeeId unique(AttendeeId)
 );
 
-Create table City(
-Id int identity(1,1) not null,
-Name nvarchar(255) not null,
-RegionId int not null,
-primary key (Id),
-constraint FK_City_Region foreign key (RegionId) references Region(RegionId),
-);
+Create table IntrestingProgram(
+AcademicProgramId int not null,
+PupilId int not null,
 
-Create table CityType(
-Id int identity(1,1) not null,
-Name nvarchar(255) not null,
-CityId int not null,
-primary key (Id),
-constraint FK_CityType_City foreign key (CityId) references City(CityId),
-);
+constraint FK_IntrestingProgram_AcademicProgram foreign key (AcademicProgramId) references AcademicProgram(Id),
+constraint FK_IntrestingProgram_Pupil foreign key (PupilId) references Pupil(AttendeeId)
 
-Create table Street(
-Id int identity(1,1) not null,
-Name nvarchar(255) not null,
-CityTypeId int not null,
-primary key (Id),
-constraint FK_Street_CityType foreign key (CityTypeId) references CityType(CityTypeId),
-);
+);	
 
-Create table House(
-Id int identity(1,1) not null,
-Name nvarchar(255) not null,
-StreetId int not null,
-primary key (Id),
-constraint FK_House_Street foreign key (StreetId) references Street(StreetId),
-);
+Create table RegistrarionProgram(
+AcademicProgramId int not null,
+PupilId int not null,
 
-Create table Address(
-Id int identity(1,1) not null,
-Name nvarchar(255) not null,
-SchoolId int,
-primary key (Id),
-constraint FK_Addressn_School foreign key (SchoolId) references School(SchoolId),
+constraint FK_RegistrarionProgram_AcademicProgram foreign key (AcademicProgramId) references AcademicProgram(Id),
+constraint FK_RegistrarionProgram_Pupil foreign key (PupilId) references Pupil(AttendeeId)
 );

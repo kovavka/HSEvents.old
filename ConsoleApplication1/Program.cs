@@ -23,15 +23,7 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            ISessionFactory sessionFactory = Fluently.Configure()
-                .Database(MsSqlConfiguration.MsSql2012.ConnectionString(
-                        @"Server=DESKTOP-51T48C5\SQLEXPRESS; initial catalog=HSEvents; Integrated Security=SSPI;").ShowSql()
-                )
-                
-                .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(true, true))
-                .BuildSessionFactory();
-
-            DataBaseHelper.CreateDB(sessionFactory);
+            DataBaseHelper.ReBuildDB();
 
 
             var session = NHibernateHelper.OpenSession();

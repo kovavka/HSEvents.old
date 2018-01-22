@@ -57,10 +57,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SQL\3.sql" />
-    <Content Include="SQL\4.sql" />
-    <Content Include="SQL\1.sql" />
     <Content Include="SQL\2.sql" />
+    <Content Include="SQL\6.sql" />
+    <Content Include="SQL\4.sql" />
+    <Content Include="SQL\5.sql" />
+    <Content Include="SQL\3.sql" />
+    <Content Include="SQL\1.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

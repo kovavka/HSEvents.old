@@ -31,7 +31,10 @@ namespace Domain.Events
         public virtual ICollection<Attendee> Attendees { get; set; }
     }
 
-    public class EventType : NamedEntity
+    public enum EventType
     {
+        Course = 1,
+        AcademicCompetition = 2,
+        SchoolWork = 3
     }
 }
