@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using Domain.Events;
+using Infrastructure.Repositories;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json.Serialization;
+using Unity;
+using Unity.WebApi;
 
 namespace HSEvents.Web
 {
@@ -26,7 +31,18 @@ namespace HSEvents.Web
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            var container = BuildUnityContainer();
+
+            config.DependencyResolver= new UnityDependencyResolver(container);
+        }
+
+        private static IUnityContainer BuildUnityContainer()
+        {
             var container = new UnityContainer();
+
+            container.RegisterType<IRepository<Event>, EventRepository>();
+
+            return container;
         }
     }
 }

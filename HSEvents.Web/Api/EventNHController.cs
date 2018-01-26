@@ -11,9 +11,10 @@ namespace HSEvents.Web.Api
 {
     public class EventNHController : NHApiController<Event>
     {
-        public EventNHController(IRepository<Event> repository) : base()
+        public EventNHController(IRepository<Event> repository) 
+            : base(repository)
         {
-            new EventRepository()
+            
         }
     }
 
