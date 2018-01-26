@@ -1,0 +1,16 @@
+﻿@using System.Drawing
+@using Domain.Events
+
+@{
+    ViewBag.Title = "Index";
+    var events =(IEnumerable<Event>) ViewData["Events"];
+    var color = "#008000";
+}
+
+<h2>Index</h2>
+
+@foreach (var ev in events)
+{
+    <div style="color:@color">@ev.Name</div>
+}
+

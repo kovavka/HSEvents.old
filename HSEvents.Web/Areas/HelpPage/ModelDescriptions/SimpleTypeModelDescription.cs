@@ -1,0 +1,6 @@
+namespace HSEvents.Web.Areas.HelpPage.ModelDescriptions
+{
+    public class SimpleTypeModelDescription : ModelDescription
+    {
+    }
+}

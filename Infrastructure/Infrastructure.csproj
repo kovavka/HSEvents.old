@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Mappings\AddressMap.cs" />
     <Compile Include="Mappings\VolunteerMap.cs" />
     <Compile Include="Mappings\EntityMap.cs" />
@@ -60,6 +59,8 @@
     <Compile Include="NHibernateHelper.cs" />
     <Compile Include="PasswordHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\EventRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

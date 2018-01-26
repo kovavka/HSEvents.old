@@ -19,7 +19,7 @@ namespace DBCreator
     {
         private static ISessionFactory sessionFactory;
 
-        private static readonly string server = @"Server= DESKTOP-51T48C5\SQLEXPRESS; ";
+        private static readonly string server = @"Server= .\SQLEXPRESS; ";
 
         private static FluentConfiguration defaultConfiguration = Fluently.Configure()
             .Database(MsSqlConfiguration.MsSql2012.ConnectionString(

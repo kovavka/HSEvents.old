@@ -24,17 +24,14 @@ namespace Infrastructure
         {
             ISessionFactory sessionFactory = Fluently.Configure()
                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(
-                    @"Server=DESKTOP-51T48C5\SQLEXPRESS; Initial Catalog=HSEvents; Integrated Security=SSPI;").ShowSql()
+                        @"Server=.\SQLEXPRESS; Initial Catalog=HSEvents; Integrated Security=SSPI;")
+                    .ShowSql()
                 )
-
-            .Mappings(m => m.FluentMappings.Conventions.AddFromAssemblyOf<EnumConvention>())
+                .Mappings(m => m.FluentMappings.Conventions.AddFromAssemblyOf<EnumConvention>())
                 .Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.Load("Infrastructure")))
-                //.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BookMap>())
                 .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, false))
                 .BuildSessionFactory();
-
-            //AutoMap.AssemblyOf<BookMap>(new AutomappingConfiguration());
-
+            
             return sessionFactory.OpenSession();
         }
 
