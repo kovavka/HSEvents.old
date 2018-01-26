@@ -17,29 +17,29 @@ primary key (Id)
 Create table Pupil(
 Sex int not null,
 YearOfGraduation int not null,
-EnterProgramId int,
-SchoolId int not null,
-AttendeeId int not null,
+EnterProgram_Id int,
+School_Id int not null,
+Attendee_Id int not null,
 
-constraint FK_Pupil_EnterProgram foreign key (EnterProgramId) references AcademicProgram(Id),
-constraint FK_Pupil_School foreign key (SchoolId) references School(Id),
-constraint FK_Pupil_Attendee foreign key (AttendeeId) references Attendee(Id),
-constraint AK_AttendeeId unique(AttendeeId)
+constraint FK_Pupil_EnterProgram foreign key (EnterProgram_Id) references AcademicProgram(Id),
+constraint FK_Pupil_School foreign key (School_Id) references School(Id),
+constraint FK_Pupil_Attendee foreign key (Attendee_Id) references Attendee(Id),
+constraint AK_AttendeeId unique(Attendee_Id)
 );
 
 Create table IntrestingProgram(
-AcademicProgramId int not null,
-PupilId int not null,
+AcademicProgram_Id int not null,
+Pupil_Id int not null,
 
-constraint FK_IntrestingProgram_AcademicProgram foreign key (AcademicProgramId) references AcademicProgram(Id),
-constraint FK_IntrestingProgram_Pupil foreign key (PupilId) references Pupil(AttendeeId)
+constraint FK_IntrestingProgram_AcademicProgram foreign key (AcademicProgram_Id) references AcademicProgram(Id),
+constraint FK_IntrestingProgram_Pupil foreign key (Pupil_Id) references Pupil(Attendee_Id)
 
 );	
 
 Create table RegistrarionProgram(
-AcademicProgramId int not null,
-PupilId int not null,
+AcademicProgram_Id int not null,
+Pupil_Id int not null,
 
-constraint FK_RegistrarionProgram_AcademicProgram foreign key (AcademicProgramId) references AcademicProgram(Id),
-constraint FK_RegistrarionProgram_Pupil foreign key (PupilId) references Pupil(AttendeeId)
+constraint FK_RegistrarionProgram_AcademicProgram foreign key (AcademicProgram_Id) references AcademicProgram(Id),
+constraint FK_RegistrarionProgram_Pupil foreign key (Pupil_Id) references Pupil(Attendee_Id)
 );

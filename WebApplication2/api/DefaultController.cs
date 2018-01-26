@@ -31,7 +31,6 @@ namespace WebApplication2.api
         {
 
             var session = NHibernateHelper.OpenSession();
-            var book = session.Get<Book>(1);
 
 
             return 10;

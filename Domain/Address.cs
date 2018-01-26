@@ -10,29 +10,29 @@ namespace Domain
 {
     public class Address: Entity
     {
-        public virtual HouseDto House { get; set; }
+        public virtual House House { get; set; }
         
-        public virtual CountryDto Country
+        public virtual Country Country
         {
             get { return Region.Country; }
         }
 
-        public virtual RegionDto Region
+        public virtual Region Region
         {
             get { return CityType.Region; }
         }
 
-        public virtual CityTypeDto CityType
+        public virtual CityType CityType
         {
             get { return City.CityType; }
         }
 
-        public virtual CityDto City
+        public virtual City City
         {
             get { return Street.City; }
         }
 
-        public virtual StreetDto Street
+        public virtual Street Street
         {
             get { return House.Street; }
         }
@@ -52,50 +52,29 @@ namespace Domain
         }
     }
 
-
-    public class CountryDto : Country
-    {
-    }
-    public class RegionDto : Region
-    {
-        public virtual CountryDto Country { get; set; }
-    }
-    public class CityTypeDto : CityType
-    {
-        public virtual RegionDto Region { get; set; }
-    }
-    public class CityDto : City
-    {
-        public virtual CityTypeDto CityType { get; set; }
-    }
-    public class StreetDto : Street
-    {
-        public virtual CityDto City { get; set; }
-    }
-    public class HouseDto : House
-    {
-        public virtual StreetDto Street { get; set; }
-    }
-
-
-
+    
     public class Country : NamedEntity
     {
     }
     public class Region : NamedEntity
     {
-    }
-    public class City : NamedEntity
-    {
+        public virtual Country Country { get; set; }
     }
     public class CityType : NamedEntity
     {
+        public virtual Region Region { get; set; }
+    }
+    public class City : NamedEntity
+    {
+        public virtual CityType CityType { get; set; }
     }
     public class Street : NamedEntity
     {
+        public virtual City City { get; set; }
     }
     public class House : NamedEntity
     {
+        public virtual Street Street { get; set; }
     }
 
 }

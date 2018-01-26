@@ -8,47 +8,48 @@ primary key (Id)
 Create table Region(
 Id int identity(1,1) not null,
 Name nvarchar(255) not null,
-CountryId int not null,
+Country_Id int not null,
 primary key (Id),
-constraint FK_Region_Country foreign key (CountryId) references Country(Id)
-);
-
-Create table City(
-Id int identity(1,1) not null,
-Name nvarchar(255) not null,
-RegionId int not null,
-primary key (Id),
-constraint FK_City_Region foreign key (RegionId) references Region(Id)
+constraint FK_Region_Country foreign key (Country_Id) references Country(Id)
 );
 
 Create table CityType(
 Id int identity(1,1) not null,
 Name nvarchar(255) not null,
-CityId int not null,
+Region_Id int not null,
 primary key (Id),
-constraint FK_CityType_City foreign key (CityId) references City(Id)
+constraint FK_CityType_Region foreign key (Region_Id) references Region(Id)
+);
+
+Create table City(
+Id int identity(1,1) not null,
+Name nvarchar(255) not null,
+CityType_Id int not null,
+primary key (Id),
+constraint FK_City_CityType foreign key (CityType_Id) references CityType(Id)
 );
 
 Create table Street(
 Id int identity(1,1) not null,
 Name nvarchar(255) not null,
-CityTypeId int not null,
+City_Id int not null,
 primary key (Id),
-constraint FK_Street_CityType foreign key (CityTypeId) references CityType(Id)
+constraint FK_Street_City foreign key (City_Id) references City(Id)
 );
 
 Create table House(
 Id int identity(1,1) not null,
 Name nvarchar(255) not null,
-StreetId int not null,
+Street_Id int not null,
 primary key (Id),
-constraint FK_House_Street foreign key (StreetId) references Street(Id)
+constraint FK_House_Street foreign key (Street_Id) references Street(Id)
 );
 
 Create table Address(
 Id int identity(1,1) not null,
-Name nvarchar(255) not null,
-SchoolId int,
+School_Id int,
+House_Id int not null,
 primary key (Id),
-constraint FK_Addressn_School foreign key (SchoolId) references School(Id)
+constraint FK_Address_School foreign key (School_Id) references School(Id),
+constraint FK_Address_House foreign key (House_Id) references House(Id)
 );

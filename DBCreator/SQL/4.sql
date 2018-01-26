@@ -7,10 +7,10 @@ primary key (Id)
 Create table Volunteer(
 Id int identity(1,1) not null,
 FullName nvarchar(255) not null,
-GroupId int not null,
+Group_Id int not null,
 
 primary key (Id),
-constraint FK_Volunteer_Group foreign key (GroupId) references "Group"(Id)
+constraint FK_Volunteer_Group foreign key (Group_Id) references "Group"(Id)
 );
 
 Create table Department(
@@ -34,8 +34,8 @@ Login nvarchar(255) not null,
 Password nvarchar(255) not null,
 IsAdmin bit not null,
 Checked bit not null,
-EmployeeId int not null,
+Employee_Id int not null,
 
-constraint FK_User_Employee foreign key (EmployeeId) references Employee(Id),
-constraint AK_EmployeeId unique(EmployeeId)
+constraint FK_User_Employee foreign key (Employee_Id) references Employee(Id),
+constraint AK_EmployeeId unique(Employee_Id)
 );

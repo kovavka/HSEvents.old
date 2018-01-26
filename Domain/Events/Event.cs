@@ -15,7 +15,7 @@ namespace Domain.Events
         Address Address { get; set; }
     }
 
-    public abstract class Event : NamedEntity, IEvent
+    public class Event : NamedEntity, IEvent
     {
         public virtual EventType Type { get; set; }
         public virtual string Comment { get; set; }

@@ -10,10 +10,10 @@ Name nvarchar(255) not null,
 Number int,
 BelongToUniversityDistrict bit not null,
 HasPriority bit not null,
-TypeId int not null,
+Type_Id int not null,
 
 primary key (Id),
-constraint FK_Schoole_SchoolType foreign key (TypeId) references SchoolType(Id)
+constraint FK_Schoole_SchoolType foreign key (Type_Id) references SchoolType(Id)
 );
 
 Create table ContactPerson(
@@ -22,9 +22,9 @@ FullName nvarchar(255) not null,
 PhoneNumber nvarchar(255),
 Email nvarchar(255),
 Appointment nvarchar(255),
-SchoolId int not null,
+School_Id int not null,
 
 primary key (Id),
-constraint FK_ContactPerson_School foreign key (SchoolId) references School(Id)
+constraint FK_ContactPerson_School foreign key (School_Id) references School(Id)
 );
 
