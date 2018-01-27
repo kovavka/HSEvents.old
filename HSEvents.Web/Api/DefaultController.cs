@@ -12,7 +12,11 @@ namespace HSEvents.Web.Api
 {
     public class DefaultController : ApiController
     {
-
+        [HttpGet]
+        public int G()
+        {
+            return 10;
+        }
     }
 
 }

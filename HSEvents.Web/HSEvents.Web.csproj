@@ -329,6 +329,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\EventScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -339,6 +340,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Content\EventStyle.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -355,6 +357,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\Event\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -369,7 +372,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{D75BA873-D24B-480F-8EF6-150428809A2B}</Project>
+      <Project>{d75ba873-d24b-480f-8ef6-150428809a2b}</Project>
       <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
@@ -377,7 +380,7 @@
       <Name>Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
-      <Project>{48B7C0D9-9B88-4527-9986-98916B507C4A}</Project>
+      <Project>{48b7c0d9-9b88-4527-9986-98916b507c4a}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>

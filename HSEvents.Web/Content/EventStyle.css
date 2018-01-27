@@ -1,0 +1,17 @@
+﻿.calendar {
+    text-align: center;
+}
+.calendar th{
+    text-align: center;
+}
+
+    .calendar td {
+        height: 80px;
+        width: 80px;
+        border: 1px solid currentColor;
+    }
+
+.empty {
+    
+   
+}

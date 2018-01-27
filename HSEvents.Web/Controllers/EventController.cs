@@ -21,10 +21,23 @@ namespace HSEvents.Web.Controllers
         // GET: Event
         public ActionResult Index()
         {
-            var events = GetAll();
-            ViewData["Events"] = events;
-
             return View();
+        }
+
+        enum Month
+        {
+            Январь,
+            Февраль,
+            Март,
+            Апрель,
+            Май,
+            Июнь,
+            Июль,
+            Август,
+            Сентябрь,
+            Октябрь,
+            Ноябрь,
+            Декабрь
         }
     }
 
