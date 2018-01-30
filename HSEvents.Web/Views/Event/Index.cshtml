@@ -12,28 +12,22 @@
 @{
     ViewBag.Title = "Index";
 }
+    <h2 id="calendarDate">Январь</h2>
 
-<h2>Январь</h2>
+    <table id="calendar" class="calendar">
+        <thead>
+        <tr>
+            <th>Пн</th>
+            <th>Вт</th>
+            <th>Ср</th>
+            <th>Чт</th>
+            <th>Пт</th>
+            <th>Сб</th>
+            <th>Вс</th>
+        </tr>
+        </thead>
 
-<table id="calendar" class="calendar">
-    <thead>
-    <tr>
-        <th>Пн</th>
-        <th>Вт</th>
-        <th>Ср</th>
-        <th>Чт</th>
-        <th>Пт</th>
-        <th>Сб</th>
-        <th>Вс</th>
-    </tr>
-    </thead>
-    
-    <tbody id="calendarBody">
-    
-    </tbody>
-</table>
+        <tbody id="calendarBody">
 
-<script >calendarBig()</script>
-
-<h2 onclick="Back()">Back</h2>
-<h2 onclick="Next()">Next</h2>
+        </tbody>
+    </table>

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Common;
 using Domain.Events;
 using Domain.IEntity;
+using HSEvents.Web.Api;
 
 namespace HSEvents.Web.Controllers
 {
@@ -21,7 +22,23 @@ namespace HSEvents.Web.Controllers
         // GET: Event
         public ActionResult Index()
         {
+            var dh = GetJs();
+            
+
             return View();
+        }
+
+
+        protected IEnumerable<JsEvent> GetJs()
+        {
+            using (var client = CreateClient())
+            {
+                var response = client.GetAsync("api/EventNH/GetForMonth?month=1").Result;
+
+                var result = response.Content.ReadAsAsync<IEnumerable<JsEvent>>().Result;
+
+                return result;
+            }
         }
 
         enum Month
@@ -51,7 +68,7 @@ namespace HSEvents.Web.Controllers
             this.address = address;
         }
 
-        private HttpClient CreateClient()
+        protected HttpClient CreateClient()
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(serviceUrl);

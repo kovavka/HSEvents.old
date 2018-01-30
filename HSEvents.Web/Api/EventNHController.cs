@@ -16,6 +16,31 @@ namespace HSEvents.Web.Api
         {
             
         }
+
+
+
+        public IEnumerable<JsEvent> GetForMonth(int month)
+        {
+            var events = GetAll();
+            var r = events
+                .Where(x => x.Dates.Any(xx => xx.Date.Month - 1 == month))
+                .SelectMany(x => x.Dates
+                    .Select(xx => new JsEvent()
+                    {
+                        day = xx.Date.Day,
+                        name = x.Name,
+                        id = x.Id
+                    }));
+
+            return r;
+        }
+    }
+
+    public class JsEvent
+    {
+        public int day;
+        public string name;
+        public int id;
     }
 
     public class NHApiController<T> : ApiController where T: IEvent

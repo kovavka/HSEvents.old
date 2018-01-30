@@ -8,10 +8,20 @@
     .calendar td {
         height: 80px;
         width: 80px;
-        border: 1px solid currentColor;
+        border: 1px solid black;
     }
 
-.empty {
+ .last {
+     border-top:  1px solid lightgray  !important;
+     border-left:  1px solid lightgray  !important;
+     border-right: 0px   !important;
+    color: lightgray
+}
+
+.next {
+    border-bottom:  1px solid lightgray  !important;
+    border-right:  1px solid lightgray  !important;
+    border-left: 0px   !important;
+    color: lightgray
     
-   
 }

@@ -16,6 +16,7 @@ namespace Infrastructure.Mappings.Events
             References(x => x.Address).Cascade.SaveUpdate().ForeignKey("FK_Event_Address");
 
             HasManyToMany(x => x.Volunteers).AsBag().Cascade.SaveUpdate().Table("VolunteerInfo");
+            HasMany(x => x.Dates).AsBag().Cascade.SaveUpdate();
         }
     }
     
@@ -77,9 +78,9 @@ namespace Infrastructure.Mappings.Events
     {
         public EventDateMap()
         {
-            Map(x => x.Day);
-            Map(x => x.StartTime);
-            Map(x => x.EndTime);
+            Map(x => x.Date);
+            Map(x => x.StartTime).CustomType("TimeAsTimeSpan"); ;
+            Map(x => x.EndTime).CustomType("TimeAsTimeSpan"); ;
         }
     }
     class SpendingMap : EntityMap<Spending>
