@@ -1,46 +1,26 @@
-﻿
-class Event {
-    constructor(name, day, id) {
-        this.name = name;
-        this.day = day;
-        this.id = id;
-    }
-
-    getDate() {
-        return this.day;
-    }
-}
+﻿var calendarDate = new Date();
+var currentDay = 1;
 
 function eventFilter(event) {
     var day = event.day;
     return currentDay === day;
 }
 
+function creteCalendar() {
+    var year = calendarDate.getFullYear();
+    var month = calendarDate.getMonth();
 
-var calendarDate = new Date();
-var currentDay = 1;
-
-var events = [];
-var g = new Event('g', calendarDate.getDate(), 1);
-var gt = new Event('gt', 23, 1);
-events.push(g);
-events.push(gt);
-
-function getEvents() {
     $.ajax({
         url: "http://localhost:58724/api/EventNH/GetForMonth",
-        data: { month: 1},
+        data: { month: month },
         dataType: []
     }).done(function (data) {
-        events = JSON.parse(data);
-        console.log(data);
-        console.log(events);
+        var events = JSON.parse(data);
+        fillCalendar(year, month, events);
     });
 }
-getEvents();
 
-function calendarBig(year, month) {
-    
+function fillCalendar(year, month, events) {
     var body = '';
 
     var date = new Date(year, month, 1);
@@ -102,7 +82,6 @@ function calendarBig(year, month) {
         getCurrentMonth(calendarDate.getMonth()) + ' ' + calendarDate.getFullYear();
 
 }
-calendarBig(calendarDate.getFullYear(), calendarDate.getMonth());
 
 function getCurrentMonth(month) {
     switch (month) {
@@ -139,15 +118,13 @@ function getCurrentMonth(month) {
 
 function nextMonth() {
     calendarDate.setMonth(calendarDate.getMonth() + 1);
-
-    calendarBig(calendarDate.getFullYear(), calendarDate.getMonth());
+    creteCalendar();
 }
 
 
 function lastMonth() {
     calendarDate.setMonth(calendarDate.getMonth() - 1);
-
-    calendarBig(calendarDate.getFullYear(), calendarDate.getMonth());
+    creteCalendar();
 }
 
 $('html').keydown(function (eventObject) {
