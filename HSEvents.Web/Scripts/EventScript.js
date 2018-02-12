@@ -10,15 +10,21 @@ function creteCalendar() {
     var year = calendarDate.getFullYear();
     var month = calendarDate.getMonth();
 
+    document.querySelector('#preloaderbg').style = "display: block";
+    
+
     $.ajax({
         url: "http://localhost:58724/api/EventNH/GetForMonth",
         data: { month: month },
         dataType: []
-    }).done(function (data) {
+    })
+        .done(function (data) {
         console.log('done');
         var events = JSON.parse(data);
         console.log(events);
         fillCalendar(year, month, events);
+
+        document.querySelector('#preloaderbg').style = "";
     });
 }
 
