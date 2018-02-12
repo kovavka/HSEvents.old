@@ -15,7 +15,9 @@ function creteCalendar() {
         data: { month: month },
         dataType: []
     }).done(function (data) {
+        console.log('done');
         var events = JSON.parse(data);
+        console.log(events);
         fillCalendar(year, month, events);
     });
 }
@@ -126,6 +128,8 @@ function lastMonth() {
     calendarDate.setMonth(calendarDate.getMonth() - 1);
     creteCalendar();
 }
+
+creteCalendar();
 
 $('html').keydown(function (eventObject) {
     if (eventObject.keyCode === 37)
