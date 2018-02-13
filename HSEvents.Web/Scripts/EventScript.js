@@ -14,7 +14,7 @@ function creteCalendar() {
     
 
     $.ajax({
-        url: "http://localhost:58724/api/EventNH/GetForMonth",
+        url: "/api/EventNH/GetForMonth",
         data: { month: month },
         dataType: []
     })
