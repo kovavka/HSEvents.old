@@ -1,0 +1,30 @@
+﻿
+@section Styles {
+    <link href="@Url.Content("~/Content/DirectoryStyle.css")" rel="stylesheet" type="text/css" />
+}
+
+@{ var controller = "Directory";}
+<h2>fjfjj</h2>
+
+<div style="    min-width: 850px;">
+    <div id="menu">
+        <div><a href="@controller/Attendees">Участники</a></div>
+        <div><a href="@controller/ContactPersons">Контактные лица школ</a></div>
+        <div><a href="@controller/Schools">Школы</a></div>
+        <div><a href="@controller/AcademicPrograms">Академические программы</a></div>
+        <div><a href="@controller/SchoolType">Типы школ</a></div>
+        <div><a href="@controller/CityType">Типы населенных пунктов</a></div>
+        <div><a href="@controller/Volonteers">Волонтеры</a></div>
+        <div><a href="@controller/Groups">Группы</a></div>
+        <div><a href="@controller/Departments">Департаменты</a></div>
+        <div><a href="@controller/Users">Пользователи</a></div>
+        <div><a href="@controller/Employees">Сотрудники</a></div>
+    </div>
+    <div id="content">
+        <h2>@ViewBag.Bnn</h2>
+    </div>
+
+</div>
+
+@Html.Partial("_LoginPartial")
+huichlun

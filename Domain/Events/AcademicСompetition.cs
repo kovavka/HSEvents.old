@@ -9,5 +9,6 @@ namespace Domain.Events
     public class AcademicСompetition : Event
     {
         public virtual Subject Subject { get; set; }
+        public virtual ICollection<Result> Results { get; set; }
     }
 }

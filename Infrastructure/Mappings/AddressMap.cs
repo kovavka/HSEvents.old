@@ -12,13 +12,7 @@ namespace Infrastructure.Mappings
     {
         public AddressMap()
         {
-            References(x => x.House).Cascade.SaveUpdate().Cascade.Delete().ForeignKey("FK_Address_House");
-        }
-    }
-    class HouseMap : NamedEntityMap<House>
-    {
-        public HouseMap()
-        {
+            Map(x => x.House);
             References(x => x.Street).Cascade.SaveUpdate().Cascade.Delete().ForeignKey("FK_House_Street");
         }
     }
@@ -34,13 +28,13 @@ namespace Infrastructure.Mappings
         public CityMap()
         {
             References(x => x.CityType).Cascade.SaveUpdate().Cascade.Delete().ForeignKey("FK_City_CityType");
+            References(x => x.Region).Cascade.SaveUpdate().Cascade.Delete().ForeignKey("FK_City_Region");
         }
     }
     class CityTypeMap : NamedEntityMap<CityType>
     {
         public CityTypeMap()
         {
-            References(x => x.Region).Cascade.SaveUpdate().Cascade.Delete().ForeignKey("FK_CityType_Region");
         }
     }
     class RegionMap : NamedEntityMap<Region>

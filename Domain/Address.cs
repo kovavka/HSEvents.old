@@ -10,8 +10,10 @@ namespace Domain
 {
     public class Address: Entity
     {
-        public virtual House House { get; set; }
-        
+        public virtual string House { get; set; }
+
+        public virtual Street Street { get; set; }
+
         public virtual Country Country
         {
             get { return Region.Country; }
@@ -19,7 +21,7 @@ namespace Domain
 
         public virtual Region Region
         {
-            get { return CityType.Region; }
+            get { return City.Region; }
         }
 
         public virtual CityType CityType
@@ -32,10 +34,6 @@ namespace Domain
             get { return Street.City; }
         }
 
-        public virtual Street Street
-        {
-            get { return House.Street; }
-        }
         
         public virtual string FullAddress
         {
@@ -47,7 +45,7 @@ namespace Domain
                     CityType.Name,
                     City.Name,
                     Street.Name,
-                    House.Name);
+                    House);
             }
         }
     }
@@ -56,25 +54,25 @@ namespace Domain
     public class Country : NamedEntity
     {
     }
+
     public class Region : NamedEntity
     {
         public virtual Country Country { get; set; }
     }
+
     public class CityType : NamedEntity
     {
-        public virtual Region Region { get; set; }
     }
+
     public class City : NamedEntity
     {
         public virtual CityType CityType { get; set; }
+        public virtual Region Region { get; set; }
     }
+
     public class Street : NamedEntity
     {
         public virtual City City { get; set; }
-    }
-    public class House : NamedEntity
-    {
-        public virtual Street Street { get; set; }
     }
 
 }

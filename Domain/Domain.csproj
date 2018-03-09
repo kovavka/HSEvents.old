@@ -58,11 +58,12 @@
     <Compile Include="ContactInfo.cs" />
     <Compile Include="Events\Employee.cs" />
     <Compile Include="Events\Department.cs" />
-    <Compile Include="Events\Spending.cs" />
-    <Compile Include="Events\EventDate.cs" />
+    <Compile Include="Events\Purchase.cs" />
+    <Compile Include="Events\EventExecution.cs" />
     <Compile Include="Events\Volunteer.cs" />
+    <Compile Include="IEntity\IPersonEntity.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="СompetitionResult.cs" />
+    <Compile Include="Result.cs" />
     <Compile Include="Events\AcademicСompetition.cs" />
     <Compile Include="Events\Subject.cs" />
     <Compile Include="Events\Course.cs" />

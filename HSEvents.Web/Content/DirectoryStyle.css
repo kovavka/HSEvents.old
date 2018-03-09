@@ -1,0 +1,23 @@
+﻿   #menu {
+       float: left;
+       width: 200px;
+       padding: 5px;
+       margin: 10px 10px 20px 5px;
+   }
+   #menu div {
+       padding: 2px;
+   }
+   #menu a { 
+       display: block;
+       padding: 2px;
+       margin: 1px;
+       font-size: 0.9em;
+       text-decoration: none;
+   }
+   #menu a:hover { 
+       background: #faf3d2;
+   }
+   #content {
+       margin: 10px 5px 20px 225px;
+       padding: 5px;
+   }

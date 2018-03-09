@@ -24,4 +24,18 @@ namespace Infrastructure.Mappings
             Map(x => x.Name);
         }
     }
+
+    class PersonMap<T> : EntityMap<T> where T : IPersonEntiny
+    {
+        public PersonMap()
+        {
+            Component(m => m.ContactInfo,
+                c =>
+                {
+                    c.Map(x => x.FullName);
+                    c.Map(x => x.PhoneNumber);
+                    c.Map(x => x.Email);
+                });
+        }
+    }
 }

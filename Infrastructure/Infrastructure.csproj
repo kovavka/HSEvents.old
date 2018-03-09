@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mappings\AddressMap.cs" />
+    <Compile Include="Mappings\PupilMap.cs" />
     <Compile Include="Mappings\VolunteerMap.cs" />
     <Compile Include="Mappings\EntityMap.cs" />
     <Compile Include="Mappings\Events\EventMap.cs" />

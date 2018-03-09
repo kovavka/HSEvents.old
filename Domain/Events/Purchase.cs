@@ -7,9 +7,9 @@ using Domain.IEntity;
 
 namespace Domain.Events
 {
-    public class Spending : Entity
+    public class Purchase : Entity
     {
-        public virtual decimal Cost { get; set; }
-        public virtual string Purchase { get; set; }
+        public virtual decimal Price { get; set; }
+        public virtual string Description { get; set; }
     }
 }

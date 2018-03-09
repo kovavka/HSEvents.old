@@ -11,7 +11,7 @@ namespace Domain.Events
 {
     public class Course: Event
     {
-        public virtual decimal? Cost { get; set; }
+        public virtual decimal? Price { get; set; }
         public virtual int? Duration { get; set; }
         public virtual Subject Subject { get; set; }    
     }

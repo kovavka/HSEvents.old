@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using Domain.Events;
+using Domain.IEntity;
 using Infrastructure;
 using Infrastructure.Repositories;
 
@@ -23,8 +24,11 @@ namespace HSEvents.Web.Api
         {
             var events = GetAll();
             var r = events
-                .Where(x => x.Dates.Any(xx => xx.Date.Month - 1 == month))
-                .SelectMany(x => x.Dates
+                .Where(x=>x.EventExecution
+                    .Any(xx=>xx.Dates.Any(xxx=>xxx.Date.Month - 1 == month)))
+
+                .SelectMany(x => x.EventExecution
+                .SelectMany(xx=>xx.Dates)
                     .Select(xx => new JsEvent()
                     {
                         day = xx.Date.Day,
@@ -43,7 +47,7 @@ namespace HSEvents.Web.Api
         public int id;
     }
 
-    public class NHApiController<T> : ApiController where T: IEvent
+    public class NHApiController<T> : ApiController where T: IEntity
     {
         private readonly IRepository<T> repository;
 

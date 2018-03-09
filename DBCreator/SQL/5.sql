@@ -4,10 +4,8 @@ Name nvarchar(255) not null,
 Info nvarchar(255) not null,
 Comment nvarchar(255),
 Type int not null,
-Address_Id int not null,
 
-primary key (Id),
-constraint FK_Event_Address foreign key (Address_Id) references Address(Id)
+primary key (Id)
 );
 
 Create table Subject(
@@ -17,7 +15,7 @@ primary key (Id)
 );
 
 Create table Course(
-Cost money,
+Price money,
 Duration int,
 Subject_Id int not null,
 Event_Id int not null,
@@ -45,23 +43,33 @@ constraint FK_SchoolWork_Event foreign key (Event_Id) references Event(Id),
 constraint AK_SchoolWork_EventId unique(Event_Id)   
 );
 
+Create table EventExecution(
+Id int identity(1,1) not null,
+Address_Id int not null,
+Event_Id int not null,
+
+primary key (Id),
+constraint FK_EventExecution_Address foreign key (Address_Id) references Address(Id),
+constraint FK_EventExecution_Event foreign key (Event_Id) references Event(Id)
+);
+
 Create table EventDate(
 Id int identity(1,1) not null,
 Date date not null,
 StartTime time,
 EndTime time,
-Event_Id int not null,
+EventExecution_Id int not null,
 
 primary key (Id),
-constraint FK_EventDate_Event foreign key (Event_Id) references Event(Id)
+constraint FK_EventExecution_Event foreign key (EventExecution_Id) references EventExecution(Id)
 );
 
-Create table Spending(
+Create table Purchase(
 Id int identity(1,1) not null,
-Cost money not null,
-Purchase nvarchar(255) not null,
+Price money not null,
+Description nvarchar(255) not null,
 Event_Id int not null,
 
 primary key (Id),
-constraint FK_Spending_Event foreign key (Event_Id) references Event(Id)
+constraint FK_Purchase_Event foreign key (Event_Id) references Event(Id)
 );

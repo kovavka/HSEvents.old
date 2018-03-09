@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +13,17 @@ namespace Domain
     {
         public virtual Sex Sex { get; set; }
         public virtual int YearOfGraduation { get; set; }
+        public virtual School School { get; set; }
 
         public virtual AcademicProgram EnterProgram { get; set; }
         public virtual ICollection<AcademicProgram> IntrestingPrograms { get; set; }
         public virtual ICollection<AcademicProgram> RegistrarionPrograms { get; set; }
-        public virtual ICollection<СompetitionResult> СompetitionResults { get; set; }
     }
-    
+
     public enum Sex
     {
-        Male = 0,
-        Female = 1
+        [Description("Мужской")] Male = 0,
+        [Description("Женский")] Female = 1
     }
 
     public class AcademicProgram : NamedEntity

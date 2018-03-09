@@ -37,21 +37,25 @@ primary key (Id)
 );
 
 Create table Result(
+Id int identity(1,1) not null,
 NumberOfPoints int not null,
 Type_Id int not null,
 AcademicСompetition_Id int not null,
 Attendee_Id int not null,
 
+primary key (Id),
 constraint FK_Result_ResultType foreign key (Type_Id) references ResultType(Id),
 constraint FK_Result_AcademicСompetition foreign key (AcademicСompetition_Id) references AcademicСompetition(Event_Id),
 constraint FK_Result_Attendee foreign key (Attendee_Id) references Attendee(Id)
 );
 
 Create table AttendanceInfo(
+Id int identity(1,1) not null,
 Participated bit not null,
 Event_Id int not null,
 Attendee_Id int not null,
 
+primary key (Id),
 constraint FK_AttendanceInfo_Event foreign key (Event_Id) references Event(Id),
 constraint FK_AttendanceInfo_Attendee foreign key (Attendee_Id) references Attendee(Id)
 );

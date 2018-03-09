@@ -31,57 +31,57 @@ namespace ConsoleApplication1
             var session = NHibernateHelper.OpenSession();
 
             
-            var country=new Country()
-            {
-                Name="Россия"
-            };
-            var region = new Region()
-            {
-                Name = "Пермский край",
-                Country = country
-            };
+            //var country=new Country()
+            //{
+            //    Name="Россия"
+            //};
+            //var region = new Region()
+            //{
+            //    Name = "Пермский край",
+            //    Country = country
+            //};
             
-            var cityType = new CityType()
-            {
-                Name = "Город",
-                Region = region
-            };
-            var city = new City()
-            {
-                Name = "Пермь",
-                CityType = cityType
-            };
-            var street = new Street()
-            {
-                Name = "Уральская",
-                City = city
-            };
-            var house = new House()
-            {
-                Name = "53А",
-                Street = street
-            };
+            //var cityType = new CityType()
+            //{
+            //    Name = "Город",
+            //    Region = region
+            //};
+            //var city = new City()
+            //{
+            //    Name = "Пермь",
+            //    CityType = cityType
+            //};
+            //var street = new Street()
+            //{
+            //    Name = "Уральская",
+            //    City = city
+            //};
+            //var house = new House()
+            //{
+            //    Name = "53А",
+            //    Street = street
+            //};
 
-            var ad=new Address()
-            {
-                House = house
-            };
+            //var ad=new Address()
+            //{
+            //    House = house
+            //};
 
 
 
-            var a = new Course()
-            {
-                Name="sdd",
-                Address = ad,
-                Type = EventType.Course,
-                Info = "sddd",
-                Cost = 12,
-                Duration = 34,
-                Subject = new Subject() {Name = "dfgre"}
-            };
+            //var a = new Course()
+            //{
+            //    Name="sdd",
+            //    Address = ad,
+            //    Type = EventType.Course,
+            //    Info = "sddd",
+            //    Price = 12,
+            //    Duration = 34,
+            //    Subject = new Subject() {Name = "dfgre"}
+            //};
 
-            session.Save(a);
-            session.Delete(a);
+            //session.Save(a);
+            //session.Delete(a);
             var rrr=  session.Get<Course>(1);
             var dd = session.Get<Event>(1);
 

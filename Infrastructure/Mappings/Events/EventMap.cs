@@ -13,10 +13,15 @@ namespace Infrastructure.Mappings.Events
             Map(x => x.Comment).Nullable();
             Map(x => x.Info);
             Map(x => x.Type);
-            References(x => x.Address).Cascade.SaveUpdate().ForeignKey("FK_Event_Address");
 
             HasManyToMany(x => x.Volunteers).AsBag().Cascade.SaveUpdate().Table("VolunteerInfo");
-            HasMany(x => x.Dates).AsBag().Cascade.SaveUpdate();
+
+            HasMany(x => x.Purchases).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_Purchase_Event");
+            HasManyToMany(x => x.Organizers).AsBag().Cascade.SaveUpdate().Table("Organizer");
+            HasManyToMany(x => x.Lecturers).AsBag().Cascade.SaveUpdate().Table("Lecturer");
+            HasManyToMany(x => x.Departments).AsBag().Cascade.SaveUpdate().Table("DepartmentInfo");
+            HasMany(x => x.Attendees).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_AttendanceInfo_Event");
+            HasMany(x => x.EventExecution).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_EventExecution_Event");
         }
     }
     
@@ -24,7 +29,7 @@ namespace Infrastructure.Mappings.Events
     {
         public CourseMap()
         {
-            Map(x => x.Cost).Nullable();
+            Map(x => x.Price).Nullable();
             Map(x => x.Duration).Nullable();
             References(x => x.Subject).Cascade.SaveUpdate().ForeignKey("FK_Course_Subject");
         }
@@ -83,12 +88,12 @@ namespace Infrastructure.Mappings.Events
             Map(x => x.EndTime).CustomType("TimeAsTimeSpan"); ;
         }
     }
-    class SpendingMap : EntityMap<Spending>
+    class PurchaseMap : EntityMap<Purchase>
     {
-        public SpendingMap()
+        public PurchaseMap()
         {
-            Map(x => x.Cost);
-            Map(x => x.Purchase);
+            Map(x => x.Price);
+            Map(x => x.Description);
         }
     }
 
