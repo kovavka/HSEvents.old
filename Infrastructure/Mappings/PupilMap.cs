@@ -22,6 +22,14 @@ namespace Infrastructure.Mappings
         }
     }
 
+    class AttendeeMap : PersonMap<Attendee>
+    {
+        public AttendeeMap()
+        {
+            Map(x => x.AttendeeType).Nullable();
+        }
+    }
+
     class ContactPersonMap : PersonMap<ContactPerson>
     {
         public ContactPersonMap()
@@ -29,9 +37,27 @@ namespace Infrastructure.Mappings
             Map(x => x.Appointment).Nullable();
         }
     }
-
+    
     class AcademicProgramMap : NamedEntityMap<AcademicProgram>
     {
     }
 
+
+    class SchoolMap : NamedEntityMap<School>
+    {
+        public SchoolMap()
+        {
+            References(x => x.Type).Cascade.SaveUpdate().Cascade.Delete().ForeignKey("FK_Schoole_SchoolType");
+            Map(x => x.Number).Nullable(); 
+
+            Map(x => x.BelongToUniversityDistrict);
+            Map(x => x.HasPriority);
+            HasMany(x => x.Addresses).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_Address_School");
+            HasMany(x => x.Contacts).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_ContactPerson_School");
+        }
+    }
+
+    class SchoolTypeMap : NamedEntityMap<SchoolType>
+    {
+    }
 }

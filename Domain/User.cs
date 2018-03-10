@@ -7,7 +7,7 @@ using Domain.Events;
 
 namespace Domain
 {
-    class User: Employee
+    public class User: Employee
     {
         public virtual string Login { get; set; }
         public virtual string Password { get; set; }

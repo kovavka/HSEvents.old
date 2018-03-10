@@ -79,13 +79,21 @@ namespace Infrastructure.Mappings.Events
             Map(x => x.Appointment);
         }
     }
+    class EventExecutionMap : EntityMap<EventExecution>
+    {
+        public EventExecutionMap()
+        {
+            HasMany(x => x.Dates).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_EventDate_EventExecution");
+            References(x => x.Address).Cascade.SaveUpdate().ForeignKey("FK_EventExecution_Address");
+        }
+    }
     class EventDateMap : EntityMap<EventDate>
     {
         public EventDateMap()
         {
             Map(x => x.Date);
-            Map(x => x.StartTime).CustomType("TimeAsTimeSpan"); ;
-            Map(x => x.EndTime).CustomType("TimeAsTimeSpan"); ;
+            Map(x => x.StartTime).CustomType("TimeAsTimeSpan");
+            Map(x => x.EndTime).CustomType("TimeAsTimeSpan");
         }
     }
     class PurchaseMap : EntityMap<Purchase>
@@ -94,6 +102,14 @@ namespace Infrastructure.Mappings.Events
         {
             Map(x => x.Price);
             Map(x => x.Description);
+        }
+    }
+    class AttendanceInfoMap : EntityMap<AttendanceInfo>
+    {
+        public AttendanceInfoMap()
+        {
+            Map(x => x.Participated);
+            References(x => x.Attendee).Cascade.SaveUpdate().ForeignKey("FK_AttendanceInfo_Attendee");
         }
     }
 

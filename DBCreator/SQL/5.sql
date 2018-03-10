@@ -61,7 +61,7 @@ EndTime time,
 EventExecution_Id int not null,
 
 primary key (Id),
-constraint FK_EventExecution_Event foreign key (EventExecution_Id) references EventExecution(Id)
+constraint FK_EventDate_EventExecution foreign key (EventExecution_Id) references EventExecution(Id)
 );
 
 Create table Purchase(
