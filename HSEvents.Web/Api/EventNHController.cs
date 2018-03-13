@@ -18,8 +18,6 @@ namespace HSEvents.Web.Api
             
         }
 
-
-
         public IEnumerable<JsEvent> GetForMonth(int month)
         {
             var events = GetAll();
@@ -45,21 +43,5 @@ namespace HSEvents.Web.Api
         public int day;
         public string name;
         public int id;
-    }
-
-    public class NHApiController<T> : ApiController where T: IEntity
-    {
-        private readonly IRepository<T> repository;
-
-        public NHApiController(IRepository<T> repository)
-        {
-            this.repository = repository;
-        }
-
-        public IEnumerable<T> GetAll()
-        {
-            return repository.GetAll();
-        }
-
     }
 }

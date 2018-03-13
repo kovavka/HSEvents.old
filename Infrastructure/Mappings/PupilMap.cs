@@ -26,7 +26,7 @@ namespace Infrastructure.Mappings
     {
         public AttendeeMap()
         {
-            Map(x => x.AttendeeType).Nullable();
+            Map(x => x.Type).Nullable();
         }
     }
 

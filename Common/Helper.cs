@@ -17,9 +17,9 @@ namespace Common
 
         public static string GetDescription(this Enum source)
         {
-            FieldInfo fi = source.GetType().GetField(source.ToString());
+            FieldInfo fieldInfo = source.GetType().GetField(source.ToString());
 
-            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(
                 typeof(DescriptionAttribute), false);
 
             if (attributes.Length > 0) return attributes[0].Description;

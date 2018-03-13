@@ -11,7 +11,7 @@ namespace Domain
 {
     public class Attendee : PersonEntity
     {
-        public virtual AttendeeType AttendeeType { get; set; }
+        public virtual AttendeeType Type { get; set; }
     }
 
     public enum AttendeeType

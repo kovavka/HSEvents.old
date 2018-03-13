@@ -1,43 +1,51 @@
-﻿@using directory =HSEvents.Web.Views.DirectoryType;
+﻿@using directory = HSEvents.Web.Views.DirectoryType;
 
 @section Styles {
     <link href="@Url.Content("~/Content/DirectoryStyle.css")" rel="stylesheet" type="text/css" />
 }
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/Views/DirectoryScript.js")"></script>
+}
 
-@{ var controller = "?type=";}
-<h2>fjfjj</h2>
+@{ var controller = "#";}
+<h2>Справочники</h2>
 
-<div style="    min-width: 850px;">
-    <div id="menu">
-        <div><a href="@controller@(directory.Attendees)">Участники</a></div>
-        <div><a href="@controller@(directory.ContactPersons)">Контактные лица школ</a></div>
-        <div><a href="@controller@(directory.Schools)">Школы</a></div>
-        <div><a href="@controller@(directory.AcademicPrograms)">Академические программы</a></div>
-        <div><a href="@controller@(directory.SchoolTypes)">Типы школ</a></div>
-        <div><a href="@controller@(directory.CityTypes)">Типы населенных пунктов</a></div>
-        <div><a href="@controller@(directory.Volunteers)">Волонтеры</a></div>
-        <div><a href="@controller@(directory.Groups)">Группы</a></div>
-        <div><a href="@controller@(directory.Departments)">Департаменты</a></div>
-        <div><a href="@controller@(directory.Users)">Пользователи</a></div>
-        <div><a href="@controller@(directory.Employees)">Сотрудники</a></div>
+<div style=" min-width: 850px;">
+    <div id="menu" >
+        <div><a href="@controller@(directory.Attendees)" onclick="change('Участники')">Участники</a></div>
+        <div><a href="@controller@(directory.ContactPersons)" onclick="change('Контактные лица школ')">Контактные лица школ</a></div>
+        <div><a href="@controller@(directory.Schools)" onclick="change('Школы')">Школы</a></div>
+        <div><a href="@controller@(directory.AcademicPrograms)" onclick="change('Академические программы')">Академические программы</a></div>
+        <div><a href="@controller@(directory.SchoolTypes)" onclick="change('Типы школ')">Типы школ</a></div>
+        <div><a href="@controller@(directory.CityTypes)" onclick="change('Типы населенных пунктов')">Типы населенных пунктов</a></div>
+        <div><a href="@controller@(directory.Volunteers)" onclick="change('Волонтеры')">Волонтеры</a></div>
+        <div><a href="@controller@(directory.Groups)" onclick="change('Группы')">Группы</a></div>
+        <div><a href="@controller@(directory.Departments)" onclick="change('Департаменты')">Департаменты</a></div>
+        <div><a href="@controller@(directory.Users)" onclick="change('Пользователи')">Пользователи</a></div>
+        <div><a href="@controller@(directory.Employees)" onclick="change('Сотрудники')">Сотрудники</a></div>
     </div>
     <div id="content">
-        <h2>@ViewBag.Title</h2>
-        
-        @if (ViewData["list"] != null)
-        {
-            foreach (var info in (IEnumerable<string>) ViewData["list"])
-            {
-                <div>@info</div>
-                <input type="submit" class="btn btn-default" style="width: 73%" value="Редактировать"/>
-                <input type="submit" class="btn btn-default" style="width: 73%" value="Удалить"/>
-                <br/>
-            }
-        }
+        <h2 id="title">@ViewBag.Title</h2>
+        <br />
 
+        <form>
+            <p>
+                <input type="text" name="search" placeholder="Введите значение для поиска" class="form-control" style="max-width:677px; display:inline" />
+                <input type="button" class="btn btn-default" style="width: 73%; background: url('/content/resourses/search.png') no-repeat; background-size: contain; max-width: 35px;" value="" />
+            </p>
+        </form>
+        
+        <div id="list"></div>
+        
+        
+        <input type="button" class="btn btn-default" style="width: 73%" value="Редактировать" onclick="edit()"/>
+        <div id="modDialog" class="modal fade" >
+            <div id="dialogContent" class="modal-dialog"></div>
+        </div>
 
     </div>
+
 
 </div>
 
-@*@Html.Partial("_LoginPartial")*@
+<script>"onLoad()"</script>

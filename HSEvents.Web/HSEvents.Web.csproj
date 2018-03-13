@@ -244,6 +244,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\DefaultController.cs" />
+    <Compile Include="Api\DirectoryNHController.cs" />
+    <Compile Include="Api\NHApiController.cs" />
     <Compile Include="Api\EventNHController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -302,6 +304,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DirectoryStyle.css" />
     <Content Include="Content\Resourses\preloader.gif" />
+    <Content Include="Content\Resourses\search.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -332,7 +335,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\EventScript.js" />
+    <Content Include="Scripts\Views\DirectoryScript.js" />
+    <Content Include="Scripts\Views\EventScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -362,6 +366,7 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\Calendar.cshtml" />
     <Content Include="Views\Directory\Index.cshtml" />
+    <Content Include="Views\Directory\Schools.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
