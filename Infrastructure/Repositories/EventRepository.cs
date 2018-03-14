@@ -34,12 +34,14 @@ namespace Infrastructure.Repositories
             return schoolWorkRepository.Get(id);
         }
 
-        public IEnumerable<Event> GetAll()
+        public IQueryable<Event> GetAll()
         {
-            return courseRepository.GetAll()
-                .OfType<Event>()
-                .Union(academicСompetitionRepository.GetAll())
-                .Union(schoolWorkRepository.GetAll());
+            return new NHRepository<Event>().GetAll();
+                
+                //courseRepository.GetAll()
+                //.OfType<Event>()
+                //.Union(academicСompetitionRepository.GetAll())
+                //.Union(schoolWorkRepository.GetAll());
         }
 
         public void Delete(Event entity)
@@ -65,6 +67,17 @@ namespace Infrastructure.Repositories
         public void Update(Event entity)
         {
             //ToDo
+        }
+
+
+        public void Delete(int id)
+        {
+            //ToDo
+        }
+        public object Add(Event entity)
+        {
+            //ToDo
+            return 0;
         }
 
     }

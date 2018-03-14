@@ -15,6 +15,10 @@ namespace Domain
         public virtual bool HasPriority { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<ContactPerson> Contacts { get; set; }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class SchoolType : NamedEntity

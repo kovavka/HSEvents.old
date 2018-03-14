@@ -25,47 +25,66 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            DataBaseHelper.ReBuildDB();
+            //DataBaseHelper.ReBuildDB();
 
 
             var session = NHibernateHelper.OpenSession();
 
-            
-            //var country=new Country()
+
+            //var country = new Country()
             //{
-            //    Name="Россия"
+            //    Name = "Россия"
             //};
             //var region = new Region()
             //{
             //    Name = "Пермский край",
             //    Country = country
             //};
-            
+
             //var cityType = new CityType()
             //{
-            //    Name = "Город",
-            //    Region = region
+            //    Name = "Город"
             //};
             //var city = new City()
             //{
             //    Name = "Пермь",
-            //    CityType = cityType
+            //    CityType = cityType,
+            //    Region = region
             //};
             //var street = new Street()
             //{
             //    Name = "Уральская",
             //    City = city
             //};
-            //var house = new House()
+
+            //var ad = new Address()
             //{
-            //    Name = "53А",
+            //    House = "53А",
             //    Street = street
             //};
 
-            //var ad=new Address()
+            //var type=new SchoolType()
             //{
-            //    House = house
+            //    Name = "лицей"
             //};
+
+            var ad = session.Get<Address>(2);
+            ad.House = "35";
+            var type= session.Get<SchoolType>(2);
+
+            var school = new School()
+            {
+                Addresses = new List<Address>() { ad },
+                BelongToUniversityDistrict = false,
+                Name = "Msddy",
+                Number = 10,
+                Type = type,
+                HasPriority = false,
+            };
+            
+            var ее = session.Save(school);
+
+            ad = session.Get<Address>(2);
 
 
 

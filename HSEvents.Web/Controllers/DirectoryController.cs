@@ -19,7 +19,7 @@ namespace HSEvents.Web.Views
 
         public PartialViewResult Partail(string viewName)
         {
-
+            ViewBag.Title = "mu";
             var addresses=new NHRepository<Address>().GetAll();
 
             ViewData["Address"]= new SelectList(addresses, "Id", "FullAddress");
@@ -31,16 +31,16 @@ namespace HSEvents.Web.Views
 
     public enum DirectoryType
     {
-        [Description("Участники")] Attendees,
-        [Description("Контактные лица школ")] ContactPersons,
-        [Description("Школы")] Schools,
-        [Description("Академические программы")] AcademicPrograms,
-        [Description("Типы школ")] SchoolTypes,
-        [Description("Типы населенных пунктов")] CityTypes,
-        [Description("Волонтеры")] Volunteers,
-        [Description("Группы")] Groups,
-        [Description("Департаменты")] Departments,
-        [Description("Пользователи")] Users,
-        [Description("Сотрудники")] Employees,
+        [Description("Участники")] Attendee,
+        [Description("Контактные лица школ")] ContactPerson,
+        [Description("Школы")] School,
+        [Description("Академические программы")] AcademicProgram,
+        [Description("Типы школ")] SchoolType,
+        [Description("Типы населенных пунктов")] CityType,
+        [Description("Волонтеры")] Volunteer,
+        [Description("Группы")] Group,
+        [Description("Департаменты")] Department,
+        [Description("Пользователи")] User,
+        [Description("Сотрудники")] Employee,
     }
 }

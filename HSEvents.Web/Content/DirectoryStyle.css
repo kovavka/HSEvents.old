@@ -40,3 +40,8 @@
        text-align: left;
        vertical-align: middle;
    }
+
+   .element {
+       cursor: pointer;
+   
+   }

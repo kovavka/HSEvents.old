@@ -12,9 +12,11 @@ namespace Infrastructure.Repositories
     public interface IRepository<T> where T:IEntity
     {
         T Get(int id);
-        IEnumerable<T> GetAll();
+        IQueryable<T> GetAll();
         void Delete(T entity);
+        void Delete(int id);
         void Update(T entity);
+        object Add(T entity);
     }
 
     public class NHRepository<T> : IRepository<T> where T : IEntity
@@ -26,7 +28,7 @@ namespace Infrastructure.Repositories
             return session.Get<T>(id);
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
             return session.Query<T>();
         }
@@ -34,11 +36,32 @@ namespace Infrastructure.Repositories
         public void Delete(T entity)
         {
             session.Delete(entity);
+            session.Flush();
+        }
+
+        public void Delete(int id)
+        {
+            session.Delete(session.Query<T>().First(x=>x.Id==id));
+            session.Flush();
         }
 
         public void Update(T entity)
         {
             session.Update(entity);
+            session.Flush();
+        }
+
+        public object Add(T entity)
+        {
+            var obj= session.Save(entity);
+            session.Flush();
+            return obj;
+        }
+
+        public void Close()
+        {
+            session.Flush();
+            session.Close();
         }
 
     }

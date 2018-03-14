@@ -22,39 +22,8 @@ namespace HSEvents.Web.Controllers
         // GET: Event
         public ActionResult Index()
         {
-            var dh = GetJs();
-            
 
             return View();
-        }
-
-
-        protected IEnumerable<JsEvent> GetJs()
-        {
-            using (var client = CreateClient())
-            {
-                var response = client.GetAsync("api/EventNH/GetForMonth?month=1").Result;
-
-                var result = response.Content.ReadAsAsync<IEnumerable<JsEvent>>().Result;
-
-                return result;
-            }
-        }
-
-        enum Month
-        {
-            Январь,
-            Февраль,
-            Март,
-            Апрель,
-            Май,
-            Июнь,
-            Июль,
-            Август,
-            Сентябрь,
-            Октябрь,
-            Ноябрь,
-            Декабрь
         }
     }
 

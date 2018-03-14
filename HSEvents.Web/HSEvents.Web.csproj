@@ -245,6 +245,8 @@
   <ItemGroup>
     <Compile Include="Api\DefaultController.cs" />
     <Compile Include="Api\DirectoryNHController.cs" />
+    <Compile Include="Api\SchoolTypeNHController.cs" />
+    <Compile Include="Api\SchoolNHController.cs" />
     <Compile Include="Api\NHApiController.cs" />
     <Compile Include="Api\EventNHController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -366,7 +368,8 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\Calendar.cshtml" />
     <Content Include="Views\Directory\Index.cshtml" />
-    <Content Include="Views\Directory\Schools.cshtml" />
+    <Content Include="Views\Directory\School.cshtml" />
+    <Content Include="Views\Directory\SchoolType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

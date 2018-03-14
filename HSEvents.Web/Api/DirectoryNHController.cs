@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Xml.Schema;
 using Domain;
 using Domain.Events;
 using Domain.IEntity;
@@ -11,6 +12,12 @@ using Infrastructure.Repositories;
 
 namespace HSEvents.Web.Api
 {
+    public class SimpleEntity
+    {
+        public int Id { get; set; }
+        public string View { get; set; }
+    }
+
     public class DirectoryNHController : ApiController
     {
         [HttpGet]
@@ -32,14 +39,15 @@ namespace HSEvents.Web.Api
         }
 
         [HttpGet]
-        public IEnumerable<string> Schools()
+        public IEnumerable<Address> Addresses(int? index)
         {
-            var repo = new NHRepository<School>();
+            var repo = new NHRepository<Address>();
             var data = repo.GetAll();
 
-            return data.Select(x => x.Name);
+            var ids = new NHRepository<School>().GetAll().Where(x => x.Id != index).SelectMany(x=>x.Addresses.Select(xx=>xx.Id));
+            
+            return data.Where(x => !ids.Contains(x.Id));
         }
-
         [HttpGet]
         public IEnumerable<string> AcademicPrograms()
         {

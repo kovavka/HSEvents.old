@@ -18,30 +18,27 @@ namespace HSEvents.Web.Api
             
         }
 
-        public IEnumerable<JsEvent> GetForMonth(int month)
+        public IQueryable<SimpleEvent> GetForMonth(int month)
         {
-            var events = GetAll();
-            var r = events
-                .Where(x=>x.EventExecution
-                    .Any(xx=>xx.Dates.Any(xxx=>xxx.Date.Month - 1 == month)))
+            var events = repository.GetAll();
 
-                .SelectMany(x => x.EventExecution
-                .SelectMany(xx=>xx.Dates)
-                    .Select(xx => new JsEvent()
-                    {
-                        day = xx.Date.Day,
-                        name = x.Name,
-                        id = x.Id
-                    }));
 
-            return r;
+
+            return events.Where(x => x.EventExecution.Any(xx => xx.Dates.Any(xxx => xxx.Date.Month == month)))
+                .SelectMany(x=>x.EventExecution.SelectMany(xx=>xx.Dates).Select(xx=> new SimpleEvent()
+                {
+                    Name = x.Name,
+                    Id = x.Id,
+                    Day = xx.Date.Day
+                }));
         }
     }
 
-    public class JsEvent
+    public class SimpleEvent
     {
-        public int day;
-        public string name;
-        public int id;
+        public int Day { get; set; }
+        public string Name { get; set; }
+        public int Id { get; set; }
+        public string Color { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace HSEvents.Web.Api
 {
     public class NHApiController<T> : ApiController where T: IEntity
     {
-        private readonly IRepository<T> repository;
+        protected readonly IRepository<T> repository;
 
         public NHApiController(IRepository<T> repository)
         {

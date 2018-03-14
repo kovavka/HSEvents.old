@@ -2,7 +2,7 @@
 var currentDay = 1;
 
 function eventFilter(event) {
-    var day = event.day;
+    var day = event.Day;
     return currentDay === day;
 }
 
@@ -15,8 +15,8 @@ function creteCalendar() {
 
     $.ajax({
         url: "/api/EventNH/GetForMonth",
-        data: { month: month },
-        dataType: []
+        data: { month: month+1 },
+        dataType: 'text'
     })
         .done(function (data) {
         console.log('done');
@@ -56,11 +56,16 @@ function fillCalendar(year, month, events) {
 
         currentDay = date.getDate();
         var filtered = events.filter(eventFilter);
-        if (filtered.length > 0) {
-            body += '<td style="background-color:pink">' + currentDay + '</td>';
-            console.log(filtered);
-        } else
-            body += '<td>' + currentDay + '</td>';
+
+        body += '<td><div><h4>' + currentDay + '</h4>';
+
+        for (var i=0; i < filtered.length; i++) {
+            body += '<div style="background-color:blue">' + filtered[i].Name + '</div>';
+
+        }
+        body += '</div></td>';
+
+        
 
         var dayOfWeek = date.getDay();
 

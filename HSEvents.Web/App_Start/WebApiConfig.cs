@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using Domain;
 using Domain.Events;
 using Infrastructure.Repositories;
 using Microsoft.Owin.Security.OAuth;
@@ -46,6 +47,8 @@ namespace HSEvents.Web
             var container = new UnityContainer();
 
             container.RegisterType<IRepository<Event>, EventRepository>();
+            container.RegisterType<IRepository<School>, NHRepository<School>>();
+            container.RegisterType<IRepository<SchoolType>, NHRepository<SchoolType>>();
 
             return container;
         }

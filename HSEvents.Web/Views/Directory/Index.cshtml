@@ -12,17 +12,17 @@
 
 <div style=" min-width: 850px;">
     <div id="menu" >
-        <div><a href="@controller@(directory.Attendees)" onclick="change('Участники')">Участники</a></div>
-        <div><a href="@controller@(directory.ContactPersons)" onclick="change('Контактные лица школ')">Контактные лица школ</a></div>
-        <div><a href="@controller@(directory.Schools)" onclick="change('Школы')">Школы</a></div>
-        <div><a href="@controller@(directory.AcademicPrograms)" onclick="change('Академические программы')">Академические программы</a></div>
-        <div><a href="@controller@(directory.SchoolTypes)" onclick="change('Типы школ')">Типы школ</a></div>
-        <div><a href="@controller@(directory.CityTypes)" onclick="change('Типы населенных пунктов')">Типы населенных пунктов</a></div>
-        <div><a href="@controller@(directory.Volunteers)" onclick="change('Волонтеры')">Волонтеры</a></div>
-        <div><a href="@controller@(directory.Groups)" onclick="change('Группы')">Группы</a></div>
-        <div><a href="@controller@(directory.Departments)" onclick="change('Департаменты')">Департаменты</a></div>
-        <div><a href="@controller@(directory.Users)" onclick="change('Пользователи')">Пользователи</a></div>
-        <div><a href="@controller@(directory.Employees)" onclick="change('Сотрудники')">Сотрудники</a></div>
+        <div><a href="@controller@(directory.Attendee)" onclick="change('Участники')">Участники</a></div>
+        <div><a href="@controller@(directory.ContactPerson)" onclick="change('Контактные лица школ')">Контактные лица школ</a></div>
+        <div><a href="@controller@(directory.School)" onclick="change('Школы')">Школы</a></div>
+        <div><a href="@controller@(directory.AcademicProgram)" onclick="change('Академические программы')">Академические программы</a></div>
+        <div><a href="@controller@(directory.SchoolType)" onclick="change('Типы школ')">Типы школ</a></div>
+        <div><a href="@controller@(directory.CityType)" onclick="change('Типы населенных пунктов')">Типы населенных пунктов</a></div>
+        <div><a href="@controller@(directory.Volunteer)" onclick="change('Волонтеры')">Волонтеры</a></div>
+        <div><a href="@controller@(directory.Group)" onclick="change('Группы')">Группы</a></div>
+        <div><a href="@controller@(directory.Department)" onclick="change('Департаменты')">Департаменты</a></div>
+        <div><a href="@controller@(directory.User)" onclick="change('Пользователи')">Пользователи</a></div>
+        <div><a href="@controller@(directory.Employee)" onclick="change('Сотрудники')">Сотрудники</a></div>
     </div>
     <div id="content">
         <h2 id="title">@ViewBag.Title</h2>
@@ -34,11 +34,13 @@
                 <input type="button" class="btn btn-default" style="width: 73%; background: url('/content/resourses/search.png') no-repeat; background-size: contain; max-width: 35px;" value="" />
             </p>
         </form>
-        
+
+        <input type="button" class="btn btn-default" style="width: 73%" value="Добавить" onclick="add()" />
+        <br />
+
         <div id="list"></div>
         
         
-        <input type="button" class="btn btn-default" style="width: 73%" value="Редактировать" onclick="edit()"/>
         <div id="modDialog" class="modal fade" >
             <div id="dialogContent" class="modal-dialog"></div>
         </div>
@@ -48,4 +50,3 @@
 
 </div>
 
-<script>"onLoad()"</script>

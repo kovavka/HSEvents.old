@@ -13,7 +13,7 @@ namespace Infrastructure.Mappings
         public AddressMap()
         {
             Map(x => x.House);
-            References(x => x.Street).Cascade.SaveUpdate().Cascade.Delete().ForeignKey("FK_House_Street");
+                References(x => x.Street).Cascade.SaveUpdate().Cascade.Delete().ForeignKey("FK_House_Street");
         }
     }
     class StreetMap : NamedEntityMap<Street>
