@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Добавить мероприятие";
+}
+
+
+
+
+        @using (Html.BeginForm("Add", "Events", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <h2>Мероприятие</h2>
+
+            <hr class="brownhr" />
+
+            
+                                @Html.Label("Тип мероприятия", new { @class = "control-label" })
+                                <br />
+                                @Html.DropDownList("type", new List<SelectListItem>
+                        {
+                            new SelectListItem {Text="<не выбрано>", Value="0"},
+                            new SelectListItem {Text="Курсы", Value="1"},
+                             new SelectListItem {Text="Олимпиада", Value="2" },
+                            new SelectListItem {Text="Работа со школами", Value="3"},
+                        }, new { @class = "form-control", id = "type" })
+                                @Html.ValidationMessage("type", new { @class = "text-danger" })
+                           
+                    
+
+                    
+                       
+                            @Html.Label("Название", new { @class = "control-label" })
+                            <br />
+                            @Html.TextBox("name", "", new { @class = "form-control" })
+                            @Html.ValidationMessage("name", new { @class = "text-danger" })
+                           
+
+
+            
+                @Html.Label("Информация", new { @class = "control-label" })
+                <br />
+                @Html.TextArea("info", "", new { @class = "form-control", @style = "max-width:671px; height:100px" })
+                @Html.ValidationMessage("info", new { @class = "text-danger" })
+            
+
+            
+
+                        <div>
+                                @Html.Label("Комментарий", new { @class = "control-label" })
+                                <br />
+                                @Html.TextArea("comment", "", new { @class = "form-control", @style = "max-width:671px; height:100px" })
+                                @Html.ValidationMessage("comment", new { @class = "text-danger" })
+
+
+                                <br />
+
+
+                                <div id="block">
+
+                                </div>
+
+                                @Html.ValidationMessage("other", new { @class = "text-danger", id = "otherError" })
+                            </div>
+                            
+                                <input type="submit" class="btn btn-default" style="width:73%" value="Сохранить" />
+                          
+
+        }
+        

@@ -25,6 +25,12 @@ namespace HSEvents.Web.Controllers
 
             return View();
         }
+
+        public ActionResult Add()
+        {
+
+            return View();
+        }
     }
 
     public class BaseController<T> : Controller where T:IEntity

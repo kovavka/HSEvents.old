@@ -59,8 +59,15 @@ function fillCalendar(year, month, events) {
 
         body += '<td><div><h4>' + currentDay + '</h4>';
 
-        for (var i=0; i < filtered.length; i++) {
-            body += '<div style="background-color:blue">' + filtered[i].Name + '</div>';
+        for (var i = 0; i < filtered.length; i++) {
+
+            var color = 'blue';
+            if (filtered[i].Colors!=null && filtered[i].Colors.length == 1)
+                color = filtered[i].Colors[0];
+
+            body += '<div class="popup" style="background-color:' + color + '" onclick="openEvent(' + currentDay+','+ i + ')" ondblclick="editEvent()">' + filtered[i].Name
+                + '<span class="popuptext" id="myPopup' + currentDay+i + '">Popup text...</span>'
+                + '</div>';
 
         }
         body += '</div></td>';
@@ -94,6 +101,15 @@ function fillCalendar(year, month, events) {
     document.querySelector('#calendarDate').innerHTML =
         getCurrentMonth(calendarDate.getMonth()) + ' ' + calendarDate.getFullYear();
 
+}
+
+function openEvent(day, index) {
+    var popup = document.getElementById("myPopup" +day+ index);
+    popup.classList.toggle("show");
+}
+
+function editEvent() {
+    window.open('/Event/Add');
 }
 
 function getCurrentMonth(month) {
@@ -149,3 +165,11 @@ $('html').keydown(function (eventObject) {
         nextMonth();
 });
 
+
+
+// When the user clicks on <div>, open the popup
+    function myFunction() {
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+    }
+ 

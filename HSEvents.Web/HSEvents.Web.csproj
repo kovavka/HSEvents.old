@@ -366,7 +366,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
-    <Content Include="Views\Event\Calendar.cshtml" />
+    <Content Include="Views\Event\Add.cshtml" />
     <Content Include="Views\Directory\Index.cshtml" />
     <Content Include="Views\Directory\School.cshtml" />
     <Content Include="Views\Directory\SchoolType.cshtml" />
