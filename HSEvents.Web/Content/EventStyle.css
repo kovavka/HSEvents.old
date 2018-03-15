@@ -1,6 +1,30 @@
 ﻿.calendar {
     text-align: center;
+    min-width: 500px;
 }
+
+.xs-7 {
+    width: 14.2857%;
+
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    float: left;
+    
+}
+
+.calendar row div {
+    border-right: 1px solid black;
+}
+
+.calendar row div div {
+    border-right: none;
+}
+
+
+
+
 .calendar th{
     text-align: center;
 }
@@ -25,6 +49,11 @@
      border-left:  1px solid lightgray  !important;
      border-right: 0px   !important;
     color: lightgray
+}
+
+.current { 
+    vertical-align: top;
+    border: 1px solid black;
 }
 
 .next {

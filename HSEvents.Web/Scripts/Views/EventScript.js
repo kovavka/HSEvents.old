@@ -29,6 +29,74 @@ function creteCalendar() {
 }
 
 function fillCalendar(year, month, events) {
+    var body = '<row>';
+
+    var date = new Date(year, month, 1);
+
+    var first = date.getDay();
+    if (first !== 1) {
+
+        var last = new Date(year, month, 0).getDate();
+
+
+        if (first !== 0) {
+            last -= first - 2;
+            for (var i = 1; i < first; i++, last++)
+                body += '<div class="xs-7 last">' + last + '</div>';
+        }
+        else {
+            last -= 5;
+            for (var i = 0; i < 6; i++, last++)
+                body += '<div class="xs-7 last">' + last + '</div>';
+        }
+
+    }
+
+    while (date.getMonth() === month) {
+
+        currentDay = date.getDate();
+        var filtered = events.filter(eventFilter);
+
+        body += '<div class="xs-7 current"><div><h4>' + currentDay + '</h4>';
+
+        for (var i=0; i < filtered.length; i++) {
+            body += '<div style="background-color:blue">' + filtered[i].Name + '</div>';
+
+        }
+        body += '</div></div>';
+
+        
+
+        var dayOfWeek = date.getDay();
+
+        if (dayOfWeek === 0)
+            body += '</div></row>';
+        
+        date.setDate(date.getDate() + 1);
+    }
+
+    var next = date.getDay();
+
+    if (next !== 1) {
+
+        if (next !== 0) {
+            for (var i = next, day = 1; i <= 7; i++, day++)
+                body += '<div class="xs-7 next">' + day + '</div>';
+        } else
+            body += '<div class="xs-7 next">1</div>';
+
+    }
+
+    body += '</row>';
+    
+    document.querySelector('#calendarBody').innerHTML = body;
+
+    document.querySelector('#calendarDate').innerHTML =
+        getCurrentMonth(calendarDate.getMonth()) + ' ' + calendarDate.getFullYear();
+
+}
+
+function fillCalendarOld(year, month, events) {
     var body = '';
 
     var date = new Date(year, month, 1);
@@ -59,19 +127,19 @@ function fillCalendar(year, month, events) {
 
         body += '<td><div><h4>' + currentDay + '</h4>';
 
-        for (var i=0; i < filtered.length; i++) {
+        for (var i = 0; i < filtered.length; i++) {
             body += '<div style="background-color:blue">' + filtered[i].Name + '</div>';
 
         }
         body += '</div></td>';
 
-        
+
 
         var dayOfWeek = date.getDay();
 
         if (dayOfWeek === 0)
             body += '</tr><tr>';
-        
+
         date.setDate(date.getDate() + 1);
     }
 
@@ -88,7 +156,7 @@ function fillCalendar(year, month, events) {
     }
 
     body += '</tr>';
-    
+
     document.querySelector('#calendarBody').innerHTML = body;
 
     document.querySelector('#calendarDate').innerHTML =
