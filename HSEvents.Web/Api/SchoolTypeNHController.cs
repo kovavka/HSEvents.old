@@ -13,7 +13,7 @@ namespace HSEvents.Web.Api
 {
     public class SchoolTypeNHController : NHApiController<SchoolType>
     {
-        public SchoolTypeNHController(IRepository<SchoolType> repository) 
+        public SchoolTypeNHController(IGetAllRepository<SchoolType> repository) 
             : base(repository)
         {
             
@@ -22,7 +22,7 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<SimpleEntity> GetSimple()
         {
-            var repo = new NHRepository<SchoolType>();
+            var repo = new NHGetAllRepository<SchoolType>();
             var data = repo.GetAll();
 
             return data.Select(x => new SimpleEntity()

@@ -23,7 +23,7 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<string> Attendees()
         {
-            var repo = new NHRepository<Attendee>();
+            var repo = new NHGetAllRepository<Attendee>();
             var data = repo.GetAll();
 
             return data.Select(x => x.ContactInfo.FullName);
@@ -32,7 +32,7 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<string> ContactPersons()
         {
-            var repo = new NHRepository<ContactPerson>();
+            var repo = new NHGetAllRepository<ContactPerson>();
             var data = repo.GetAll();
 
             return data.Select(x => x.ContactInfo.FullName);
@@ -41,17 +41,17 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<Address> Addresses(int? index)
         {
-            var repo = new NHRepository<Address>();
+            var repo = new NHGetAllRepository<Address>();
             var data = repo.GetAll();
 
-            var ids = new NHRepository<School>().GetAll().Where(x => x.Id != index).SelectMany(x=>x.Addresses.Select(xx=>xx.Id));
+            var ids = new NHGetAllRepository<School>().GetAll().Where(x => x.Id != index).SelectMany(x=>x.Addresses.Select(xx=>xx.Id));
             
             return data.Where(x => !ids.Contains(x.Id));
         }
         [HttpGet]
         public IEnumerable<string> AcademicPrograms()
         {
-            var repo = new NHRepository<AcademicProgram>();
+            var repo = new NHGetAllRepository<AcademicProgram>();
             var data = repo.GetAll();
 
             return data.Select(x => x.Name);
@@ -60,7 +60,7 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<string> SchoolTypes()
         {
-            var repo = new NHRepository<SchoolType>();
+            var repo = new NHGetAllRepository<SchoolType>();
             var data = repo.GetAll();
 
             return data.Select(x => x.Name);
@@ -69,7 +69,7 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<string> CityTypes()
         {
-            var repo = new NHRepository<CityType>();
+            var repo = new NHGetAllRepository<CityType>();
             var data = repo.GetAll();
 
             return data.Select(x => x.Name);
@@ -78,7 +78,7 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<string> Volunteers()
         {
-            var repo = new NHRepository<Volunteer>();
+            var repo = new NHGetAllRepository<Volunteer>();
             var data = repo.GetAll();
 
             return data.Select(x => x.FullName);
@@ -87,7 +87,7 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<string> Groups()
         {
-            var repo = new NHRepository<School>();
+            var repo = new NHGetAllRepository<School>();
             var data = repo.GetAll();
 
             return data.Select(x => x.Name);
@@ -96,7 +96,7 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<string> Departments()
         {
-            var repo = new NHRepository<Department>();
+            var repo = new NHGetAllRepository<Department>();
             var data = repo.GetAll();
 
             return data.Select(x => x.Name);
@@ -105,7 +105,7 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<string> Users()
         {
-            var repo = new NHRepository<User>();
+            var repo = new NHGetAllRepository<User>();
             var data = repo.GetAll();
 
             return data.Select(x => x.ContactInfo.FullName);
@@ -114,7 +114,7 @@ namespace HSEvents.Web.Api
         [HttpGet]
         public IEnumerable<string> Employees()
         {
-            var repo = new NHRepository<Employee>();
+            var repo = new NHGetAllRepository<Employee>();
             var data = repo.GetAll();
 
             return data.Select(x => x.ContactInfo.FullName);

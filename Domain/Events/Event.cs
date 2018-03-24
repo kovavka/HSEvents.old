@@ -20,7 +20,7 @@ namespace Domain.Events
         public virtual ICollection<Employee> Lecturers { get; set; }
         public virtual ICollection<Department> Departments { get; set; }
         
-        public virtual ICollection<AttendanceInfo> Attendees{ get; set; }
+        public virtual ICollection<AttendanceInfo> AttendanceInfo { get; set; }
 
 
         public virtual ICollection<EventExecution> EventExecution { get; set; }

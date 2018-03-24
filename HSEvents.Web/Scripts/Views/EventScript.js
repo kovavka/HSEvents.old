@@ -65,7 +65,7 @@ function fillCalendar(year, month, events) {
             if (filtered[i].Colors!=null && filtered[i].Colors.length == 1)
                 color = filtered[i].Colors[0];
 
-            body += '<div class="popup" style="background-color:' + color + '" onclick="openEvent(' + currentDay+','+ i + ')" ondblclick="editEvent()">' + filtered[i].Name
+            body += '<div class="popup" style="background-color:' + color + '" onclick="openEvent()" ondblclick="editEvent()">' + filtered[i].Name
                 + '<span class="popuptext" id="myPopup' + currentDay+i + '">Popup text...</span>'
                 + '</div>';
 
@@ -103,9 +103,26 @@ function fillCalendar(year, month, events) {
 
 }
 
-function openEvent(day, index) {
-    var popup = document.getElementById("myPopup" +day+ index);
-    popup.classList.toggle("show");
+document.addEventListener('click', printMousePos, true);
+var X = 0;
+var Y = 0;
+
+function printMousePos(e) {
+    console.log(e.pageX);
+    X = e.pageX;
+    console.log(e.pageY);
+    Y = e.pageY;
+}
+
+function openEvent() {
+    var popup = document.getElementById("tdd");
+
+
+    popup.style = "position: absolute;     left:" + X + "px; top: " + Y + "px;";
+
+
+    //var popup = document.getElementById("myPopup" +day+ index);
+    //popup.classList.toggle("show");
 }
 
 function editEvent() {

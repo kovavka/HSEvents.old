@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Domain;
 using Domain.Events;
+using HSEvents.Web.Authentification;
 using Infrastructure.Repositories;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
@@ -49,6 +50,9 @@ namespace HSEvents.Web
             container.RegisterType<IRepository<Event>, EventRepository>();
             container.RegisterType<IRepository<School>, NHRepository<School>>();
             container.RegisterType<IRepository<SchoolType>, NHRepository<SchoolType>>();
+            container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IAuthentication, CustomAuthentication>();
+            
 
             return container;
         }

@@ -14,7 +14,7 @@ namespace HSEvents.Web.Api
     public class SchoolNHController : NHApiController<School>
     {
         public SchoolNHController() 
-            : base(new NHRepository<School>())
+            : base(new NHGetAllRepository<School>())
         {
             
         }

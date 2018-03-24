@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Domain.IEntity;
 using NHibernate;
 using NHibernate.Linq;
@@ -12,11 +8,10 @@ namespace Infrastructure.Repositories
     public interface IRepository<T> where T:IEntity
     {
         T Get(int id);
-        IQueryable<T> GetAll();
-        void Delete(T entity);
         void Delete(int id);
         void Update(T entity);
         object Add(T entity);
+        void Delete(T entity);
     }
 
     public class NHRepository<T> : IRepository<T> where T : IEntity
@@ -27,40 +22,48 @@ namespace Infrastructure.Repositories
         {
             return session.Get<T>(id);
         }
-
-        public IQueryable<T> GetAll()
-        {
-            return session.Query<T>();
-        }
-
+        
         public void Delete(T entity)
         {
-            session.Delete(entity);
-            session.Flush();
+            using (var tx = session.BeginTransaction())
+            {
+                session.Delete(entity);
+                tx.Commit();
+            }
         }
 
         public void Delete(int id)
         {
-            session.Delete(session.Query<T>().First(x=>x.Id==id));
-            session.Flush();
+            using (var tx = session.BeginTransaction())
+            {
+                session.Delete(session.Query<T>().First(x => x.Id == id));
+                tx.Commit();
+            }
         }
 
         public void Update(T entity)
         {
-            session.Update(entity);
-            session.Flush();
+            using (var tx = session.BeginTransaction())
+            {
+                session.Update(entity);
+                tx.Commit();
+            }
         }
 
         public object Add(T entity)
         {
-            var obj= session.Save(entity);
-            session.Flush();
-            return obj;
+            object result;
+            using (var tx = session.BeginTransaction())
+            {
+                result = session.Save(entity);
+                tx.Commit();
+            }
+
+            return result;
         }
 
         public void Close()
         {
-            session.Flush();
             session.Close();
         }
 

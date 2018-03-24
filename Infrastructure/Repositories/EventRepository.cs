@@ -36,7 +36,7 @@ namespace Infrastructure.Repositories
 
         public IQueryable<Event> GetAll()
         {
-            return new NHRepository<Event>().GetAll();
+            return new NHGetAllRepository<Event>().GetAll();
                 
                 //courseRepository.GetAll()
                 //.OfType<Event>()

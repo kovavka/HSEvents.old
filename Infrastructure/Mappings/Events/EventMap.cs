@@ -20,7 +20,7 @@ namespace Infrastructure.Mappings.Events
             HasManyToMany(x => x.Organizers).AsBag().Cascade.SaveUpdate().Table("Organizer");
             HasManyToMany(x => x.Lecturers).AsBag().Cascade.SaveUpdate().Table("Lecturer");
             HasManyToMany(x => x.Departments).AsBag().Cascade.SaveUpdate().Table("DepartmentInfo");
-            HasMany(x => x.Attendees).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_AttendanceInfo_Event");
+            HasMany(x => x.AttendanceInfo).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_AttendanceInfo_Event");
             HasMany(x => x.EventExecution).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_EventExecution_Event");
         }
     }
@@ -65,18 +65,21 @@ namespace Infrastructure.Mappings.Events
             Map(x => x.Color);
         }
     }
-    class EmployeeMap : EntityMap<Employee>
+    class EmployeeMap : PersonMap<Employee>
     {
         public EmployeeMap()
         {
-            Component(x => x.ContactInfo,
-                c =>
-                {
-                    c.Map(x => x.FullName);
-                    c.Map(x => x.Email).Nullable();
-                    c.Map(x => x.PhoneNumber).Nullable();
-                });
             Map(x => x.Appointment);
+        }
+    }
+    class UserMap : SubclassMap<User>
+    {
+        public UserMap()
+        {
+            Map(x => x.Login);
+            Map(x => x.Password);
+            Map(x => x.IsAdmin);
+            Map(x => x.Checked);
         }
     }
     class EventExecutionMap : EntityMap<EventExecution>

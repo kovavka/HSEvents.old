@@ -20,7 +20,7 @@ namespace HSEvents.Web.Views
         public PartialViewResult Partail(string viewName)
         {
             ViewBag.Title = "mu";
-            var addresses=new NHRepository<Address>().GetAll();
+            var addresses=new NHGetAllRepository<Address>().GetAll();
 
             ViewData["Address"]= new SelectList(addresses, "Id", "FullAddress");
 

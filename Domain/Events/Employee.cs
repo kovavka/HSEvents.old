@@ -7,9 +7,8 @@ using Domain.IEntity;
 
 namespace Domain.Events
 {
-    public class Employee : Entity
+    public class Employee : PersonEntity
     {
-        public virtual ContactInfo ContactInfo { get; set; }
         public virtual string Appointment { get; set; }
     }
 }
