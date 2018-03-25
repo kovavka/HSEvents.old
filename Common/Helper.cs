@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Common
@@ -25,6 +26,34 @@ namespace Common
             if (attributes.Length > 0) return attributes[0].Description;
 
             return source.ToString();
+        }
+
+        public static bool IsNullOrEmpty(this string str)
+        {
+            return string.IsNullOrEmpty(str);
+        }
+
+        public static bool IsNotEmpty(this string str)
+        {
+            return !string.IsNullOrEmpty(str);
+        }
+
+        public static bool IsCorrectEmail(this string str)
+        {
+            if (str.IsNullOrEmpty())
+                return false;
+
+            var rule = new Regex(@"\A[a-z0-9-_\.]+@[a-z0-9-_\.]+\.[a-z0-9-_\.]+$", RegexOptions.IgnoreCase);
+            return rule.IsMatch(str);
+        }
+
+        public static bool IsCorrectPhone(this string str)
+        {
+            if (str.IsNullOrEmpty())
+                return false;
+
+            var rule = new Regex(@"\A[0-9]{4,12}$");
+            return rule.IsMatch(str);
         }
     }
 }

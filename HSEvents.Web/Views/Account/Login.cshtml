@@ -3,37 +3,37 @@
     ViewBag.Title = "Выполнить вход";
 }
 
-@using (Html.BeginForm("Index", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <br>
     <h4 align="center">Используйте локальную учетную запись для входа</h4>
     @*<h6> логин - test*, пароль - 1234</h6>
     <h6>test1 - абитуриент, test2 - модератор, test3 - администратор</h6>*@
-    <hr class="brownhr">
-    <div class="inner">
+    <hr>
         <div class="form-group">
             @Html.Label("Логин")
             <br />
             @Html.TextBoxFor(model => model.Login, new { @class = "form-control topmargin" })
-            @Html.ValidationMessage("login", new { @class = "text-danger" })
+            @Html.ValidationMessage("Login", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             @Html.Label("Пароль")
             <br />
             @Html.PasswordFor(model => model.Password, new { @class = "form-control topmargin" })
-            @Html.ValidationMessage("password", new { @class = "text-danger" })
+            @Html.ValidationMessage("Password", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-10">
                 <div class="checkbox">
                     @Html.CheckBox("RememberMe")
-                    @Html.Label("RememberMe")
+                    @Html.Label("Запомнить меня")
                 </div>
             </div>
         </div>
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationMessage("Button", new { @class = "text-danger" })
 
         <div class="form-group">
             <div width="120%">
@@ -53,5 +53,4 @@
             <p>
                 @Html.ActionLink("Забыли пароль?", "ForgotPassword")
             </p>*@
-    </div>
 }

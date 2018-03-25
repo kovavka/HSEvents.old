@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using HSEvents.Web.Authentification;
 using Infrastructure.Repositories;
-using Ninject.Infrastructure.Language;
 using Unity;
 
 namespace HSEvents.Web
@@ -29,7 +28,7 @@ namespace HSEvents.Web
             ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory(controllerActivator));
         }
 
-        private static IUnityContainer BuildUnityContainer()
+        public static IUnityContainer BuildUnityContainer()
         {
             var container = new UnityContainer();
             

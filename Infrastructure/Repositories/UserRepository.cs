@@ -14,6 +14,7 @@ namespace Infrastructure.Repositories
     {
         User Login(string login, string password);
         User Login(string login);
+        bool Exists(string login);
     }
 
     public class UserRepository : NHRepository<User>, IUserRepository
@@ -22,9 +23,6 @@ namespace Infrastructure.Repositories
 
         public User Login(string login, string password)
         {
-            var t = session.Query<User>()
-                .Where(x => x.Login == login);
-
             return session.Query<User>()
                 .Where(x => x.Login == login)
                 .ToList()
@@ -35,6 +33,11 @@ namespace Infrastructure.Repositories
         {
             return session.Query<User>()
                 .FirstOrDefault(x => x.Login == login);
+        }
+
+        public bool Exists(string login)
+        {
+            return session.Query<User>().Any(x => x.Login == login);
         }
     }
 }

@@ -25,6 +25,9 @@ namespace HSEvents.Web.Authentification
                 return false;
             }
 
+            if (role == "admin")
+                return userIdentity.User.IsAdmin;
+
             return true;
         }
 

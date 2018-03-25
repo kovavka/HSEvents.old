@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using System.Web;
 using Domain;
 using Infrastructure.Repositories;
-using Ninject;
+using Unity.Attributes;
 
 namespace HSEvents.Web.Authentification
 {
@@ -16,7 +15,7 @@ namespace HSEvents.Web.Authentification
 
     public class UserIndentity : IIdentity, IUserProvider
     {
-        [Inject]
+        [Dependency]
         public IAuthentication Auth { get; set; }
 
         public User CurrentUser

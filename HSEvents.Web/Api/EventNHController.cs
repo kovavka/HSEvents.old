@@ -5,11 +5,13 @@ using System.Web;
 using System.Web.Http;
 using Domain.Events;
 using Domain.IEntity;
+using HSEvents.Web.Authentification;
 using Infrastructure;
 using Infrastructure.Repositories;
 
 namespace HSEvents.Web.Api
 {
+    [HttpAuth]
     public class EventNHController : NHApiController<Event>
     {
         public EventNHController(IGetAllRepository<Event> repository) 

@@ -47,7 +47,7 @@ namespace HSEvents.Web
         {
             var container = new UnityContainer();
 
-            container.RegisterType<IRepository<Event>, EventRepository>();
+            container.RegisterType<IGetAllRepository<Event>, EventRepository>();
             container.RegisterType<IRepository<School>, NHRepository<School>>();
             container.RegisterType<IRepository<SchoolType>, NHRepository<SchoolType>>();
             container.RegisterType<IUserRepository, UserRepository>();

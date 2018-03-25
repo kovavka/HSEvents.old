@@ -8,7 +8,7 @@ using NHibernate;
 
 namespace Infrastructure.Repositories
 {
-    public class EventRepository: IRepository<Event>
+    public class EventRepository: IGetAllRepository<Event>
     {
         private readonly CourseRepository courseRepository;
         private readonly AcademicСompetitionRepository academicСompetitionRepository;

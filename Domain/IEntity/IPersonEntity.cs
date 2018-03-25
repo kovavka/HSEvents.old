@@ -14,5 +14,10 @@ namespace Domain.IEntity
     public class PersonEntity : Entity, IPersonEntiny
     {
         public virtual ContactInfo ContactInfo { get; set; }
+
+        public PersonEntity()
+        {
+            ContactInfo =new ContactInfo();
+        }
     }
 }

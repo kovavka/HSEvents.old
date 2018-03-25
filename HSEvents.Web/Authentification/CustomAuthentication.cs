@@ -4,7 +4,6 @@ using System.Web;
 using System.Web.Security;
 using Domain;
 using Infrastructure.Repositories;
-using Ninject;
 using Unity.Attributes;
 
 namespace HSEvents.Web.Authentification
@@ -38,25 +37,30 @@ namespace HSEvents.Web.Authentification
 
         public User Login(string login, string password, bool isPersistent)
         {
-            User retUser = Repository.Login(login, password);
-            if (retUser != null)
+            User user = Repository.Login(login, password);
+
+            if (user != null)
             {
-                CreateCookie(login, isPersistent);
+                var roles = user.IsAdmin ? "admin" : "";
+                CreateCookie(login, roles, isPersistent);
             }
-            return retUser;
+
+            return user;
         }
 
         public User Login(string login)
         {
-            User retUser = Repository.Login(login);
-            if (retUser != null)
+            User user = Repository.Login(login);
+
+            if (user != null)
             {
-                CreateCookie(login);
+                var roles = user.IsAdmin ? "admin" : "";
+                CreateCookie(login, roles);
             }
-            return retUser;
+            return user;
         }
 
-        private void CreateCookie(string login, bool isPersistent = false)
+        private void CreateCookie(string login, string roles, bool isPersistent = false)
         {
             var ticket = new FormsAuthenticationTicket(
                   1,
@@ -64,7 +68,7 @@ namespace HSEvents.Web.Authentification
                   DateTime.Now,
                   DateTime.Now.Add(FormsAuthentication.Timeout),
                   isPersistent,
-                  string.Empty,
+                  roles,
                   FormsAuthentication.FormsCookiePath);
 
             // Encrypt the ticket.
