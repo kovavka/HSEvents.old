@@ -1,23 +1,61 @@
-﻿@using Domain
-@using (Html.BeginForm("Import", "Attendees", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-{
-        <label for="file">Выберите файл для загрузки</label>
-        <input type="file" name="file" id="file" />
+﻿@using Common
+@using Domain
+@section Styles {
+    <link href="@Url.Content("~/Content/ReportStyle.css")" rel="stylesheet" type="text/css" />
+}
 
-    <br />
+@using (Html.BeginForm("Import", "Attendees", FormMethod.Post, new {@class = "form-horizontal", role = "form", enctype = "multipart/form-data"}))
+{
+    <label for="file">Выберите файл для загрузки</label>
+    <input type="file" name="file" id="file"/>
+
+    <br/>
 
     @Html.ValidationSummary()
-    <input type="submit" value="Импортировать" />
+    <input type="submit" value="Импортировать"/>
 
-
-    if (ViewData["Attendees"] != null)
+}
+    @if (ViewData["Import"] != null)
     {
-        var data = (List<Attendee>)ViewData["Attendees"];
+        var data = (List<Attendee>)ViewData["Import"];
 
-        foreach (var attendee in data)
+
+        <table class="calendar">
+            <thead>
+            <tr>
+                <th>ФИО</th>
+                <th>Тип участника</th>
+                <th>Телефон</th>
+                <th>Email</th>
+                <th>Пол</th>
+                <th>Год окончания школы</th>
+                <th>Школа</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            @foreach (var attendee in data)
+            {
+                <tr>
+                    <td>@attendee.ContactInfo.FullName</td>
+                    <td>@attendee.Type.GetDescription()</td>
+                    <td>@attendee.ContactInfo.PhoneNumber</td>
+                    <td>@attendee.ContactInfo.Email</td>
+                    @if (attendee.Type == AttendeeType.Pupil)
+                    {
+                        var pupil = attendee as Pupil;
+                        <td>@pupil.Sex</td>
+                        <td>@pupil.YearOfGraduation</td>
+                        <td>@pupil.School.Name</td>
+                    }
+                </tr>
+            }
+            </tbody>
+        </table>
+        <br/>
+        using (Html.BeginForm("Save", "Attendees", FormMethod.Post, new {@class = "form-horizontal", role = "form", enctype = "multipart/form-data"}))
         {
-            <div>@attendee.ContactInfo.FullName</div>
+            <input type="submit" class="btn btn-default" style="width: 73%" value="Сохранить"/>
         }
     }
-}
 

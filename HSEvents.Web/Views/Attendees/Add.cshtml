@@ -1,0 +1,137 @@
+﻿@using Domain
+@model Pupil
+@{
+    ViewBag.Title = "Добавление участника";
+}
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/Views/AttendeesScript.js")"></script>
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Add", "Attendees", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Заполните информацию</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="form-group">
+        <div class="col-lg-12">
+            <div class="form-group">
+                @Html.Label("ФИО", new { @class = "control-label" })
+                <br />
+                @Html.TextBoxFor(x => x.ContactInfo.FullName, "", new { @class = "form-control", style = "max-width: 670px" })
+                @Html.ValidationMessage("FullName", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <row>
+            <div class="col-md-4">
+                <div class="inner1">
+                    <div class="form-group">
+                        @Html.Label("Email", new { @class = "control-label" })
+                        <br />
+                        @Html.TextBoxFor(x => x.ContactInfo.Email, "", new { @class = "form-control" })
+                        @Html.ValidationMessage("Email", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Телефон", new { @class = "control-label" })
+                        <br />
+                        @Html.TextBoxFor(x => x.ContactInfo.PhoneNumber, "", new { @class = "form-control" })
+                        @Html.ValidationMessage("PhoneNumber", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="inner1">
+                    <div class="form-group">
+                        @Html.Label("Тип", new { @class = "control-label" })
+                        <br />
+                        @Html.DropDownListFor(x => x.Type, EnumHelper.GetSelectList(typeof(AttendeeType)), new { @class = "form-control", onchange = "changeType()" })
+                        @Html.ValidationMessage("Type", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </row>
+        
+        
+        
+        
+        <div id="pupilItems">
+        <row>
+            <div class="col-md-4">
+                <div class="inner1">
+                    <div class="form-group">
+                        @Html.Label("Пол", new { @class = "control-label" })
+                        <br />
+                        @Html.DropDownListFor(x => x.Sex, EnumHelper.GetSelectList(typeof(Sex)), new { @class = "form-control" })
+                        @Html.ValidationMessage("Sex", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Год окончания школы", new { @class = "control-label" })
+                        <br />
+                        @Html.TextBoxFor(x => x.YearOfGraduation, "", new { @class = "form-control" })
+                        @Html.ValidationMessage("YearOfGraduation", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="inner1">
+                    <div class="form-group">
+                        @Html.Label("Школа", new { @class = "control-label" })
+                        <br />
+                        @Html.DropDownListFor(x => x.School, (IEnumerable<SelectListItem>)ViewData["Schools"], new { @class = "form-control" })
+                        @Html.ValidationMessage("School", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Программа поступления", new { @class = "control-label" })
+                        <br />
+                        @Html.DropDownListFor(x => x.EnterProgram, (IEnumerable<SelectListItem>)ViewData["Programs"], new { @class = "form-control" })
+                        @Html.ValidationMessage("EnterProgram", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </row>
+
+            <row>
+                <div class="col-md-4">
+                    <div class="inner1">
+                        <div class="form-group">
+                            @Html.Label("Интересующие программы", new { @class = "control-label" })
+                            <br />
+                            @Html.ListBoxFor(x => x.IntrestingPrograms, (IEnumerable<SelectListItem>)ViewData["Programs"], new { @class = "form-control" })
+                            @Html.ValidationMessage("IntrestingPrograms", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="inner1">
+                        <div class="form-group">
+                            @Html.Label("Программы подачи документов", new { @class = "control-label" })
+                            <br />
+                            @Html.ListBoxFor(x => x.RegistrarionPrograms, (IEnumerable<SelectListItem>)ViewData["Programs"], new { @class = "form-control" })
+                            @Html.ValidationMessage("RegistrarionPrograms", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </row>
+        </div>
+</div>
+
+    <div class="col-md-12">
+        <div style="margin-left: -15px; margin-top: 25px">
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-default" style="width:73%" value="Сохранить" />
+            </div>
+        </div>
+    </div>
+
+}
+    

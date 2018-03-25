@@ -296,6 +296,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Views\AttendeesScript.js" />
     <Content Include="Scripts\Views\ReportsScript.js" />
     <Content Include="Scripts\Views\DirectoryScript.js" />
     <Content Include="Scripts\Views\EventScript.js" />
@@ -335,6 +336,9 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Attendees\Import.cshtml" />
+    <Content Include="Views\Attendees\Add.cshtml" />
+    <Content Include="Views\Attendees\Edit.cshtml" />
+    <Content Include="Views\Attendees\EditPupil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

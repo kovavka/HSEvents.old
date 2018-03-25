@@ -18,14 +18,92 @@ namespace HSEvents.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            ViewData["Attendees"]="";
+            return View();
+        }
+        
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var attendee = new NHRepository<Attendee>().Get(id);
+            if (attendee.Type==AttendeeType.Pupil)
+                return View("EditPupil", attendee as Pupil);
+            
+            return View(attendee);
+        }
+
+        [HttpPost]
+        public ActionResult EditPupil(Pupil pupil)
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Attendee attendee)
+        {
+            return View();
+
+        }
+
+        [HttpGet]
+        public ActionResult Add()
+        {
+            var schools = new NHGetAllRepository<School>().GetAll().ToList();
+            ViewData["Schools"] = new SelectList(schools, "Id", "Name");
+
+
+            var programs = new NHGetAllRepository<AcademicProgram>().GetAll().ToList();
+            ViewData["Programs"] = new SelectList(programs, "Id", "Name");
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(Attendee attendee)
+        public ActionResult Add(Pupil pupil)
         {
+            if (pupil.ContactInfo.FullName.IsNullOrEmpty())
+                ModelState.AddModelError("FullName", "Введите ФИО");
+            if (!pupil.ContactInfo.Email.IsCorrectEmail())
+                ModelState.AddModelError("Email", "Неверный формат Email");
+            if (!pupil.ContactInfo.PhoneNumber.IsCorrectPhone())
+                ModelState.AddModelError("PhoneNumber", "Неверный формат номера");
+
+            if (!ModelState.IsValid)
+                return View();
+
+
+            if (pupil.Type == AttendeeType.Pupil)
+            {
+                new NHRepository<Pupil>().Add(pupil);
+            }
+            else
+            {
+                var attendee = new Attendee()
+                {
+                    ContactInfo = pupil.ContactInfo,
+                    Type = pupil.Type,
+                };
+                new NHRepository<Attendee>().Add(attendee);
+            }
+
+
             return View();
 
+        }
+
+        [HttpPost]
+        public ActionResult Save()
+        {
+            var data = (List<Attendee>)ViewData["Import"];
+
+            var repository=new NHRepository<Attendee>();
+            foreach (var attendee in data)
+            {
+                repository.Add(attendee);
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -51,7 +129,7 @@ namespace HSEvents.Web.Controllers
                 return View();
             }
 
-            ViewData["Attendees"] = ReadFile(file).ToList();
+            ViewData["Import"] = ReadFile(file).ToList();
 
             return View();
         }
