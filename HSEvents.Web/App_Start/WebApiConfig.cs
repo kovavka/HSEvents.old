@@ -37,24 +37,6 @@ namespace HSEvents.Web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
-            var container = BuildUnityContainer();
-
-            config.DependencyResolver= new UnityDependencyResolver(container);
-        }
-
-        private static IUnityContainer BuildUnityContainer()
-        {
-            var container = new UnityContainer();
-
-            container.RegisterType<IGetAllRepository<Event>, EventRepository>();
-            container.RegisterType<IRepository<School>, NHRepository<School>>();
-            container.RegisterType<IRepository<SchoolType>, NHRepository<SchoolType>>();
-            container.RegisterType<IUserRepository, UserRepository>();
-            container.RegisterType<IAuthentication, CustomAuthentication>();
-            
-
-            return container;
         }
     }
 }

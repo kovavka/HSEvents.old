@@ -1,4 +1,8 @@
 using System.Web.Http;
+using HSEvents.Web.Authentification;
+using Infrastructure.Repositories;
+using Domain;
+using Domain.Events;
 using Unity;
 using Unity.WebApi;
 
@@ -8,14 +12,22 @@ namespace HSEvents.Web
     {
         public static void RegisterComponents()
         {
-			var container = new UnityContainer();
-            
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-            
-            // e.g. container.RegisterType<ITestService, TestService>();
+			var container = BuildUnityContainer();
             
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+        }
+        
+        private static IUnityContainer BuildUnityContainer()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterType<IGetAllRepository<Event>, EventRepository>();
+            container.RegisterType<IRepository<School>, NHRepository<School>>();
+            container.RegisterType<IRepository<SchoolType>, NHRepository<SchoolType>>();
+            container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IAuthentication, CustomAuthentication>();
+
+            return container;
         }
     }
 }

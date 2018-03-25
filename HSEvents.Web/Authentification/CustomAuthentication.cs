@@ -81,6 +81,8 @@ namespace HSEvents.Web.Authentification
                 Expires = DateTime.Now.Add(FormsAuthentication.Timeout)
             };
             HttpContext.Response.Cookies.Set(authCookie);
+
+            _currentUser= new UserProvider(ticket.Name, Repository);
         }
 
         public void LogOut()
@@ -98,7 +100,7 @@ namespace HSEvents.Web.Authentification
         {
             get
             {
-                if (_currentUser == null)
+                if (_currentUser == null || _currentUser.Identity.Name=="anonym")
                 {
                     try
                     {
