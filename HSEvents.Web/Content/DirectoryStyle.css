@@ -1,6 +1,6 @@
 ﻿   #menu {
        float: left;
-       width: 200px;
+       width: 220px;
        padding: 5px;
        margin: 10px 10px 20px 5px;
    }
@@ -20,6 +20,7 @@
    #content {
        margin: 10px 5px 20px 225px;
        padding: 5px;
+       min-height: 400px;
    }
 
    .modal {
@@ -43,5 +44,8 @@
 
    .element {
        cursor: pointer;
-   
+   }
+
+   label {
+       font-weight: normal !important;
    }

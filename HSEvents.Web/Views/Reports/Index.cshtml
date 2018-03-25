@@ -1,1 +1,68 @@
-﻿
+﻿@section Styles {
+    <link href="@Url.Content("~/Content/DirectoryStyle.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/ReportStyle.css")" rel="stylesheet" type="text/css" />
+}
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/Views/ReportsScript.js")"></script>
+}
+@{
+    ViewBag.Title = "Отчеты";
+}
+
+
+<h2>@ViewBag.Title</h2>
+
+<div style="min-width: 850px;">
+    <div id="menu">
+        <div class="form-group">
+            @Html.CheckBox("attendeed", new { @onclick = "checkedChanged()" })
+            @Html.Label("Регистрировались")
+        </div>
+        <div class="form-group">
+            @Html.CheckBox("participated", new { @onclick = "checkedChanged()" })
+            @Html.Label("Участвовали")
+        </div>
+        <div class="form-group">
+            @Html.CheckBox("registered", new { @onclick = "checkedChanged()" })
+            @Html.Label("Подали документы")
+        </div>
+        <div class="form-group">
+            @Html.CheckBox("currentYearGraduate", new { @onclick = "checkedChanged()" })
+            @Html.Label("Выпускники текущего года")
+        </div>
+        <div class="form-group">
+            @Html.CheckBox("entered", new { @onclick = "checkedChanged()" })
+            @Html.Label("Зачислены")
+        </div>
+
+        <input type="button" class="btn btn-default" style="width: 73%" value="Экспортировать" onclick="exportClick()"/>
+
+    </div>
+    <div id="content">
+        <h3>Результат запроса</h3>
+        <br />
+        <form id="form">
+            <table id="report" class="calendar" style="visibility: hidden;">
+                <thead>
+                <tr>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                    <th>Email</th>
+                    <th>Тип участника</th>
+                </tr>
+                </thead>
+
+                <tbody id="reportBody">
+
+                </tbody>
+            </table>
+        </form>
+        
+        <div id="notFound" >По данному запросу не найдено результатов</div>
+        
+
+    </div>
+
+
+</div>
+

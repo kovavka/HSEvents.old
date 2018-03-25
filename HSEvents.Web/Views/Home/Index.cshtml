@@ -1,7 +1,4 @@
-﻿
-@model Domain.User
-
-<div class="jumbotron">
+﻿<div class="jumbotron">
     <h1>HSEvents</h1>
     <p class="lead">Добро пожаловать в систему учета профориентационных мероприятий НИУ ВШЭ - Пермь</p>
     <p><a href="/Account" class="btn btn-primary btn-lg">Вход &raquo;</a></p>
@@ -17,18 +14,5 @@
         <p>Начните работу с ситемой после регистрации и подтверждения роли администратором</p>
         <p><a class="btn btn-default" href="/Account/Register">Зарегистрироваться &raquo;</a></p>
     </div>
-
-    <ul class="nav nav-pills pull-right">
-        @if (Model != null)
-        {
-            <li>@Model.Login</li>
-            <li>@Html.ActionLink("Выход", "Logout", "Account")</li>
-        }
-        else
-        {
-            <li>@Html.ActionLink("Вход", "Login", "Account")</li>
-            <li>@Html.ActionLink("Регистрация", "Register", "Account")</li>
-        }
-    </ul>
 
 </div>

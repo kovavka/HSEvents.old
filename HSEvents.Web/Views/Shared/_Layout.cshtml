@@ -1,10 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@model Domain.User
+
+<!DOCTYPE html>
 <html>
 @RenderSection("styles", false);
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
-    <title>@ViewBag.Title</title>
+    
+    <link  rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <link  rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+
+
+    <title>@ViewBag.Title</title> 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -25,6 +32,24 @@
                 <li>@Html.ActionLink("Справочники", "Index", "Directory", new {area = ""}, null)</li>
                 <li>@Html.ActionLink("Участники", "Index", "Attendees", new { area = "" }, null)</li>
                 <li>@Html.ActionLink("Отчеты", "Index", "Reports", new { area = "" }, null)</li>
+                
+                @if (Model != null && Model.IsAdmin)
+                {
+                    <li>@Html.ActionLink("Пользователи", "Index", "Users", new {area = ""}, null)</li>
+                }
+            </ul>
+            
+            <ul class="nav navbar-nav pull-right">
+                @if (Model != null)
+                {
+                    <li><a>@Model.Login</a></li>
+                    <li>@Html.ActionLink("Выход", "Logout", "Account", new { area = "" }, null)</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Вход", "Login", "Account", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "" }, null)</li>
+                }
             </ul>
         </div>
     </div>
