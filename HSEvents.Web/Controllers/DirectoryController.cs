@@ -6,11 +6,12 @@ using System.Web.Mvc;
 using Common;
 using Domain;
 using Domain.Events;
+using HSEvents.Web.Controllers;
 using Infrastructure.Repositories;
 
 namespace HSEvents.Web.Views
 {
-    public class DirectoryController : Controller
+    public class DirectoryController : BaseController
     {
         public ActionResult Index()
         {

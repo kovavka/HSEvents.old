@@ -15,7 +15,7 @@ namespace HSEvents.Web.Controllers
         {
             ViewBag.Title = "Home Page";
 
-            return View(CurrentUser);
+            return View();
         }
     }
 }

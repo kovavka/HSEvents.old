@@ -1,1 +1,35 @@
-﻿
+﻿@using Common
+@using Domain
+@section Styles {
+    <link href="@Url.Content("~/Content/ReportStyle.css")" rel="stylesheet" type="text/css" />
+}
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/Views/AttendeesScript.js")"></script>
+}
+
+@if (ViewData["Attendees"] != null)
+{
+    var data = (IEnumerable<Attendee>)ViewData["Attendees"];
+    <table id="report" class="calendar">
+        <thead>
+        <tr>
+            <th>ФИО</th>
+            <th>Телефон</th>
+            <th>Email</th>
+            <th>Тип участника</th>
+        </tr>
+        </thead>
+
+        <tbody id="reportBody">
+        @foreach (var attendee in data)
+        {
+            <tr ondblclick="openAttendee(@attendee.Id)">
+                <td>@attendee.ContactInfo.FullName</td>
+                <td>@attendee.ContactInfo.PhoneNumber</td>
+                <td>@attendee.ContactInfo.Email</td>
+                <td>@attendee.Type.GetDescription()</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

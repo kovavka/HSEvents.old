@@ -36,7 +36,11 @@
                         @Html.TextBoxFor(x => x.ContactInfo.Email, "", new { @class = "form-control" })
                         @Html.ValidationMessage("Email", new { @class = "text-danger" })
                     </div>
-
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="inner1"> 
                     <div class="form-group">
                         @Html.Label("Телефон", new { @class = "control-label" })
                         <br />
@@ -45,7 +49,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="inner1">
                     <div class="form-group">
@@ -59,6 +62,9 @@
         </row>
         
         
+        
+       
+       
         
         
         <div id="pupilItems">
@@ -76,7 +82,7 @@
                         @Html.Label("Год окончания школы", new { @class = "control-label" })
                         <br />
                         @Html.TextBoxFor(x => x.YearOfGraduation, "", new { @class = "form-control" })
-                        @Html.ValidationMessage("YearOfGraduation", new { @class = "text-danger" })
+                        @Html.ValidationMessage("Year", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -87,13 +93,11 @@
                         @Html.Label("Школа", new { @class = "control-label" })
                         <br />
                         @Html.DropDownList("School", (IEnumerable<SelectListItem>)ViewData["Schools"], new { @class = "form-control" })
-                        @Html.ValidationMessage("School", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.Label("Программа поступления", new { @class = "control-label" })
                         <br />
-                        @Html.DropDownListFor(x => x.EnterProgram, (IEnumerable<SelectListItem>)ViewData["Programs"], new { @class = "form-control" })
-                        @Html.ValidationMessage("EnterProgram", new { @class = "text-danger" })
+                        @Html.DropDownList("EnterProgram", (IEnumerable<SelectListItem>)ViewData["NullablePrograms"], new { @class = "form-control" })
                     </div>
                 </div>
             </div>
@@ -106,7 +110,6 @@
                             @Html.Label("Интересующие программы", new { @class = "control-label" })
                             <br />
                             @Html.ListBox("IntrestingPrograms", (IEnumerable<SelectListItem>)ViewData["Programs"], new { @class = "form-control" })
-                            @Html.ValidationMessage("IntrestingPrograms", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -116,7 +119,6 @@
                             @Html.Label("Программы подачи документов", new { @class = "control-label" })
                             <br />
                             @Html.ListBox("RegistrarionPrograms", (IEnumerable<SelectListItem>)ViewData["Programs"], new { @class = "form-control" })
-                            @Html.ValidationMessage("RegistrarionPrograms", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

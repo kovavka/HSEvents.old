@@ -12,13 +12,8 @@ using HSEvents.Web.Api;
 
 namespace HSEvents.Web.Controllers
 {
-    public class EventsController : BaseController<Event>
+    public class EventsController : BaseController
     {
-        public EventsController() : base("api/EventNH/GetAll")
-        {
-            
-        }
-
         // GET: Event
         public ActionResult Index()
         {
@@ -30,38 +25,6 @@ namespace HSEvents.Web.Controllers
         {
 
             return View();
-        }
-    }
-
-    public class BaseController<T> : Controller where T:IEntity
-    {
-        private readonly string serviceUrl = "http://localhost:58724";
-        private readonly string address;
-
-        public BaseController(string address)
-        {
-            this.address = address;
-        }
-
-        protected HttpClient CreateClient()
-        {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(serviceUrl);
-            client.Timeout = TimeSpan.FromMinutes(10);
-            client.DefaultRequestHeaders.Accept.Clear();
-            return client;
-        }
-
-        protected IEnumerable<T> GetAll()
-        {
-            using (var client = CreateClient())
-            {
-                var response = client.GetAsync(address).Result;
-
-                var result = response.Content.ReadAsAsync<IEnumerable<T>>().Result;
-
-                return result;
-            }
         }
     }
 }

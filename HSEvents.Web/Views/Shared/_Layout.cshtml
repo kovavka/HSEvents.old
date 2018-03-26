@@ -1,5 +1,4 @@
-﻿@model Domain.User
-
+﻿@using Domain
 <!DOCTYPE html>
 <html>
 @RenderSection("styles", false);
@@ -33,16 +32,20 @@
                 <li>@Html.ActionLink("Участники", "Index", "Attendees", new { area = "" }, null)</li>
                 <li>@Html.ActionLink("Отчеты", "Index", "Reports", new { area = "" }, null)</li>
                 
-                @if (Model != null && Model.IsAdmin)
+                @{
+                    var user = (User) ViewBag.User;
+                }
+
+                @if (user != null && user.IsAdmin)
                 {
                     <li>@Html.ActionLink("Пользователи", "Index", "Users", new {area = ""}, null)</li>
                 }
             </ul>
             
             <ul class="nav navbar-nav pull-right">
-                @if (Model != null)
+                @if (user != null)
                 {
-                    <li><a>@Model.Login</a></li>
+                    <li><a>@user.Login</a></li>
                     <li>@Html.ActionLink("Выход", "Logout", "Account", new { area = "" }, null)</li>
                 }
                 else

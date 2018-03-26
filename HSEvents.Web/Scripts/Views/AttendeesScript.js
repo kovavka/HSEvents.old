@@ -6,3 +6,7 @@
     else
         document.querySelector('#pupilItems').style.visibility = "hidden";
 }
+
+function openAttendee(index) {
+    location.href = "/Attendees/Edit?id=" + index;
+}

@@ -15,6 +15,8 @@ namespace HSEvents.Web.Controllers
 
             Auth.HttpContext = context;
             context.User = Auth.CurrentUser;
+
+            ViewBag.User = CurrentUser;
         }
         
         [Dependency]

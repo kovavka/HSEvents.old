@@ -13,12 +13,12 @@ using Infrastructure.Repositories;
 
 namespace HSEvents.Web.Controllers
 {
-    public class AttendeesController : Controller
+    public class AttendeesController : BaseController
     {
         [HttpGet]
         public ActionResult Index()
         {
-            ViewData["Attendees"]="";
+            ViewData["Attendees"]= new NHGetAllRepository<Attendee>().GetAll().ToList();
             return View();
         }
         
@@ -26,24 +26,80 @@ namespace HSEvents.Web.Controllers
         public ActionResult Edit(int id)
         {
             var attendee = new NHRepository<Attendee>().Get(id);
-            if (attendee.Type==AttendeeType.Pupil)
+            if (attendee.Type == AttendeeType.Pupil)
+            {
+                var schools = new NHGetAllRepository<School>().GetAll().ToList();
+
+                ViewData["Schools"] = new SelectList(schools, "Id", "Name");
+
+                var programs = new NHGetAllRepository<AcademicProgram>().GetAll().ToList();
+                ViewData["Programs"] = new SelectList(programs, "Id", "Name");
+
+                var list = new AcademicProgram { Id = -1, Name = "не выбрано" }.AsEnumerable().Concat(programs).ToList();
+                ViewData["NullablePrograms"] = new SelectList(list, "Id", "Name");
+
                 return View("EditPupil", attendee as Pupil);
+            }
             
             return View(attendee);
         }
 
         [HttpPost]
-        public ActionResult EditPupil(Pupil pupil)
+        public ActionResult EditPupil(Pupil pupil, int school, IEnumerable<int> intrestingPrograms,
+            IEnumerable<int> registrarionPrograms, int enterProgram)
         {
-            return View();
+            var schools = new NHGetAllRepository<School>().GetAll().ToList();
 
+            ViewData["Schools"] = new SelectList(schools, "Id", "Name");
+
+            var programs = new NHGetAllRepository<AcademicProgram>().GetAll().ToList();
+            ViewData["Programs"] = new SelectList(programs, "Id", "Name");
+
+            var list = new AcademicProgram {Id = -1, Name = "не выбрано"}.AsEnumerable().Concat(programs).ToList();
+            ViewData["NullablePrograms"] = new SelectList(list, "Id", "Name");
+
+
+            if (pupil.ContactInfo.FullName.IsNullOrEmpty())
+                ModelState.AddModelError("FullName", "Введите ФИО");
+            if (!pupil.ContactInfo.Email.IsCorrectEmail())
+                ModelState.AddModelError("Email", "Неверный формат Email");
+            if (!pupil.ContactInfo.PhoneNumber.IsCorrectPhone())
+                ModelState.AddModelError("PhoneNumber", "Неверный формат номера");
+            if (pupil.YearOfGraduation <= 2010 || pupil.YearOfGraduation >= 2030)
+                ModelState.AddModelError("Year", "Неверный формат года");
+
+            if (!ModelState.IsValid)
+                return View();
+
+
+            pupil.School = new NHRepository<School>().Get(school);
+            pupil.EnterProgram = enterProgram != -1 ? new NHRepository<AcademicProgram>().Get(enterProgram) : null;
+
+            pupil.IntrestingPrograms = GetPrograms(intrestingPrograms).ToList();
+            pupil.RegistrarionPrograms = GetPrograms(registrarionPrograms).ToList();
+
+            new NHRepository<Pupil>().Update(pupil);
+
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Edit(Attendee attendee)
         {
-            return View();
+            if (attendee.ContactInfo.FullName.IsNullOrEmpty())
+                ModelState.AddModelError("FullName", "Введите ФИО");
+            if (!attendee.ContactInfo.Email.IsCorrectEmail())
+                ModelState.AddModelError("Email", "Неверный формат Email");
+            if (!attendee.ContactInfo.PhoneNumber.IsCorrectPhone())
+                ModelState.AddModelError("PhoneNumber", "Неверный формат номера");
 
+            if (!ModelState.IsValid)
+                return View();
+            
+            new NHRepository<Attendee>().Update(attendee);
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -56,21 +112,24 @@ namespace HSEvents.Web.Controllers
             var programs = new NHGetAllRepository<AcademicProgram>().GetAll().ToList();
             ViewData["Programs"] = new SelectList(programs, "Id", "Name");
 
+            var list = new AcademicProgram {Id = -1, Name = "не выбрано"}.AsEnumerable().Concat(programs).ToList();
+            ViewData["NullablePrograms"] = new SelectList(list, "Id", "Name");
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Add(Pupil pupil, int school, IEnumerable<int> intrestingPrograms, IEnumerable<int> registrarionPrograms)
+        public ActionResult Add(Pupil pupil, int school, IEnumerable<int> intrestingPrograms, IEnumerable<int> registrarionPrograms, int enterProgram)
         {
-
             var schools = new NHGetAllRepository<School>().GetAll().ToList();
 
             ViewData["Schools"] = new SelectList(schools, "Id", "Name");
 
-
             var programs = new NHGetAllRepository<AcademicProgram>().GetAll().ToList();
             ViewData["Programs"] = new SelectList(programs, "Id", "Name");
 
+            var list = new AcademicProgram { Id = -1, Name = "не выбрано" }.AsEnumerable().Concat(programs).ToList();
+            ViewData["NullablePrograms"] = new SelectList(list, "Id", "Name");
 
 
 
@@ -80,6 +139,8 @@ namespace HSEvents.Web.Controllers
                 ModelState.AddModelError("Email", "Неверный формат Email");
             if (!pupil.ContactInfo.PhoneNumber.IsCorrectPhone())
                 ModelState.AddModelError("PhoneNumber", "Неверный формат номера");
+            if ((pupil.YearOfGraduation<=2010 || pupil.YearOfGraduation >= 2030) && pupil.Type == AttendeeType.Pupil)
+                ModelState.AddModelError("Year", "Неверный формат года");
 
             if (!ModelState.IsValid)
                 return View();
@@ -87,6 +148,13 @@ namespace HSEvents.Web.Controllers
 
             if (pupil.Type == AttendeeType.Pupil)
             {
+                pupil.School = new NHRepository<School>().Get(school);
+                if (enterProgram != -1)
+                    pupil.EnterProgram = new NHRepository<AcademicProgram>().Get(enterProgram);
+
+                pupil.IntrestingPrograms = GetPrograms(intrestingPrograms).ToList();
+                pupil.RegistrarionPrograms = GetPrograms(registrarionPrograms).ToList();
+
                 new NHRepository<Pupil>().Add(pupil);
             }
             else
@@ -100,8 +168,15 @@ namespace HSEvents.Web.Controllers
             }
 
 
-            return View();
+            return RedirectToAction("Index");
+        }
 
+        private IEnumerable<AcademicProgram> GetPrograms(IEnumerable<int> programs)
+        {
+            foreach (var program in programs)
+            {
+               yield return new NHRepository<AcademicProgram>().Get(program);
+            }
         }
 
         [HttpPost]
