@@ -24,7 +24,7 @@ namespace Infrastructure
         {
             ISessionFactory sessionFactory = Fluently.Configure()
                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(
-                        @"Server=.\SQLExpress; Initial Catalog=HSEvents; Integrated Security=SSPI;")
+                        @"Server=.; Initial Catalog=HSEvents; Integrated Security=SSPI;")
                     .ShowSql()
                 )
                 .Mappings(m => m.FluentMappings.Conventions.AddFromAssemblyOf<EnumConvention>())
