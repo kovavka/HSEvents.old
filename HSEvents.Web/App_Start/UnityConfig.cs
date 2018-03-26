@@ -27,7 +27,8 @@ namespace HSEvents.Web
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IAuthentication, CustomAuthentication>();
             container.RegisterType<IGetAllRepository<Attendee>, NHGetAllRepository<Attendee>>();
-            
+            container.RegisterType<IGetAllRepository<User>, NHGetAllRepository<User>>();
+
 
             return container;
         }

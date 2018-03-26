@@ -18,21 +18,25 @@
                 <th>Email</th>
                 <th>Должность</th>
                 <th>Администратор</th>
+                <th>Подтвержден</th>
             </tr>
         </thead>
 
         <tbody id="reportBody">
             @foreach (var user in data)
             {
+                var id1 = "role" + user.Id;
+                var id2 = "access" + user.Id;
                 <tr>
                     <td>@user.ContactInfo.FullName</td>
                     <td>@user.ContactInfo.PhoneNumber</td>
                     <td>@user.ContactInfo.Email</td>
                     <td>@user.Appointment</td>
-                    <td>@user.IsAdmin</td>
-                    <td>
+                    <td id='@id1'>@user.IsAdmin</td>
+                    <td id='@id2'>@user.Checked</td>
+                    <td style="border: none">
                         <input type="button" onclick="setAccess(@user.Id)" class="btn btn-default" value="Предоставить доступ" /></td>
-                    <td>
+                    <td style="border: none">
                         <input type="button" onclick="changeRole(@user.Id)" class="btn btn-default" value="Изменить роль" />
                     </td>
                 </tr>

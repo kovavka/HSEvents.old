@@ -1,68 +1,146 @@
-﻿
+﻿@using Common
+@using Domain.Events
+@model Domain.Events.Event
 @{
     ViewBag.Title = "Добавить мероприятие";
 }
+@section Styles {
+    <link href="@Url.Content("~/Content/ReportStyle.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/DirectoryStyle.css")" rel="stylesheet" type="text/css" />
+}
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/Views/EventScript.js")"></script>
+}
 
 
+@using (Html.BeginForm("Add", "Events", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <h2>Мероприятие</h2>
 
-
-        @using (Html.BeginForm("Add", "Events", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            <h2>Мероприятие</h2>
-
-            <hr class="brownhr" />
+    <hr/>
+    
+     <div class="form-group">
+     <row>
+         <div class="col-md-4">
+             <div class="form-group">
+                 @Html.Label("Тип мероприятия", new { @class = "control-label" })
+                 <br />
+                 @Html.DropDownListFor(x => x.Type, new List<SelectListItem>
+                 {
+                     new SelectListItem {Text="Курсы", Value="1"},
+                     new SelectListItem {Text="Олимпиада", Value="2" },
+                     new SelectListItem {Text="Работа со школами", Value="3"},
+                 }, new { @class = "form-control", id = "type" })
+             </div>
+         </div>
+         
+         <div class="col-md-4">
+             <div class="form-group">
+                 @Html.Label("Название", new { @class = "control-label" })
+                 <br />
+                 @Html.TextBoxFor(x=>x.Name, "", new { @class = "form-control" })
+                 @Html.ValidationMessage("Name", new { @class = "text-danger" })
+             </div>
+         </div>
+     </row>
+     </div>
 
             
-                                @Html.Label("Тип мероприятия", new { @class = "control-label" })
-                                <br />
-                                @Html.DropDownList("type", new List<SelectListItem>
-                        {
-                            new SelectListItem {Text="<не выбрано>", Value="0"},
-                            new SelectListItem {Text="Курсы", Value="1"},
-                             new SelectListItem {Text="Олимпиада", Value="2" },
-                            new SelectListItem {Text="Работа со школами", Value="3"},
-                        }, new { @class = "form-control", id = "type" })
-                                @Html.ValidationMessage("type", new { @class = "text-danger" })
-                           
-                    
-
-                    
-                       
-                            @Html.Label("Название", new { @class = "control-label" })
-                            <br />
-                            @Html.TextBox("name", "", new { @class = "form-control" })
-                            @Html.ValidationMessage("name", new { @class = "text-danger" })
-                           
-
-
-            
-                @Html.Label("Информация", new { @class = "control-label" })
-                <br />
-                @Html.TextArea("info", "", new { @class = "form-control", @style = "max-width:671px; height:100px" })
-                @Html.ValidationMessage("info", new { @class = "text-danger" })
+    <div style="margin-left: -15px">
+        @Html.Label("Информация", new { @class = "control-label" })
+        <br />
+        @Html.TextAreaFor(x=>x.Info, new { @class = "form-control", @style = "max-width:671px; height:100px" })
+        @Html.ValidationMessage("Info", new { @class = "text-danger" })
             
 
             
 
-                        <div>
-                                @Html.Label("Комментарий", new { @class = "control-label" })
-                                <br />
-                                @Html.TextArea("comment", "", new { @class = "form-control", @style = "max-width:671px; height:100px" })
-                                @Html.ValidationMessage("comment", new { @class = "text-danger" })
+        <div>
+            @Html.Label("Комментарий", new { @class = "control-label" })
+            <br />
+            @Html.TextAreaFor(x=>x.Comment,  new { @class = "form-control", @style = "max-width:671px; height:100px" })
+            @Html.ValidationMessage("Comment", new { @class = "text-danger" })
 
+        </div>
 
-                                <br />
+    </div>
 
+    <div class="form-group">
+        <row>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.Label("Организаторы", new { @class = "control-label" })
+                    <br />
+                    @Html.ListBox("Organizers", (IEnumerable<SelectListItem>)ViewData["Employees"], new { @class = "form-control" })
+    
+                </div>
+                <div class="form-group">
+                    @Html.Label("Лекторы", new { @class = "control-label" })
+                    <br />
+                    @Html.ListBox("Lecturers", (IEnumerable<SelectListItem>)ViewData["Employees"], new { @class = "form-control" })
 
-                                <div id="block">
+                </div>
+            </div>
+         
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.Label("Волонтеры", new { @class = "control-label" })
+                    <br />
+                    @Html.ListBox("Volunteers", (IEnumerable<SelectListItem>)ViewData["Volunteers"], new { @class = "form-control" })
+    
+                </div>
+                <div class="form-group">
+                     @Html.Label("Подразделения", new {@class = "control-label"})
+                    <br/>
+                    @Html.ListBox("Departments", (IEnumerable<SelectListItem>) ViewData["Departments"], new {@class = "form-control"})
 
-                                </div>
+                </div>
+            </div>
+        </row>
+    </div>
+   
 
-                                @Html.ValidationMessage("other", new { @class = "text-danger", id = "otherError" })
-                            </div>
-                            
-                                <input type="submit" class="btn btn-default" style="width:73%" value="Сохранить" />
-                          
+    @Html.Label("Проведение мероприятия", new { @class = "control-label" })
 
+    <input type="button" class="btn btn-default" value="Добавить" onclick="addExecution()" />
+
+    <table id="report" class="calendar">
+        <thead>
+        <tr>
+            <th>Даты</th>
+            <th>Адрес</th>
+        </tr>
+        </thead>
+
+        <tbody id="reportBody">
+        
+        @{
+            var data = (IEnumerable<EventExecution>) ViewData["EventExecutions"];
         }
+        @foreach (var execution in data.WithEnumerable())
+        {
+            var id = "row" + execution.Id;
+            <tr id='@id' ondblclick="openExecution(@execution.Id)">
+                <td>@string.Join(", ",execution.Dates.WithEnumerable().Select(x=>x.Date.ToShortDateString()))</td>
+                <td>@execution.Address</td>
+                
+                <td><input type="button" class="btn btn-default" value="Удалить" onclick="deleteExecution(@execution.Id)" /></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    
+
+   
+    <div id="modDialog" class="modal fade" >
+        <div id="dialogContent" class="modal-dialog"></div>
+    </div>
+
+    
+    
+    <div style="margin-left: -15px; margin-top: 25px">
+        <input type="submit" class="btn btn-default" style="width:73%" value="Сохранить" />
+    </div>
+
+}
         

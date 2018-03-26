@@ -1,0 +1,59 @@
+﻿<div class="modal-content" >
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h4>Проведение мероприятия</h4>
+    </div>
+    <div class="modal-body">
+    
+        <div class="col-lg-12">
+            @Html.Label("Адрес", new { @class = "control-label" })
+            <br />
+            @Html.DropDownList("Address", (IEnumerable<SelectListItem>)ViewData["Addresses"], new { @class = "form-control" })
+            
+            
+    
+            @Html.ValidationMessage("cityType", new { @class = "text-danger" })
+            <br />
+    
+        </div>
+        
+    
+        @Html.Label("Проведение мероприятия", new { @class = "control-label" })
+        
+        <br/>
+        @Html.Label("Дата", new { @class = "control-label" })
+        @Html.TextBox("Date", "", new { @class = "form-control" })
+        
+
+        @Html.Label("Время начала", new { @class = "control-label" })
+        @Html.TextBox("Start", "", new { @class = "form-control" })
+
+        
+        @Html.Label("Время окончания", new { @class = "control-label" })
+        @Html.TextBox("End", "", new { @class = "form-control" })
+
+        <input type="button" class="btn btn-default" value="Добавить" onclick="addDate()" />
+
+        
+        <table id="report" class="calendar">
+            <thead>
+            <tr>
+                <th>Даты</th>
+                <th>Адрес</th>
+            </tr>
+            </thead>
+
+            <tbody id="reportBody">
+            </tbody>
+        </table>
+        
+        @using (Html.BeginForm("AddExecution", "Events", FormMethod.Post, new {role = "form"}))
+        {
+            <div class="col-md-6">
+                <input type="button" class="btn btn-default" style="width: 73%" value="Сохранить" onclick='save("School")'/>
+            </div>
+        }
+        <br/>
+
+    </div>
+</div>
