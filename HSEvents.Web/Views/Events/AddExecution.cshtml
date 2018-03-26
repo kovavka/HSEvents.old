@@ -22,37 +22,38 @@
         
         <br/>
         @Html.Label("Дата", new { @class = "control-label" })
-        @Html.TextBox("Date", "", new { @class = "form-control" })
+        @Html.TextBox("Date", "12.12.2015", new { @class = "form-control" })
         
 
         @Html.Label("Время начала", new { @class = "control-label" })
-        @Html.TextBox("Start", "", new { @class = "form-control" })
+        @Html.TextBox("Start", "12:12", new { @class = "form-control" })
 
         
         @Html.Label("Время окончания", new { @class = "control-label" })
-        @Html.TextBox("End", "", new { @class = "form-control" })
+        @Html.TextBox("End", "12:13", new { @class = "form-control" })
 
         <input type="button" class="btn btn-default" value="Добавить" onclick="addDate()" />
 
         
-        <table id="report" class="calendar">
+        <table id="dates" class="calendar">
             <thead>
             <tr>
-                <th>Даты</th>
-                <th>Адрес</th>
+                <th>Дата</th>
+                <th>Время начала</th>
+                <th>Время окончания</th>
             </tr>
             </thead>
 
-            <tbody id="reportBody">
+            <tbody id="datesBody">
             </tbody>
         </table>
         
-        @using (Html.BeginForm("AddExecution", "Events", FormMethod.Post, new {role = "form"}))
-        {
+        <br/>
+
             <div class="col-md-6">
-                <input type="button" class="btn btn-default" style="width: 73%" value="Сохранить" onclick='save("School")'/>
+                <input type="button" class="btn btn-default" style="width: 73%" value="Сохранить" onclick='saveExecution()'/>
             </div>
-        }
+      
         <br/>
 
     </div>

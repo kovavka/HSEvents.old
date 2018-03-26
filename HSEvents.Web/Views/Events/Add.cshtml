@@ -104,7 +104,7 @@
 
     <input type="button" class="btn btn-default" value="Добавить" onclick="addExecution()" />
 
-    <table id="report" class="calendar">
+    <table id="execution" class="calendar">
         <thead>
         <tr>
             <th>Даты</th>
@@ -112,7 +112,7 @@
         </tr>
         </thead>
 
-        <tbody id="reportBody">
+        <tbody id="executionBody">
         
         @{
             var data = (IEnumerable<EventExecution>) ViewData["EventExecutions"];
@@ -139,7 +139,7 @@
     
     
     <div style="margin-left: -15px; margin-top: 25px">
-        <input type="submit" class="btn btn-default" style="width:73%" value="Сохранить" />
+        <input type="submit" class="btn btn-default" style="width:73%" value="Сохранить" onclick="addEvent()"/>
     </div>
 
 }
