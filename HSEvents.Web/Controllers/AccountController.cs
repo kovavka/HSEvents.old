@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Domain;
 using Common;
+using Infrastructure;
 using Infrastructure.Repositories;
 using Unity.Attributes;
 
@@ -83,6 +84,8 @@ namespace HSEvents.Web.Controllers
 
             if (!ModelState.IsValid)
                 return View();
+
+            user.Password = PasswordHelper.GetHash(user.Password);
 
             repository.Add(user);
 

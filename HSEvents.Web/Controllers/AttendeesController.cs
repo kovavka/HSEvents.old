@@ -60,8 +60,20 @@ namespace HSEvents.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Pupil pupil)
+        public ActionResult Add(Pupil pupil, int school, IEnumerable<int> intrestingPrograms, IEnumerable<int> registrarionPrograms)
         {
+
+            var schools = new NHGetAllRepository<School>().GetAll().ToList();
+
+            ViewData["Schools"] = new SelectList(schools, "Id", "Name");
+
+
+            var programs = new NHGetAllRepository<AcademicProgram>().GetAll().ToList();
+            ViewData["Programs"] = new SelectList(programs, "Id", "Name");
+
+
+
+
             if (pupil.ContactInfo.FullName.IsNullOrEmpty())
                 ModelState.AddModelError("FullName", "Введите ФИО");
             if (!pupil.ContactInfo.Email.IsCorrectEmail())
