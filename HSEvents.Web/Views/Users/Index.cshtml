@@ -1,1 +1,42 @@
-﻿
+﻿@using Domain
+@section Styles {
+    <link href="@Url.Content("~/Content/ReportStyle.css")" rel="stylesheet" type="text/css" />
+}
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/Views/UsersScript.js")"></script>
+}
+
+
+@if (ViewData["Users"] != null)
+{
+    var data = (IEnumerable<User>)ViewData["Users"];
+    <table id="report" class="calendar">
+        <thead>
+            <tr>
+                <th>ФИО</th>
+                <th>Телефон</th>
+                <th>Email</th>
+                <th>Должность</th>
+                <th>Администратор</th>
+            </tr>
+        </thead>
+
+        <tbody id="reportBody">
+            @foreach (var user in data)
+            {
+                <tr>
+                    <td>@user.ContactInfo.FullName</td>
+                    <td>@user.ContactInfo.PhoneNumber</td>
+                    <td>@user.ContactInfo.Email</td>
+                    <td>@user.Appointment</td>
+                    <td>@user.IsAdmin</td>
+                    <td>
+                        <input type="button" onclick="setAccess(@user.Id)" class="btn btn-default" value="Предоставить доступ" /></td>
+                    <td>
+                        <input type="button" onclick="changeRole(@user.Id)" class="btn btn-default" value="Изменить роль" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

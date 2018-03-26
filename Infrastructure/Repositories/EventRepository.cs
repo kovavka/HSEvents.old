@@ -80,6 +80,9 @@ namespace Infrastructure.Repositories
             return 0;
         }
 
+        public void Dispose()
+        {
+        }
     }
 
     public class CourseRepository : NHRepository<Course>

@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Domain.IEntity;
 using NHibernate;
 using NHibernate.Linq;
 
 namespace Infrastructure.Repositories
 {
-    public interface IRepository<T> where T:IEntity
+    public interface IRepository<T>:IDisposable where T:IEntity
     {
         T Get(int id);
         void Delete(int id);
@@ -60,6 +61,11 @@ namespace Infrastructure.Repositories
             }
 
             return result;
+        }
+
+        public void Dispose()
+        {
+            session.Close();
         }
 
         public void Close()

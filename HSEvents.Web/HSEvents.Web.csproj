@@ -296,6 +296,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Views\UsersScript.js" />
     <Content Include="Scripts\Views\AttendeesScript.js" />
     <Content Include="Scripts\Views\ReportsScript.js" />
     <Content Include="Scripts\Views\DirectoryScript.js" />

@@ -36,5 +36,9 @@ namespace Common
             return evaluatingFunc(input);
         }
 
+        public static IEnumerable<T> WithEnumerable<T>(this IEnumerable<T> source)
+        {
+            return source ?? Enumerable.Empty<T>();
+        }
     }
 }

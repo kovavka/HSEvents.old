@@ -28,17 +28,29 @@ namespace HSEvents.Web.Controllers
             var attendee = new NHRepository<Attendee>().Get(id);
             if (attendee.Type == AttendeeType.Pupil)
             {
-                var schools = new NHGetAllRepository<School>().GetAll().ToList();
+                List<School> schools;
+                using (var repository = new NHGetAllRepository<School>())
+                {
+                    schools = repository.GetAll().ToList();
+                }
 
                 ViewData["Schools"] = new SelectList(schools, "Id", "Name");
 
-                var programs = new NHGetAllRepository<AcademicProgram>().GetAll().ToList();
+                List<AcademicProgram> programs;
+                using (var repository = new NHGetAllRepository<AcademicProgram>())
+                {
+                    programs = repository.GetAll().ToList();
+                }
+
                 ViewData["Programs"] = new SelectList(programs, "Id", "Name");
 
                 var list = new AcademicProgram { Id = -1, Name = "не выбрано" }.AsEnumerable().Concat(programs).ToList();
                 ViewData["NullablePrograms"] = new SelectList(list, "Id", "Name");
 
-                return View("EditPupil", attendee as Pupil);
+
+                var pupil = attendee as Pupil;
+                
+                return View("EditPupil", pupil);
             }
             
             return View(attendee);
@@ -48,40 +60,70 @@ namespace HSEvents.Web.Controllers
         public ActionResult EditPupil(Pupil pupil, int school, IEnumerable<int> intrestingPrograms,
             IEnumerable<int> registrarionPrograms, int enterProgram)
         {
-            var schools = new NHGetAllRepository<School>().GetAll().ToList();
+            List<School> schools;
+            using (var repository= new NHGetAllRepository<School>())
+            {
+                schools= repository.GetAll().ToList();
+            }
 
             ViewData["Schools"] = new SelectList(schools, "Id", "Name");
 
-            var programs = new NHGetAllRepository<AcademicProgram>().GetAll().ToList();
+            List<AcademicProgram> programs;
+            using (var repository = new NHGetAllRepository<AcademicProgram>())
+            {
+                programs = repository.GetAll().ToList();
+            }
+            
             ViewData["Programs"] = new SelectList(programs, "Id", "Name");
 
             var list = new AcademicProgram {Id = -1, Name = "не выбрано"}.AsEnumerable().Concat(programs).ToList();
-            ViewData["NullablePrograms"] = new SelectList(list, "Id", "Name");
+             ViewData["NullablePrograms"] = new SelectList(list, "Id", "Name");
 
+            IsValid = true;
 
             if (pupil.ContactInfo.FullName.IsNullOrEmpty())
-                ModelState.AddModelError("FullName", "Введите ФИО");
+                AddModelError("FullName", "Введите ФИО");
             if (!pupil.ContactInfo.Email.IsCorrectEmail())
-                ModelState.AddModelError("Email", "Неверный формат Email");
+                AddModelError("Email", "Неверный формат Email");
             if (!pupil.ContactInfo.PhoneNumber.IsCorrectPhone())
-                ModelState.AddModelError("PhoneNumber", "Неверный формат номера");
+                AddModelError("PhoneNumber", "Неверный формат номера");
             if (pupil.YearOfGraduation <= 2010 || pupil.YearOfGraduation >= 2030)
-                ModelState.AddModelError("Year", "Неверный формат года");
+                AddModelError("Year", "Неверный формат года");
 
-            if (!ModelState.IsValid)
+            if (!IsValid)
                 return View();
 
+            using (var repository = new NHRepository<School>())
+            {
+                pupil.School = repository.Get(school);
+            }
 
-            pupil.School = new NHRepository<School>().Get(school);
-            pupil.EnterProgram = enterProgram != -1 ? new NHRepository<AcademicProgram>().Get(enterProgram) : null;
+            if (enterProgram == -1)
+                pupil.EnterProgram = null;
+            else
+            {
+                using (var repository = new NHRepository<AcademicProgram>())
+                {
+                    pupil.EnterProgram = repository.Get(enterProgram);
+                }
+            }
 
             pupil.IntrestingPrograms = GetPrograms(intrestingPrograms).ToList();
             pupil.RegistrarionPrograms = GetPrograms(registrarionPrograms).ToList();
+
+            pupil.Type = AttendeeType.Pupil;
 
             new NHRepository<Pupil>().Update(pupil);
 
 
             return RedirectToAction("Index");
+        }
+
+        private bool IsValid;
+        private void AddModelError(string key, string message)
+        {
+            ModelState.AddModelError(key, message);
+            IsValid = false;
         }
 
         [HttpPost]
@@ -131,26 +173,35 @@ namespace HSEvents.Web.Controllers
             var list = new AcademicProgram { Id = -1, Name = "не выбрано" }.AsEnumerable().Concat(programs).ToList();
             ViewData["NullablePrograms"] = new SelectList(list, "Id", "Name");
 
-
+            IsValid = true;
 
             if (pupil.ContactInfo.FullName.IsNullOrEmpty())
-                ModelState.AddModelError("FullName", "Введите ФИО");
+                AddModelError("FullName", "Введите ФИО");
             if (!pupil.ContactInfo.Email.IsCorrectEmail())
-                ModelState.AddModelError("Email", "Неверный формат Email");
+                AddModelError("Email", "Неверный формат Email");
             if (!pupil.ContactInfo.PhoneNumber.IsCorrectPhone())
-                ModelState.AddModelError("PhoneNumber", "Неверный формат номера");
+                AddModelError("PhoneNumber", "Неверный формат номера");
             if ((pupil.YearOfGraduation<=2010 || pupil.YearOfGraduation >= 2030) && pupil.Type == AttendeeType.Pupil)
-                ModelState.AddModelError("Year", "Неверный формат года");
+                AddModelError("Year", "Неверный формат года");
 
-            if (!ModelState.IsValid)
+            if (!IsValid)
                 return View();
 
 
             if (pupil.Type == AttendeeType.Pupil)
             {
-                pupil.School = new NHRepository<School>().Get(school);
+                using (var repository = new NHRepository<School>())
+                {
+                    pupil.School = repository.Get(school);
+                }
+
                 if (enterProgram != -1)
-                    pupil.EnterProgram = new NHRepository<AcademicProgram>().Get(enterProgram);
+                {
+                    using (var repository = new NHRepository<AcademicProgram>())
+                    {
+                        pupil.EnterProgram = repository.Get(enterProgram);
+                    }
+                }
 
                 pupil.IntrestingPrograms = GetPrograms(intrestingPrograms).ToList();
                 pupil.RegistrarionPrograms = GetPrograms(registrarionPrograms).ToList();
@@ -173,18 +224,21 @@ namespace HSEvents.Web.Controllers
 
         private IEnumerable<AcademicProgram> GetPrograms(IEnumerable<int> programs)
         {
-            foreach (var program in programs)
+            foreach (var program in programs.WithEnumerable())
             {
-               yield return new NHRepository<AcademicProgram>().Get(program);
+                using (var repository = new NHRepository<AcademicProgram>())
+                {
+                    yield return repository.Get(program);
+                }
             }
         }
 
         [HttpPost]
         public ActionResult Save()
         {
-            var data = (List<Attendee>)ViewData["Import"];
+            var data = (IEnumerable<Attendee>)TempData["Import"];
 
-            var repository=new NHRepository<Attendee>();
+            var repository = new NHRepository<Attendee>();
             foreach (var attendee in data)
             {
                 repository.Add(attendee);
@@ -217,6 +271,7 @@ namespace HSEvents.Web.Controllers
             }
 
             ViewData["Import"] = ReadFile(file).ToList();
+            TempData["Import"] = ViewData["Import"];
 
             return View();
         }
@@ -281,6 +336,7 @@ namespace HSEvents.Web.Controllers
                     element = new Attendee();
                 }
 
+                element.Type = type;
                 element.ContactInfo.FullName = (string) excelApp.Cells[1, column].Value.ToString();
 
                 var email = (string) excelApp.Cells[4, column].Value.ToString();
