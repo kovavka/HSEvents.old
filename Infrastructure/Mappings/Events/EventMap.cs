@@ -27,9 +27,10 @@ namespace Infrastructure.Mappings.Events
             HasManyToMany(x => x.Lecturers).AsBag().Cascade.SaveUpdate().Table("Lecturer");
             HasManyToMany(x => x.Departments).AsBag().Cascade.SaveUpdate().Table("DepartmentInfo");
             HasMany(x => x.AttendanceInfo).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_AttendanceInfo_Event");
-            HasMany(x => x.EventExecutions).AsBag().Cascade.AllDeleteOrphan().ForeignKeyConstraintName("FK_EventExecution_Event").Inverse()
-                .Table("EventExecution")
-                .KeyColumn("Event_Id");
+            HasMany(x => x.EventExecutions)
+                .AsBag()
+                .Cascade.AllDeleteOrphan()
+                .ForeignKeyConstraintName("FK_EventExecution_Event");
         }
     }
     

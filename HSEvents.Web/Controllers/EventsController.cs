@@ -76,25 +76,43 @@ namespace HSEvents.Web.Controllers
             @event.Volunteers = Parse<Volunteer>(lecturers).ToList();
             @event.Volunteers = Parse<Volunteer>(departments).ToList();
 
+            
+
+            if (EventExecution != null)
+            {
+
+                @event.EventExecutions = ParseEventExecutions(EventExecution).ToList();
+                
+            }
+
             using (var repository = new NHRepository<Event>())
             {
                 repository.Add(@event);
             }
 
-            if (EventExecution != null)
-            {
-                @event.EventExecutions = EventExecution;
-
-                using (var repository = new NHRepository<Event>())
-                {
-                    repository.Update(@event);
-                }
-            }
             EventExecution.Clear();
 
             return RedirectToAction("Index");
         }
-        
+
+
+        private IEnumerable<EventExecution> ParseEventExecutions(IEnumerable<EventExecution> data)
+        {
+            foreach (var execution in data.WithEnumerable())
+            {
+                Address address;
+
+                using (var repository = new NHRepository<Address>())
+                {
+                    address = repository.Get(execution.Address.Id);
+                }
+                
+
+                execution.Address = address;
+
+                yield return execution;
+            }
+        }
 
         private IEnumerable<T> Parse<T>(IEnumerable<int> data) where T:IEntity
         {
@@ -132,19 +150,10 @@ namespace HSEvents.Web.Controllers
         [HttpPost]
         public ActionResult GetExecution(int address, Jsdate[] data)
         {
-            Address ad;
-            int a;
-
-            using (var repository = new NHRepository<Address>())
-            {
-                ad = repository.Get(address);
-                a = ad.Id;
-            }
-
             var result =
                 new EventExecution()
                 {
-                    Address = ad,
+                    Address = new NHRepository<Address>().Get(address),
                     Dates = Parse(data).ToList()
                 };
 
@@ -164,8 +173,8 @@ namespace HSEvents.Web.Controllers
                 yield return new EventDate()
                 {
                     Date = t,
-                    StartTime = new TimeSpan(12,34,0),
-                    EndTime = new TimeSpan(12, 34, 0)
+                    StartTime = new DateTime(1970, 1, 1, 5, 0, 0).AddMilliseconds(jsdate.startTime).TimeOfDay,
+                    EndTime = new DateTime(1970, 1, 1, 5, 0, 0).AddMilliseconds(jsdate.endTime).TimeOfDay
                 };
             }
         }

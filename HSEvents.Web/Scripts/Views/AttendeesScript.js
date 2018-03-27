@@ -10,3 +10,7 @@
 function openAttendee(index) {
     location.href = "/Attendees/Edit?id=" + index;
 }
+
+function deleteAttendee(index) {
+    location.href = "/Attendees/Delete?id=" + index;
+}

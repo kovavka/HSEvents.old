@@ -63,12 +63,17 @@
     <Compile Include="Repositories\EventRepository.cs" />
     <Compile Include="Repositories\IGetAllRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\PupilRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{D75BA873-D24B-480F-8EF6-150428809A2B}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{C72149FD-CA39-418C-8B7D-F1F43E1182E9}</Project>
       <Name>Domain</Name>

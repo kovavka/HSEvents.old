@@ -34,6 +34,8 @@
                 <td>@attendee.ContactInfo.PhoneNumber</td>
                 <td>@attendee.ContactInfo.Email</td>
                 <td>@attendee.Type.GetDescription()</td>
+                <td style="border: none">
+                    <input type="button" onclick="deleteAttendee(@attendee.Id)" class="btn btn-default" value="Удалить" /></td>
             </tr>
         }
         </tbody>

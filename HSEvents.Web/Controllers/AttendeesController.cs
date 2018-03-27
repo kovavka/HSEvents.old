@@ -92,29 +92,9 @@ namespace HSEvents.Web.Controllers
 
             if (!IsValid)
                 return View();
+            
 
-            using (var repository = new NHRepository<School>())
-            {
-                pupil.School = repository.Get(school);
-            }
-
-            if (enterProgram == -1)
-                pupil.EnterProgram = null;
-            else
-            {
-                using (var repository = new NHRepository<AcademicProgram>())
-                {
-                    pupil.EnterProgram = repository.Get(enterProgram);
-                }
-            }
-
-            pupil.IntrestingPrograms = GetPrograms(intrestingPrograms).ToList();
-            pupil.RegistrarionPrograms = GetPrograms(registrarionPrograms).ToList();
-
-            pupil.Type = AttendeeType.Pupil;
-
-            new NHRepository<Pupil>().Update(pupil);
-
+            new PupilRepository().Update(pupil, school, intrestingPrograms, registrarionPrograms, enterProgram);
 
             return RedirectToAction("Index");
         }
@@ -147,11 +127,20 @@ namespace HSEvents.Web.Controllers
         [HttpGet]
         public ActionResult Add()
         {
-            var schools = new NHGetAllRepository<School>().GetAll().ToList();
+            List<School> schools;
+            using (var repository = new NHGetAllRepository<School>())
+            {
+                schools = repository.GetAll().ToList();
+            }
+
             ViewData["Schools"] = new SelectList(schools, "Id", "Name");
 
+            List<AcademicProgram> programs;
+            using (var repository = new NHGetAllRepository<AcademicProgram>())
+            {
+                programs = repository.GetAll().ToList();
+            }
 
-            var programs = new NHGetAllRepository<AcademicProgram>().GetAll().ToList();
             ViewData["Programs"] = new SelectList(programs, "Id", "Name");
 
             var list = new AcademicProgram {Id = -1, Name = "не выбрано"}.AsEnumerable().Concat(programs).ToList();
@@ -160,14 +149,28 @@ namespace HSEvents.Web.Controllers
             return View();
         }
 
+        public ActionResult Delete(int id)
+        {
+            new NHRepository<Attendee>().Delete(id);
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult Add(Pupil pupil, int school, IEnumerable<int> intrestingPrograms, IEnumerable<int> registrarionPrograms, int enterProgram)
         {
-            var schools = new NHGetAllRepository<School>().GetAll().ToList();
+            List<School> schools;
+            using (var repository = new NHGetAllRepository<School>())
+            {
+                schools = repository.GetAll().ToList();
+            }
 
             ViewData["Schools"] = new SelectList(schools, "Id", "Name");
 
-            var programs = new NHGetAllRepository<AcademicProgram>().GetAll().ToList();
+            List<AcademicProgram> programs;
+            using (var repository = new NHGetAllRepository<AcademicProgram>())
+            {
+                programs = repository.GetAll().ToList();
+            }
             ViewData["Programs"] = new SelectList(programs, "Id", "Name");
 
             var list = new AcademicProgram { Id = -1, Name = "не выбрано" }.AsEnumerable().Concat(programs).ToList();
@@ -190,23 +193,7 @@ namespace HSEvents.Web.Controllers
 
             if (pupil.Type == AttendeeType.Pupil)
             {
-                using (var repository = new NHRepository<School>())
-                {
-                    pupil.School = repository.Get(school);
-                }
-
-                if (enterProgram != -1)
-                {
-                    using (var repository = new NHRepository<AcademicProgram>())
-                    {
-                        pupil.EnterProgram = repository.Get(enterProgram);
-                    }
-                }
-
-                pupil.IntrestingPrograms = GetPrograms(intrestingPrograms).ToList();
-                pupil.RegistrarionPrograms = GetPrograms(registrarionPrograms).ToList();
-
-                new NHRepository<Pupil>().Add(pupil);
+              new  PupilRepository().Save(pupil, school, intrestingPrograms, registrarionPrograms, enterProgram);
             }
             else
             {
@@ -220,17 +207,6 @@ namespace HSEvents.Web.Controllers
 
 
             return RedirectToAction("Index");
-        }
-
-        private IEnumerable<AcademicProgram> GetPrograms(IEnumerable<int> programs)
-        {
-            foreach (var program in programs.WithEnumerable())
-            {
-                using (var repository = new NHRepository<AcademicProgram>())
-                {
-                    yield return repository.Get(program);
-                }
-            }
         }
 
         [HttpPost]
@@ -310,7 +286,11 @@ namespace HSEvents.Web.Controllers
                     if (!int.TryParse((string) excelApp.Cells[7, column].Value.ToString(), out id))
                         continue;
 
-                    var school = new NHRepository<School>().Get(id);
+                    School school;
+                    using (var repository = new NHRepository<School>())
+                    {
+                        school = repository.Get(id);
+                    }
                     
                     str = (string)excelApp.Cells[5, column].Value.ToString();
                     Sex sex;

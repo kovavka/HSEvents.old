@@ -25,119 +25,41 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            DataBaseHelper.ReBuildDB();
+            //DataBaseHelper.ReBuildDB();
 
 
             var session = NHibernateHelper.OpenSession();
-            var add = session.Get<Address>(2);
-            var ex = new EventExecution()
+
+
+
+            var school = session.Get<School>(2);
+            var prog2 = session.Get<AcademicProgram>(2);
+            var prog1 = session.Get<AcademicProgram>(1);
+
+            var pupil = new Pupil()
             {
-                Address = add,
-                Dates = new List<EventDate>()
-                {
-                    new EventDate()
-                    {
-                        Date = new DateTime(2017, 12, 3),
-                        StartTime = new TimeSpan(1, 2, 3),
-                        EndTime = new TimeSpan(2, 3, 4)
-                    }
-                }
-            };
-            var ev = new SchoolWork()
-            {
-                Name = "dd",
-                Info = "fsdfge",
-                Type = EventType.SchoolWork
-                
+                ContactInfo = new ContactInfo() {FullName = "fd"},
+                Sex = Sex.Female,
+                School = school,
+                IntrestingPrograms = new List<AcademicProgram>(){ prog1,prog2 },
+                RegistrarionPrograms = new List<AcademicProgram>() { prog2 }
             };
 
-           var trvsvd= session.Get<Event>(3);
-
-            session.Save(ev);
-
-            ev.Purchases=new List<Purchase>() { new Purchase() {Description = "dd", Price = 23}};
-            session.Update(ev);
+            session.Save(pupil);
             session.Flush();
 
-            ev.EventExecutions = new List<EventExecution>() { ex};
-            session.Update(ev);
 
-            session.Flush();
-
-            //var country = new Country()
-            //{
-            //    Name = "Россия"
-            //};
-            //var region = new Region()
-            //{
-            //    Name = "Пермский край",
-            //    Country = country
-            //};
-
-            //var cityType = new CityType()
-            //{
-            //    Name = "Город"
-            //};
-            //var city = new City()
-            //{
-            //    Name = "Пермь",
-            //    CityType = cityType,
-            //    Region = region
-            //};
-            //var street = new Street()
-            //{
-            //    Name = "Уральская",
-            //    City = city
-            //};
-
-            //var ad = new Address()
-            //{
-            //    House = "53А",
-            //    Street = street
-            //};
-
-            //var type=new SchoolType()
-            //{
-            //    Name = "лицей"
-            //};
-
-            var ad = session.Get<Address>(2);
-            ad.House = "35";
-            var type= session.Get<SchoolType>(2);
-
-            var school = new School()
+            var pupil2 = new Pupil()
             {
-                Addresses = new List<Address>() { ad },
-                BelongToUniversityDistrict = false,
-                Name = "Msddy",
-                Number = 10,
-                Type = type,
-                HasPriority = false,
+                ContactInfo = new ContactInfo() { FullName = "fdds" },
+                Sex = Sex.Female,
+                School = school,
+                IntrestingPrograms = new List<AcademicProgram>() { prog1, prog2 },
+                RegistrarionPrograms = new List<AcademicProgram>() { prog2 }
             };
-            
-            var ее = session.Save(school);
 
-            ad = session.Get<Address>(2);
-
-
-
-            //var a = new Course()
-            //{
-            //    Name="sdd",
-            //    Address = ad,
-            //    Type = EventType.Course,
-            //    Info = "sddd",
-            //    Price = 12,
-            //    Duration = 34,
-            //    Subject = new Subject() {Name = "dfgre"}
-            //};
-
-            //session.Save(a);
-            //session.Delete(a);
-            var rrr=  session.Get<Course>(1);
-            var dd = session.Get<Event>(1);
-
-
+            session.Save(pupil2);
+            session.Flush();
         }
 
         private ISessionFactory Create()

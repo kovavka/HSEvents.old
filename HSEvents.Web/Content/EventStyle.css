@@ -20,6 +20,7 @@
     font-weight: 600;   
     white-space: nowrap;
     max-width: 120px;
+    min-width: 120px;
     cursor: pointer;
 }
 
