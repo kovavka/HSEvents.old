@@ -66,6 +66,7 @@ namespace HSEvents.Web.Controllers
 
             if (@event.Name.IsNullOrEmpty() || @event.Info.IsNullOrEmpty())
             {
+                EventExecution.Clear();
                 return View();
             }
 
@@ -82,20 +83,14 @@ namespace HSEvents.Web.Controllers
 
             if (EventExecution != null)
             {
-                @event.EventExecution = EventExecution;
-                using (var repository = new NHRepository<EventExecution>())
-                {
-                    foreach (var eventExecution in EventExecution)
-                    {
-                        repository.Add(eventExecution);
-                    }
-                }
+                @event.EventExecutions = EventExecution;
 
                 using (var repository = new NHRepository<Event>())
                 {
                     repository.Update(@event);
                 }
             }
+            EventExecution.Clear();
 
             return RedirectToAction("Index");
         }
@@ -125,44 +120,61 @@ namespace HSEvents.Web.Controllers
             return PartialView();
         }
 
-        private static EventExecution[] EventExecution;
+        private static List<EventExecution> EventExecution=new List<EventExecution>();
+        
 
         [HttpPost]
         public void PutExecutions(EventExecution[] executions)
         {
-            EventExecution = executions;
+            //EventExecution = executions;
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult GetExecution(int address, Jsdate[] data)
         {
-            return Json(
+            Address ad;
+            int a;
 
-             new EventExecution()
+            using (var repository = new NHRepository<Address>())
             {
-                Address = new NHRepository<Address>().Get(address),
-                Dates = Parse(data).ToList()
-            }, JsonRequestBehavior.AllowGet);
+                ad = repository.Get(address);
+                a = ad.Id;
+            }
+
+            var result =
+                new EventExecution()
+                {
+                    Address = ad,
+                    Dates = Parse(data).ToList()
+                };
+
+
+            EventExecution.Add(result);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         private IEnumerable<EventDate> Parse(Jsdate[] data)
         {
             foreach (var jsdate in data)
             {
+               
+                var t = new DateTime(1970, 1, 1, 5, 0, 0).AddMilliseconds(jsdate.date);
+
                 yield return new EventDate()
                 {
-                    Date = jsdate.date,
-                    StartTime = new TimeSpan(0, 0, 0, 0, jsdate.startTime),
-                    EndTime = new TimeSpan(0, 0, 0, 0, jsdate.endTime)
+                    Date = t,
+                    StartTime = new TimeSpan(12,34,0),
+                    EndTime = new TimeSpan(12, 34, 0)
                 };
             }
         }
 
         public class Jsdate
         {
-            public DateTime date { get; set; }
-            public int startTime { get; set; }
-            public int endTime { get; set; }
+            public long date { get; set; }
+            public long startTime { get; set; }
+            public long endTime { get; set; }
         }
     }
 }

@@ -40,7 +40,7 @@ function addDate() {
 
     obj = new Object();
 
-    obj.date = date;
+    obj.date = date.getTime();
     obj.startTime = startTime;
     obj.endTime = endTime;
 
@@ -68,7 +68,7 @@ function saveExecution() {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: '/Events/GetExecution',
         data: {
             'address':address,
@@ -87,9 +87,10 @@ function saveExecution() {
             document.querySelector('#executionBody').innerHTML +=
              "<tr>"+"<td>" + data.Dates[0].Date + "</td>"
             + "<td>" + data.Address.Id + "</td>" + "</tr>";
+
         }
     });
-
+    data = [];
 }
 
 function addEvent() {

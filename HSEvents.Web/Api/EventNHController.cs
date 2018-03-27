@@ -25,9 +25,9 @@ namespace HSEvents.Web.Api
         {
             var events = repository.GetAll();
 
-            return events.Where(x => x.EventExecution.Any(xx => xx.Dates.Any(xxx => xxx.Date.Month == month)))
+            return events.Where(x => x.EventExecutions.Any(xx => xx.Dates.Any(xxx => xxx.Date.Month == month)))
                 .ToList()
-                .SelectMany(x=>x.EventExecution.SelectMany(xx=>xx.Dates).Select(xx=> new SimpleEvent()
+                .SelectMany(x=>x.EventExecutions.SelectMany(xx=>xx.Dates).Select(xx=> new SimpleEvent()
                 {
                     Name = x.Name,
                     Id = x.Id,

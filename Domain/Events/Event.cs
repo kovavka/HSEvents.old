@@ -23,7 +23,7 @@ namespace Domain.Events
         public virtual ICollection<AttendanceInfo> AttendanceInfo { get; set; }
 
 
-        public virtual ICollection<EventExecution> EventExecution { get; set; }
+        public virtual ICollection<EventExecution> EventExecutions { get; set; }
     }
 
     public enum EventType

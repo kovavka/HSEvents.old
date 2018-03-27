@@ -26,10 +26,11 @@ namespace Infrastructure
                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(
                         @"Server=.; Initial Catalog=HSEvents; Integrated Security=SSPI;")
                     .ShowSql()
+                   
                 )
                 .Mappings(m => m.FluentMappings.Conventions.AddFromAssemblyOf<EnumConvention>())
                 .Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.Load("Infrastructure")))
-                .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, false))
+                .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(true, false))
                 .BuildSessionFactory();
             
             return sessionFactory.OpenSession();

@@ -46,7 +46,7 @@ constraint AK_SchoolWork_EventId unique(Event_Id)
 Create table EventExecution(
 Id int identity(1,1) not null,
 Address_Id int not null,
-Event_Id int not null,
+Event_Id int,
 
 primary key (Id),
 constraint FK_EventExecution_Address foreign key (Address_Id) references Address(Id),
@@ -58,7 +58,7 @@ Id int identity(1,1) not null,
 Date date not null,
 StartTime time,
 EndTime time,
-EventExecution_Id int not null,
+EventExecution_Id int,
 
 primary key (Id),
 constraint FK_EventDate_EventExecution foreign key (EventExecution_Id) references EventExecution(Id)
@@ -68,7 +68,7 @@ Create table Purchase(
 Id int identity(1,1) not null,
 Price money not null,
 Description nvarchar(255) not null,
-Event_Id int not null,
+Event_Id int,
 
 primary key (Id),
 constraint FK_Purchase_Event foreign key (Event_Id) references Event(Id)

@@ -16,12 +16,20 @@ namespace Infrastructure.Mappings.Events
 
             HasManyToMany(x => x.Volunteers).AsBag().Cascade.SaveUpdate().Table("VolunteerInfo");
 
-            HasMany(x => x.Purchases).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_Purchase_Event");
+            //HasMany(x => x.Purchases).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_Purchase_Event");
+
+            HasMany(x => x.Purchases)
+                .ForeignKeyConstraintName("FK_Purchase_Event")
+                .AsBag()
+                .Cascade.AllDeleteOrphan();
+
             HasManyToMany(x => x.Organizers).AsBag().Cascade.SaveUpdate().Table("Organizer");
             HasManyToMany(x => x.Lecturers).AsBag().Cascade.SaveUpdate().Table("Lecturer");
             HasManyToMany(x => x.Departments).AsBag().Cascade.SaveUpdate().Table("DepartmentInfo");
             HasMany(x => x.AttendanceInfo).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_AttendanceInfo_Event");
-            HasMany(x => x.EventExecution).AsBag().Cascade.SaveUpdate().ForeignKeyConstraintName("FK_EventExecution_Event");
+            HasMany(x => x.EventExecutions).AsBag().Cascade.AllDeleteOrphan().ForeignKeyConstraintName("FK_EventExecution_Event").Inverse()
+                .Table("EventExecution")
+                .KeyColumn("Event_Id");
         }
     }
     

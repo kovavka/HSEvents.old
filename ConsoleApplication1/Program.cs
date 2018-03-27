@@ -25,11 +25,44 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            //DataBaseHelper.ReBuildDB();
+            DataBaseHelper.ReBuildDB();
 
 
             var session = NHibernateHelper.OpenSession();
+            var add = session.Get<Address>(2);
+            var ex = new EventExecution()
+            {
+                Address = add,
+                Dates = new List<EventDate>()
+                {
+                    new EventDate()
+                    {
+                        Date = new DateTime(2017, 12, 3),
+                        StartTime = new TimeSpan(1, 2, 3),
+                        EndTime = new TimeSpan(2, 3, 4)
+                    }
+                }
+            };
+            var ev = new SchoolWork()
+            {
+                Name = "dd",
+                Info = "fsdfge",
+                Type = EventType.SchoolWork
+                
+            };
 
+           var trvsvd= session.Get<Event>(3);
+
+            session.Save(ev);
+
+            ev.Purchases=new List<Purchase>() { new Purchase() {Description = "dd", Price = 23}};
+            session.Update(ev);
+            session.Flush();
+
+            ev.EventExecutions = new List<EventExecution>() { ex};
+            session.Update(ev);
+
+            session.Flush();
 
             //var country = new Country()
             //{
