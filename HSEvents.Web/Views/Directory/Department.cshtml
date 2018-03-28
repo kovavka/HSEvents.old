@@ -7,6 +7,8 @@
 }
 <h4>Подразделение</h4>
 
+@using (Html.BeginForm("Department", "Directory", FormMethod.Post, new { role = "form" }))
+{
 <div class="col-lg-12">
     @Html.Label("Название", new { @class = "control-label" })
     <br />
@@ -25,8 +27,6 @@
 
 <br />
 
-@using (Html.BeginForm("Department", "Directory", FormMethod.Post, new { role = "form" }))
-{
     <div class="form-group">
         <row>
             <div class="col-md-6">
@@ -35,10 +35,10 @@
             @if (edit)
             {
                 <div class="col-md-6">
-                    <input type="button" class="btn btn-default" style="width: 73%" value="Удалить" onclick="remove(Model.Id)" />
+                    <input type="button" class="btn btn-default" style="width: 73%" value="Удалить" onclick="remove('Department', @Model.Id)" />
                 </div>
             }
-            @Html.LabelFor(x => x.Id, new { @class = "form-control", @style = "visibility:hidden" })
+            @Html.TextBoxFor(x => x.Id, new { @class = "form-control", @style = "visibility:hidden" })
         </row>
     </div>
 }  

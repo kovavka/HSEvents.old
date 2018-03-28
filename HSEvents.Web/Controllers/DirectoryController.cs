@@ -154,7 +154,16 @@ namespace HSEvents.Web.Views
                 addresses = repository.GetAll().ToList();
             }
 
-            var list = (IEnumerable<SelectListItem>)new SelectList(addresses, "Id", "FullAddress");
+            var listAddress = (IEnumerable<SelectListItem>)new SelectList(addresses, "Id", "FullAddress");
+
+            List<SchoolType> types;
+            using (var repository = new NHGetAllRepository<SchoolType>())
+            {
+                types = repository.GetAll().ToList();
+            }
+
+            var listType = (IEnumerable<SelectListItem>)new SelectList(types, "Id", "Name");
+
 
             SchoolDto school = new SchoolDto();
             if (id != 0)
@@ -166,16 +175,21 @@ namespace HSEvents.Web.Views
                     {
                         Id = t.Id,
                         Address = t.Addresses.ToList()[0].Id,
-                        Name = t.Name
+                        Name = t.Name,
+                        Type=t.Type.Id
                     };
                 }
 
 
-                list = addresses.Select(x =>
+                listAddress = addresses.Select(x =>
                     new SelectListItem() { Text = x.FullAddress, Selected = x.Id == school.Address, Value = x.Id.ToString() });
+
+                listType= types.Select(x =>
+                    new SelectListItem() { Text = x.Name, Selected = x.Id == school.Type, Value = x.Id.ToString() });
             }
 
-            ViewData["Address"] = list;
+            ViewData["Address"] = listAddress;
+            ViewData["Type"] = listType;
 
             return View(school);
         }
@@ -192,6 +206,18 @@ namespace HSEvents.Web.Views
             var list = (IEnumerable<SelectListItem>)new SelectList(addresses, "Id", "FullAddress");
 
             ViewData["Address"] = list;
+
+            List<SchoolType> types;
+            using (var repository = new NHGetAllRepository<SchoolType>())
+            {
+                types = repository.GetAll().ToList();
+            }
+
+            ViewData["Type"] = new SelectList(types, "Id", "Name");
+
+
+
+
             ViewBag.Edit = school.Id != 0;
 
 
@@ -210,12 +236,14 @@ namespace HSEvents.Web.Views
             using (var tx = session.BeginTransaction())
             {
                 var address = session.Query<Address>().First(x => x.Id == school.Address);
+                var type = session.Query<SchoolType>().First(x => x.Id == school.Type);
 
                 var entity = new School()
                 {
                     Id = school.Id,
                     Name = school.Name,
                     Addresses = new List<Address>() { address},
+                    Type= type
                 };
 
                 session.SaveOrUpdate(entity);
@@ -358,6 +386,47 @@ namespace HSEvents.Web.Views
         }
 
 
+        [HttpGet]
+        public ActionResult CityType(int id = 0)
+        {
+            ViewBag.Edit = id != 0;
+
+            CityType cityType = new CityType();
+            if (id != 0)
+            {
+                using (var repository = new NHRepository<CityType>())
+                {
+                    cityType = repository.Get(id);
+                }
+            }
+
+            return View(cityType);
+        }
+
+        [HttpPost]
+        public ActionResult CityType(CityType cityType)
+        {
+            ViewBag.Edit = cityType.Id != 0;
+
+            if (cityType.Name.IsNullOrEmpty())
+                ModelState.AddModelError("Name", "Поле не может быть пустым");
+
+            if (!ModelState.IsValid)
+                return View(cityType);
+
+
+            var session = NHibernateHelper.OpenSession();
+
+
+            using (var tx = session.BeginTransaction())
+            {
+                session.SaveOrUpdate(cityType);
+
+                tx.Commit();
+            }
+
+            return RedirectToAction("Index");
+        }
 
         [HttpGet]
         public ActionResult Volunteer(int id = 0)
@@ -444,6 +513,7 @@ namespace HSEvents.Web.Views
         public string Name { get; set; }
         
         public int Address { get; set; }
+        public int Type { get; set; }
 
     }
 

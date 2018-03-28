@@ -1,11 +1,10 @@
-﻿function remove(index) {
-    var hash = window.location.hash.substring(1);
+﻿function remove(hash, index) {
 
     $.ajax({
         type: 'POST',
         url: '/api/' + hash + 'NH/Delete?id=' + index,
         success: function () {
-            getAll(hash);
+            location.href = '/Directory';
         },
         error: function () {
             alert(

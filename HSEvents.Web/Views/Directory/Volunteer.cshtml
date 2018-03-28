@@ -7,6 +7,8 @@
 }
 <h4>Тип школы</h4>
 
+@using (Html.BeginForm("Volunteer", "Directory", FormMethod.Post, new { role = "form" }))
+{
 <div class="col-lg-12">
     @Html.Label("ФИО", new { @class = "control-label" })
     <br />
@@ -17,8 +19,6 @@
 <br />
 
 
-@using (Html.BeginForm("Volunteer", "Directory", FormMethod.Post, new { role = "form" }))
-{
     <div class="form-group">
         <row>
             <div class="col-md-6">
@@ -27,7 +27,7 @@
             @if (edit)
             {
                 <div class="col-md-6">
-                    <input type="button" class="btn btn-default" style="width: 73%" value="Удалить" onclick="remove(Model.Id)" />
+                    <input type="button" class="btn btn-default" style="width: 73%" value="Удалить" onclick="remove('Volunteer', @Model.Id)" />
                 </div>
             }
             @Html.LabelFor(x => x.Id, new { @class = "form-control", @style = "visibility:hidden" })
