@@ -65,8 +65,7 @@ function fillCalendar(year, month, events) {
             if (filtered[i].Colors!=null && filtered[i].Colors.length == 1)
                 color = filtered[i].Colors[0];
 
-            body += '<div class="popup" style="background-color:' + color + '" onclick="openEvent()" ondblclick="editEvent()">' + filtered[i].Name
-                + '<span class="popuptext" id="myPopup' + currentDay+i + '">Popup text...</span>'
+            body += '<div class="popup" style="background-color:' + color + '" >' + filtered[i].Name
                 + '</div>';
 
         }
@@ -160,7 +159,7 @@ function getCurrentMonth(month) {
             return "";
     }
     
-}
+} 
 
 function nextMonth() {
     calendarDate.setMonth(calendarDate.getMonth() + 1);

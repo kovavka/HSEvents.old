@@ -10,10 +10,12 @@ using Domain;
 using Domain.Events;
 using Domain.IEntity;
 using HSEvents.Web.Api;
+using HSEvents.Web.Authentification;
 using Infrastructure.Repositories;
 
 namespace HSEvents.Web.Controllers
 {
+    [Auth]
     public class EventsController : BaseController
     {
         // GET: Event

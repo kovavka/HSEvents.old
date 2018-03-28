@@ -12,7 +12,7 @@
 @{
     ViewBag.Title = "Index";
 }
-    <h2 id="calendarDate">Январь</h2>
+<h2 id="calendarDate">Январь</h2> 
 
 <div id="preloaderbg" class="centerbg1">
     <div class="centerbg2">
@@ -36,15 +36,15 @@
     <tbody id="calendarBody">
 
     </tbody>
+    
 </table>
 
+<br/>
 
-<div class="popup" onclick="myFunction()">Click me!
-    <span class="popuptext" id="myPopup">Popup text...</span>
-</div>
+<a href="/Events/Add">Добавить</a>
 
-<div id="tdd" style="position: absolute">
-    <div style="background: aqua; min-height: 100px; min-width: 100px">
-        аваппр
-    </div>
-</div>
+<br />
+
+
+<input type="button" onclick="lastMonth()" value="Назад"/>
+<input type="button" onclick="nextMonth()" value="Вперед" />

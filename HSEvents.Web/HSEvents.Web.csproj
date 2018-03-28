@@ -84,6 +84,10 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\..\medexpert\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -239,6 +243,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\DepartmentNHController.cs" />
+    <Compile Include="Api\VolunteerNHController.cs" />
+    <Compile Include="Api\AddressNHController.cs" />
+    <Compile Include="Api\CityTypeNHController.cs" />
+    <Compile Include="Api\AcademicProgramNHController.cs" />
     <Compile Include="Api\UsersNHController.cs" />
     <Compile Include="Api\DefaultController.cs" />
     <Compile Include="Api\DirectoryNHController.cs" />
@@ -298,6 +307,7 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Views\CalendarScript.js" />
+    <Content Include="Scripts\Views\removed.js" />
     <Content Include="Scripts\Views\UsersScript.js" />
     <Content Include="Scripts\Views\AttendeesScript.js" />
     <Content Include="Scripts\Views\ReportsScript.js" />
@@ -343,6 +353,12 @@
     <Content Include="Views\Attendees\Edit.cshtml" />
     <Content Include="Views\Attendees\EditPupil.cshtml" />
     <Content Include="Views\Events\AddExecution.cshtml" />
+    <Content Include="Views\Directory\Department.cshtml" />
+    <Content Include="Views\Directory\ContactPerson.cshtml" />
+    <Content Include="Views\Directory\AcademicProgram.cshtml" />
+    <Content Include="Views\Directory\CityType.cshtml" />
+    <Content Include="Views\Directory\Volunteer.cshtml" />
+    <Content Include="Views\Directory\Address.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

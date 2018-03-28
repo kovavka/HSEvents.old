@@ -22,14 +22,21 @@ namespace HSEvents.Web
             var container = new UnityContainer();
 
             container.RegisterType<IGetAllRepository<Event>, EventRepository>();
-            container.RegisterType<IRepository<School>, NHRepository<School>>();
-            container.RegisterType<IRepository<SchoolType>, NHRepository<SchoolType>>();
+            container.RegisterType<IGetAllRepository<School>, NHGetAllRepository<School>>();
+            container.RegisterType<IGetAllRepository<SchoolType>, NHGetAllRepository<SchoolType>>();
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IAuthentication, CustomAuthentication>();
             container.RegisterType<IGetAllRepository<Attendee>, NHGetAllRepository<Attendee>>();
             container.RegisterType<IGetAllRepository<User>, NHGetAllRepository<User>>();
 
 
+            container.RegisterType<IGetAllRepository<AcademicProgram>, NHGetAllRepository<AcademicProgram>>();
+            container.RegisterType<IGetAllRepository<CityType>, NHGetAllRepository<CityType>>();
+            container.RegisterType<IGetAllRepository<Volunteer>, NHGetAllRepository<Volunteer>>();
+            container.RegisterType<IGetAllRepository<Address>, NHGetAllRepository<Address>>();
+            container.RegisterType<IGetAllRepository<Department>, NHGetAllRepository<Department>>();
+
+            
             return container;
         }
     }

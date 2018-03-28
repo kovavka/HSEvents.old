@@ -1,4 +1,5 @@
-﻿@using directory = HSEvents.Web.Views.DirectoryType;
+﻿@using Common
+@using directory = HSEvents.Web.Views.DirectoryType;
 
 @section Styles {
     <link href="@Url.Content("~/Content/DirectoryStyle.css")" rel="stylesheet" type="text/css" />
@@ -11,18 +12,15 @@
 <h2>Справочники</h2>
 
 <div style="min-width: 850px;">
-    <div id="menu" >
-        <div><a href="@controller@(directory.Attendee)" onclick="change('Участники')">Участники</a></div>
-        <div><a href="@controller@(directory.ContactPerson)" onclick="change('Контактные лица школ')">Контактные лица школ</a></div>
-        <div><a href="@controller@(directory.School)" onclick="change('Школы')">Школы</a></div>
-        <div><a href="@controller@(directory.AcademicProgram)" onclick="change('Академические программы')">Академические программы</a></div>
-        <div><a href="@controller@(directory.SchoolType)" onclick="change('Типы школ')">Типы школ</a></div>
-        <div><a href="@controller@(directory.CityType)" onclick="change('Типы населенных пунктов')">Типы населенных пунктов</a></div>
-        <div><a href="@controller@(directory.Volunteer)" onclick="change('Волонтеры')">Волонтеры</a></div>
-        <div><a href="@controller@(directory.Group)" onclick="change('Группы')">Группы</a></div>
-        <div><a href="@controller@(directory.Department)" onclick="change('Департаменты')">Департаменты</a></div>
-        <div><a href="@controller@(directory.User)" onclick="change('Пользователи')">Пользователи</a></div>
-        <div><a href="@controller@(directory.Employee)" onclick="change('Сотрудники')">Сотрудники</a></div>
+    <div id="menu">
+
+        <div><a href="@controller@(directory.School)" onclick="change('Школы')">@directory.School.GetDescription()</a></div>
+        <div><a href="@controller@(directory.AcademicProgram)" onclick="change('Академические программы')">@directory.AcademicProgram.GetDescription()</a></div>
+        <div><a href="@controller@(directory.SchoolType)" onclick="change('Типы школ')">@directory.SchoolType.GetDescription()</a></div>
+        <div><a href="@controller@(directory.CityType)" onclick="change('Типы населенных пунктов')">@directory.CityType.GetDescription()</a></div>
+        <div><a href="@controller@(directory.Volunteer)" onclick="change('Волонтеры')">@directory.Volunteer.GetDescription()</a></div>
+        <div><a href="@controller@(directory.Address)" onclick="change('Адреса')">@directory.Address.GetDescription()</a></div>
+        <div><a href="@controller@(directory.Department)" onclick="change('Департаменты')">@directory.Department.GetDescription()</a></div>
     </div>
     <div id="content">
         <h2 id="title">@ViewBag.Title</h2>
@@ -31,6 +29,7 @@
         
 
         <input type="button" class="btn btn-default" style="width: 73%" value="Добавить" onclick="add()" />
+        <br />
         <br />
 
         <div id="list"></div>

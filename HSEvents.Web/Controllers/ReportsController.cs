@@ -14,7 +14,7 @@ using HSEvents.Web.Authentification;
 
 namespace HSEvents.Web.Controllers
 {
-    //[Auth]
+    [Auth]
     public class ReportsController : BaseController
     {
         [HttpGet]

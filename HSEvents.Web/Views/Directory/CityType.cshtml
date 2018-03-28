@@ -1,33 +1,22 @@
-﻿@model HSEvents.Web.Views.SchoolDto
+﻿@model Domain.CityType
 @{
-    var edit = (bool)ViewBag.Edit;
+    var edit = (bool) ViewBag.Edit;
 }
 @section Scripts {
     <script src="@Url.Content("~/Scripts/Views/removed.js")"></script>
 }
-<h4>Школа</h4>
+<h4>Тип населенного пункта</h4>
 
 <div class="col-lg-12">
-    @Html.Label("Полное наименование", new { @class = "control-label" })
+    @Html.Label("Название", new { @class = "control-label" })
     <br />
-    @Html.TextBoxFor( x=>x.Name, new { @class = "form-control", @style = "max-width:677px" })
+    @Html.TextBoxFor(x=>x.Name, new { @class = "form-control", @style = "max-width:677px" })
     @Html.ValidationMessage("Name", new { @class = "text-danger" })
 </div>
-    
-<div class="col-lg-12">
-    @Html.Label("Адрес", new { @class = "control-label" })
-    <br />
-    
-   
-    @Html.DropDownListFor(x => x.Address,(IEnumerable<SelectListItem>)ViewData["Address"], new { @class = "form-control", @style = "max-width:677px" })
 
+<br />
 
     
-    @Html.ValidationMessage("Address", new { @class = "text-danger" })
-    <br />
-    
-</div>
-
 @using (Html.BeginForm("School", "Directory", FormMethod.Post, new { role = "form" }))
 { 
     <div class="form-group">

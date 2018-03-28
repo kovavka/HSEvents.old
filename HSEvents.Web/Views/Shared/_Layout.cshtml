@@ -25,33 +25,39 @@
             </button>
             @Html.ActionLink("HSEvents", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Календарь", "Index", "Events", new {area = ""}, null)</li>
-                <li>@Html.ActionLink("Справочники", "Index", "Directory", new {area = ""}, null)</li>
-                <li>@Html.ActionLink("Участники", "Index", "Attendees", new { area = "" }, null)</li>
-                <li>@Html.ActionLink("Отчеты", "Index", "Reports", new { area = "" }, null)</li>
-                
-                @{
-                    var user = (User) ViewBag.User;
-                }
+        @{
+            var user = (User) ViewBag.User;
+        }
 
-                @if (user != null && user.IsAdmin)
-                {
-                    <li>@Html.ActionLink("Пользователи", "Index", "Users", new {area = ""}, null)</li>
-                }
-            </ul>
+        <div class="navbar-collapse collapse">
             
+            @if (user != null)
+            {
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Календарь", "Index", "Events", new {area = ""}, null)</li>
+                    <li>@Html.ActionLink("Справочники", "Index", "Directory", new {area = ""}, null)</li>
+                    <li>@Html.ActionLink("Участники", "Index", "Attendees", new {area = ""}, null)</li>
+                    <li>@Html.ActionLink("Отчеты", "Index", "Reports", new {area = ""}, null)</li>
+
+
+
+                    @if (user.IsAdmin)
+                    {
+                        <li>@Html.ActionLink("Пользователи", "Index", "Users", new {area = ""}, null)</li>
+                    }
+                </ul>
+            }
+
             <ul class="nav navbar-nav pull-right">
                 @if (user != null)
                 {
                     <li><a>@user.Login</a></li>
-                    <li>@Html.ActionLink("Выход", "Logout", "Account", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Выход", "Logout", "Account", new {area = ""}, null)</li>
                 }
                 else
                 {
-                    <li>@Html.ActionLink("Вход", "Login", "Account", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Вход", "Login", "Account", new {area = ""}, null)</li>
+                    <li>@Html.ActionLink("Регистрация", "Register", "Account", new {area = ""}, null)</li>
                 }
             </ul>
         </div>

@@ -1,22 +1,23 @@
-﻿@model Domain.SchoolType
+﻿@model Domain.Events.Volunteer
 @{
     var edit = (bool)ViewBag.Edit;
 }
 @section Scripts {
     <script src="@Url.Content("~/Scripts/Views/removed.js")"></script>
 }
-        <h4>Тип школы</h4>
+<h4>Тип школы</h4>
 
-    <div class="col-lg-12">
-        @Html.Label("Название", new { @class = "control-label" })
-        <br />
-        @Html.TextBoxFor(x=>x.Name, new { @class = "form-control", @style = "max-width:677px" })
-        @Html.ValidationMessage("Name", new { @class = "text-danger" })
-    </div>
-
+<div class="col-lg-12">
+    @Html.Label("ФИО", new { @class = "control-label" })
     <br />
+    @Html.TextBoxFor(x => x.FullName, new { @class = "form-control", @style = "max-width:677px" })
+    @Html.ValidationMessage("FullName", new { @class = "text-danger" })
+</div>
 
-@using (Html.BeginForm("SchoolType", "Directory", FormMethod.Post, new { role = "form" }))
+<br />
+
+
+@using (Html.BeginForm("Volunteer", "Directory", FormMethod.Post, new { role = "form" }))
 {
     <div class="form-group">
         <row>

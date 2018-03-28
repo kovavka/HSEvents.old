@@ -9,10 +9,12 @@ using System.Web;
 using System.Web.Mvc;
 using Common;
 using Domain;
+using HSEvents.Web.Authentification;
 using Infrastructure.Repositories;
 
 namespace HSEvents.Web.Controllers
 {
+    [Auth]
     public class AttendeesController : BaseController
     {
         [HttpGet]

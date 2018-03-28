@@ -4,10 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Domain;
+using HSEvents.Web.Authentification;
 using Infrastructure.Repositories;
 
 namespace HSEvents.Web.Controllers
 {
+    [Auth(Roles = "admin")]
     public class UsersController : BaseController
     {
         // GET: Users

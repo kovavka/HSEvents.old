@@ -1,0 +1,44 @@
+﻿@model Domain.ContactPerson
+@{
+    var edit = (bool)ViewBag.Edit;
+}
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/Views/removed.js")"></script>
+}
+<h4>Контактное лицо школы</h4>
+
+<div class="col-lg-12">
+    @Html.Label("ФИО", new { @class = "control-label" })
+    <br />
+    @Html.TextBoxFor(x => x.ContactInfo.FullName, new { @class = "form-control", @style = "max-width:677px" })
+    @Html.ValidationMessage("FullName", new { @class = "text-danger" })
+</div>
+
+<br />
+
+<div class="col-lg-12">
+    @Html.Label("Должность", new { @class = "control-label" })
+    <br />
+    @Html.TextBoxFor(x => x.Appointment, new { @class = "form-control", @style = "max-width:677px" })
+    @Html.ValidationMessage("Appointment", new { @class = "text-danger" })
+</div>
+
+<br />
+
+@using (Html.BeginForm("ContactPerson", "Directory", FormMethod.Post, new { role = "form" }))
+{
+    <div class="form-group">
+        <row>
+            <div class="col-md-6">
+                <input type="submit" class="btn btn-default" style="width: 73%" value="Сохранить" />
+            </div>
+            @if (edit)
+            {
+                <div class="col-md-6">
+                    <input type="button" class="btn btn-default" style="width: 73%" value="Удалить" onclick="remove(Model.Id)" />
+                </div>
+            }
+            @Html.LabelFor(x => x.Id, new { @class = "form-control", @style = "visibility:hidden" })
+        </row>
+    </div>
+}  

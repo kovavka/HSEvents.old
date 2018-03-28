@@ -22,7 +22,7 @@ FullName nvarchar(255) not null,
 PhoneNumber nvarchar(255),
 Email nvarchar(255),
 Appointment nvarchar(255),
-School_Id int not null,
+School_Id int,
 
 primary key (Id),
 constraint FK_ContactPerson_School foreign key (School_Id) references School(Id)

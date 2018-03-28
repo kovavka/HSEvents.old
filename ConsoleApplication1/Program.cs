@@ -25,7 +25,7 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            //DataBaseHelper.ReBuildDB();
+            DataBaseHelper.ReBuildDB();
 
 
             var session = NHibernateHelper.OpenSession();

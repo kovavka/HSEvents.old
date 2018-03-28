@@ -6,16 +6,12 @@ $('html').ready(onLoad());
 function add() {
     index = 0;
     var view = window.location.hash.substring(1);
+    
+    window.open(
+        '/Directory/' + view + '?id=' + index,
+        '_blank'
+    );
 
-    $.ajax({
-        type: 'GET',
-        url: 'Directory/Partail?viewName=' + view,
-        success: function (data) {
-            document.querySelector('#dialogContent').innerHTML = data;
-            $('#modDialog').modal('show');
-            onModalShow(view);
-        }
-    });
 }
 
 function edit(index) {
@@ -23,15 +19,10 @@ function edit(index) {
 
     var view = window.location.hash.substring(1);
 
-    $.ajax({
-        type: 'GET',
-        url: 'Directory/Partail?viewName=' + view,
-        success: function (data) {
-            document.querySelector('#dialogContent').innerHTML = data;
-            $('#modDialog').modal('show');
-            onModalShow(view);
-        }
-    });
+    window.open(
+        '/Directory/' + view + '?id=' + index,
+        '_blank' 
+    );
 }
 
 function change(type) {
@@ -76,8 +67,8 @@ function onLoad() {
         var type = window.location.hash.substring(1);
         getAll(type);
     } else {
-        window.location.hash = "Attendees";
-        change("Участники");
+        window.location.hash = "School";
+        change("Школы");
     }
 }
 
@@ -134,7 +125,7 @@ function saveSchoolType() {
     }
 }
 
-function remove() {
+function remove(index) {
     var hash = window.location.hash.substring(1);
 
     $.ajax({
@@ -142,7 +133,10 @@ function remove() {
         url: '/api/' + hash + 'NH/Delete?id=' + index,
         success: function () {
             getAll(hash);
-            $('#modDialog').modal('hide');
+        },
+        error: function () {
+            alert(
+                "Не удалось удалить сущность, т.к. она связана с другими, попробуйте сначала удалить связанные сущности");
         }
     });
 
@@ -223,6 +217,23 @@ function schoolTypesOnLoad() {
             .done(function(element) {
                 $("#name")[0].value = element.Name;
             });
-
     }
+}
+
+var htmlModel;
+
+function saveModel(model) {
+    var view = window.location.hash.substring(1);
+
+    console.log(htmlModel);
+
+    $.ajax({
+            type: 'POST',
+            url: '/Directory/' + view,
+            data: { 'address': model }
+        })
+        .done(function (result) {
+            if(!result.IsValid)
+                alert(result.Error);
+        });
 }

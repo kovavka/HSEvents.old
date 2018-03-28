@@ -1,0 +1,81 @@
+﻿@model HSEvents.Web.Views.AddressDto
+@{
+    var edit = (bool)(ViewBag.Edit ?? false);
+}
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/Views/removed.js")"></script>
+}
+<h4>Адрес</h4>
+
+@using (Html.BeginForm("Address", "Directory", FormMethod.Post, new { role = "form" }))
+{
+<div class="col-lg-12">
+    @Html.Label("Страна", new { @class = "control-label" })
+    <br />
+    @Html.TextBoxFor(x => x.Country, new { @class = "form-control", @style = "max-width:677px" })
+    @Html.ValidationMessage("House", new { @class = "text-danger" })
+</div>
+
+<br />
+<div class="col-lg-12">
+    @Html.Label("Регион", new { @class = "control-label" })
+    <br />
+    @Html.TextBoxFor(x => x.Region, new { @class = "form-control", @style = "max-width:677px" })
+    @Html.ValidationMessage("Region", new { @class = "text-danger" })
+</div>
+
+<br />
+
+<div class="col-lg-12">
+    @Html.Label("Тип населенного пункта", new { @class = "control-label" })
+    <br />
+    @Html.DropDownListFor(x => x.CityType, (IEnumerable<SelectListItem>)ViewData["CityType"], new { @class = "form-control", @style = "max-width:677px" })
+    @Html.ValidationMessage("CityType", new { @class = "text-danger" })
+</div>
+
+<br />
+
+<div class="col-lg-12">
+    @Html.Label("Город", new { @class = "control-label" })
+    <br />
+    @Html.TextBoxFor(x => x.City, new { @class = "form-control", @style = "max-width:677px" })
+    @Html.ValidationMessage("City", new { @class = "text-danger" })
+</div>
+
+<br />
+
+<div class="col-lg-12">
+    @Html.Label("Улица", new { @class = "control-label" })
+    <br />
+    @Html.TextBoxFor(x => x.Street, new { @class = "form-control", @style = "max-width:677px" })
+    @Html.ValidationMessage("City", new { @class = "text-danger" })
+</div>
+
+<br />
+
+<div class="col-lg-12">
+    @Html.Label("Дом", new { @class = "control-label" })
+    <br />
+    @Html.TextBoxFor(x => x.House, new { @class = "form-control", @style = "max-width:677px" })
+    @Html.ValidationMessage("House", new { @class = "text-danger" })
+</div>
+
+
+<br />
+
+    <div class="form-group">
+        <row>
+            <div class="col-md-6">
+                <input type="submit" class="btn btn-default" style="width: 73%" value="Сохранить" />
+            </div>
+            @if (edit)
+                {
+                <div class="col-md-6">
+                    <input type="button" class="btn btn-default" style="width: 73%" value="Удалить" onclick="remove(Model.Id)" />
+                </div>
+            }
+            @Html.LabelFor(x => x.Id, new { @class = "form-control", @style = "visibility:hidden" })
+        </row>
+    </div>
+}
+<br />

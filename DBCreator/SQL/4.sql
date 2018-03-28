@@ -7,7 +7,7 @@ primary key (Id)
 Create table Volunteer(
 Id int identity(1,1) not null,
 FullName nvarchar(255) not null,
-Group_Id int not null,
+Group_Id int,
 
 primary key (Id),
 constraint FK_Volunteer_Group foreign key (Group_Id) references "Group"(Id)
